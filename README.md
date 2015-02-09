@@ -1,2 +1,5 @@
 # scalajs-spa-tutorial
-Tutorial for creating a simple Single Page Application in ScalaJS
+Screenshots
+
+![dashboard](/../screenshots/screenshots/dashboard.PNG?raw=true)
+

@@ -4,7 +4,7 @@ import japgolly.scalajs.react.extra.router.{ApprovedPath, Location, Redirect, Ro
 import japgolly.scalajs.react.vdom.all._
 import spatutorial.client.components.Icon._
 
-case class RouterMenuItem(label: String, icon: Icon, location: Location[_])
+case class RouterMenuItem(label: String, icon: Icon, location: Location[_ <: BaseRoute])
 
 /**
  * Provides a base for all routes. Allows registration of modules to be displayed in the main menu

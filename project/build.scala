@@ -20,7 +20,7 @@ object SPABuild extends Build {
   lazy val spa = crossProject.in(file(".")).
     settings(
       name := "scalajs-spa",
-      version := "0.1-SNAPSHOT",
+      version := "0.1.0",
       scalaVersion := "2.11.5",
       scalacOptions ++= Seq(
         "-Xlint",
@@ -50,7 +50,7 @@ object SPABuild extends Build {
       unmanagedResourceDirectories in Test += file(".") / SharedSrcDir / "src" / "test" / "resources",
       // set some basic options when running the project with Revolver
       javaOptions in Revolver.reStart ++= Seq("-Xmx1G"),
-      // configure a specific port for debugging, to you can easily debug multiple projects at the same time if necessary
+      // configure a specific port for debugging, so you can easily debug multiple projects at the same time if necessary
       Revolver.enableDebugging(port = 5111, suspend = false)
     ).
     // set up settings specific to the JS project
@@ -67,7 +67,9 @@ object SPABuild extends Build {
       unmanagedResourceDirectories in Test += file(".") / SharedSrcDir / "src" / "test" / "resources",
       // define where the JS-only application will be hosted by the Workbench plugin
       localUrl :=("localhost", 13131),
-      bootSnippet := "SPAMain().main();")
+      refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile),
+      bootSnippet := "SPAMain().main();"
+    )
 
   // configure a specific directory for scalajs output
   val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")

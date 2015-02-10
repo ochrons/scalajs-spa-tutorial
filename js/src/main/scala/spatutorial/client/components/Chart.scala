@@ -9,10 +9,10 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSName
 
 trait ChartDataset extends js.Object {
-  val label: String = js.native
-  val fillColor: String = js.native
-  val strokeColor: String = js.native
-  val data: js.Array[Double] = js.native
+  def label: String = js.native
+  def fillColor: String = js.native
+  def strokeColor: String = js.native
+  def data: js.Array[Double] = js.native
 }
 
 object ChartDataset {
@@ -27,8 +27,8 @@ object ChartDataset {
 }
 
 trait ChartData extends js.Object {
-  val labels: js.Array[String] = js.native
-  val datasets: js.Array[ChartDataset] = js.native
+  def labels: js.Array[String] = js.native
+  def datasets: js.Array[ChartDataset] = js.native
 }
 
 object ChartData {

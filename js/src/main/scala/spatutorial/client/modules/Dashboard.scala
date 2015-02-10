@@ -1,7 +1,7 @@
 package spatutorial.client.modules
 
 import japgolly.scalajs.react.ReactComponentB
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.all._
 import spatutorial.client.components.Chart.ChartProps
 import spatutorial.client.components._
 
@@ -12,9 +12,9 @@ object Dashboard {
     val DashboardComponent = ReactComponentB[Router]("Dashboard")
       .render(router => {
       val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
-      <.div(
-        // just a header and MessageOfTheDay component
-        <.h2("Dashboard"), Motd(), Chart(cp)
+      div(
+        // just a header, MessageOfTheDay and chart components
+        h2("Dashboard"), Motd(), Chart(cp)
       )
     }).build
 

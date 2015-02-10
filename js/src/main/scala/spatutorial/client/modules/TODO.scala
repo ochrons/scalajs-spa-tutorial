@@ -24,15 +24,15 @@ object TODO {
 
       def refresh(): Unit = {
         // load Todos from the server
-        AjaxClient[Api].getTodos().call().foreach { message =>
-          t.modState(_ => TodoState(message))
+        AjaxClient[Api].getTodos().call().foreach { todos =>
+          t.modState(_ => TodoState(todos))
         }
       }
     }
 
     // create the React component for ToDo management
     val TODOComponent = ReactComponentB[Router]("TODO")
-      .initialState(TodoState(Seq()))
+      .initialState(TodoState(Seq())) // initial state is an empty list
       .backend(new Backend(_))
       .render((router, S, B) => {
       Panel(PanelProps("What needs to be done"),

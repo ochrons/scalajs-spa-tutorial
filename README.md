@@ -8,12 +8,12 @@ Tutorial for creating a simple Single Page Application with [Scala.js](http://ww
 ### Purpose
 
 This project demonstrates typical design patterns and practices for developing SPAs with Scala.js with special focus on building a complete application.
- It started as a way to learn more about Scala.js and related libraries, but then I decided to make it more tutorial-like for the greater good :)
+It started as a way to learn more about Scala.js and related libraries, but then I decided to make it more tutorial-like for the greater good :)
 
 The code covers typical aspects of building a SPA using Scala.js but it doesn't try to be an all-encompassing example for all the things possible with Scala.js.
- Before going through this tutorial, it would be helpful if you already know the basics of Scala.js and have read through the official
- [Scala.js tutorial](http://www.scala-js.org/doc/tutorial.html) and the great e-book [Hands-on Scala.js](http://lihaoyi.github.io/hands-on-scala-js/#Hands-onScala.js)
- by [Li Haoyi (lihaoyi)](https://github.com/lihaoyi).
+Before going through this tutorial, it would be helpful if you already know the basics of Scala.js and have read through the official
+[Scala.js tutorial](http://www.scala-js.org/doc/tutorial.html) and the great e-book [Hands-on Scala.js](http://lihaoyi.github.io/hands-on-scala-js/#Hands-onScala.js)
+by [Li Haoyi (lihaoyi)](https://github.com/lihaoyi).
 
 # Getting started
 
@@ -66,7 +66,7 @@ The only external JavaScript references are to [React](http://facebook.github.io
 reference is the compiled application code.
 
 Once the browser has loaded all the resources, it will call the `SPAMain().main()` method defined in the
-[`SPAMain.scala`](js/src/main/scala/spatutorial/SPAMain.scala) singleton class. This is the entry point of the application. The class itself is very simple,
+[`SPAMain.scala`](js/src/main/scala/spatutorial/client/SPAMain.scala) singleton class. This is the entry point of the application. The class itself is very simple,
 
 ```scala
 @JSExport("SPAMain")
@@ -121,17 +121,17 @@ trait BaseRoute extends RoutingRules {
 Not much there, since everything interesting comes from `RoutingRules`. Each route component is defined as a trait inside the module's object, like this:
 
 ```scala
-  trait DashboardRoute extends BaseRoute {
-    // create the React component for Dashboard
-    val DashboardComponent = ReactComponentB[Router]("Dashboard")
-    // ....
+trait DashboardRoute extends BaseRoute {
+  // create the React component for Dashboard
+  val DashboardComponent = ReactComponentB[Router]("Dashboard")
+  // ....
 
-    // register the component and store location
-    val dashboard: Loc = register(rootLocation(DashboardComponent))
+  // register the component and store location
+  val dashboard: Loc = register(rootLocation(DashboardComponent))
 
-    // register it for the Main Menu
-    registerMenu(RouterMenuItem("Dashboard", Icon.dashboard, dashboard))
-  }
+  // register it for the Main Menu
+  registerMenu(RouterMenuItem("Dashboard", Icon.dashboard, dashboard))
+}
 ```
 
 Each route component calls the `register` function to register the route (in this case the root location) and `registerMenu` function to register itself
@@ -150,26 +150,26 @@ The `MainRouter` also provides the base HTML code and the main menu for the appl
 provide a nice looking layout, but you can use whatever CSS framework you wish just by changing the CSS class definitions.
 
 ```scala
-  override protected def interceptRender(ic: InterceptionR) = {
-    div(
-      nav(cls := "navbar navbar-inverse navbar-fixed-top")(
-        div(cls := "container")(
-          div(cls := "navbar-header")(span(cls := "navbar-brand")("SPA Tutorial")),
-          div(cls := "collapse navbar-collapse")(
-            ul(cls := "nav navbar-nav")(
-              // build a list of registered menu items
-              for (item <- menuItems) yield {
-                li((ic.loc == item.location) ?= (cls := "active"),
-                  ic.router.link(item.location.asInstanceOf[ApprovedPath[P]])(item.icon, " ", item.label))
-              }
-            )
+override protected def interceptRender(ic: InterceptionR) = {
+  div(
+    nav(cls := "navbar navbar-inverse navbar-fixed-top")(
+      div(cls := "container")(
+        div(cls := "navbar-header")(span(cls := "navbar-brand")("SPA Tutorial")),
+        div(cls := "collapse navbar-collapse")(
+          ul(cls := "nav navbar-nav")(
+            // build a list of registered menu items
+            for (item <- menuItems) yield {
+              li((ic.loc == item.location) ?= (cls := "active"),
+                ic.router.link(item.location.asInstanceOf[ApprovedPath[P]])(item.icon, " ", item.label))
+            }
           )
         )
-      ),
-      // currently active module is shown in this container
-      div(cls := "container")(ic.element)
-    )
-  }
+      )
+    ),
+    // currently active module is shown in this container
+    div(cls := "container")(ic.element)
+  )
+}
 ```
 
 See how the code looks just like HTML, except it's type safe and the IDE provides auto-complete!
@@ -178,34 +178,529 @@ Ok, we've got the HTML page defined, menu generated and the active component (Da
 
 ### Dashboard
 
-TODO
+[Dashboard module](js/src/main/scala/spatutorial/client/modules/SPAMain.scala) contains a single `trait` defining the route. Within this
+trait a `ReactComponent` is built, and the route and menu items registered.
+
+The dashboard component is really simple in terms of React components as it contains no internal state nor backend functionality. It's
+basically just a placeholder for two other components `Motd` and `Chart`. The only method is the `render` method which is responsible for
+rendering the component when it's mounted by React. It also provides fake data for the Chart component, to keep simple.
+
+```scala
+val DashboardComponent = ReactComponentB[Router]("Dashboard")
+  .render(router => {
+  val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
+  div(
+    // just a header, MessageOfTheDay and chart components
+    h2("Dashboard"), Motd(), Chart(cp)
+  )
+}).build
+```
+
+#### Message of the day
+
+[Motd component](js/src/main/scala/spatutorial/client/components/Motd.scala) is a simple React component that fetches *Message of the day*
+from the server and displays it in a panel. The component consists of three different classes: `State` for storing component state, `Backend`
+for functionality and `Motd` for instantiating the component. The `Motd` is not given any properties, so the prop type is `Unit`.
+
+```scala
+val Motd = ReactComponentB[Unit]("Motd")
+  .initialState(State("loading...")) // show a loading text while message is being fetched from the server
+  .backend(new Backend(_))
+  .render((_, S, B) => {
+    Panel(PanelProps("Message of the day"), div(S.message),
+      Button(ButtonProps(B.refresh, CommonStyle.danger), Icon.refresh, span(" Update"))
+    )
+  })
+  .componentDidMount(scope => {
+    scope.backend.refresh()
+  })
+  .buildU
+```
+
+A React component is defined through a series of function calls. Each of these calls, like `initialState` modifies the type of the component,
+meaning you cannot access the state in the `render` method unless you have initialized it with `initialState`.
+
+In the Todo component earlier, we didn't define state nor backend and therefore the render method had only access to the properties. In this
+`render` method we have access to all three, denoted by `_` (props), `S` (state) and `B` (backend). Since the component has no properties
+(type `Unit`) we discard the first parameter using the `_` notation. The render method builds a simple hierarchy of other React components
+(`Panel` and `Button`) containing the message from the server.
+
+Of course to actually get the message, we need to request it from the server. To do this automatically when the component is mounted, we hook
+a call to `refresh()` in the `componentDidMount` method. The `Backend` class takes care of the actual server Ajax call and after receiving a
+response, updates the component state.
+
+```scala
+def refresh() {
+  // load a new message from the server
+  AjaxClient[Api].motd("User X").call().foreach { message =>
+    t.modState(_ => State(message))
+  }
+}
+```
+
+How the magic of calling the server actually happens is covered in a [later chapter](#Autowire-and-uPickle).
 
 ### Integrating JavaScript components
 
-TODO
+Although Scala.js provides a superb environment for developing web clients, sometimes it makes sense to utilize the hard work of
+thousands of JavaScript developers fumbling in the shadows :)
 
-### Todo
+#### Bootstrap CSS components
 
-TODO
+[Bootstrap](http://getbootstrap.com/) is a popular HTML/CSS/JS framework by Twitter for developing responsive applications. It comes with a lot
+of styled HTML/CSS components that are easy to use and integrate into your application. Lot of Bootstrap actually doesn't even use JavaScript, all
+the magic happens in CSS.
 
-## Server side
+This tutorial wraps couple of simple Bootstrap [components](js/src/main/scala/spatutorial/client/components/Bootstrap.scala)
+(button and panel) into React components. Bootstrap uses contextual styles in many components to convey additional meaning. These can be
+easily represented by a Scala enumeration.
 
-TODO
+```scala
+object CommonStyle extends Enumeration {
+  val default, primary, success, info, warning, danger = Value
+}
+```
+
+To define an interactive button, it has to know what to do when it's clicked. In this example we simply give a function in the properties
+alongside the contextual style. Note that the actual button contents doesn't need to be provided in the properties as it's more convenient
+to define it through child component(s).
+
+```scala
+case class ButtonProps(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default)
+
+val Button = ReactComponentB[ButtonProps]("Button")
+  .render { (P, C) =>
+    button(cls := s"btn btn-${P.style}", `type` := "button", onClick --> P.onClick())(C)
+  }.build
+```
+
+This time the render method gets two parameters, the properties and the children given to this component. It simply renders a normal
+button using Bootstrap CSS and binding `onClick` to the handler we defined in the properties. Finally the children are rendered within
+the button tag.
+
+Defining a Bootstrap Panel is about as simple.
+
+```scala
+case class PanelProps(heading:String, style: CommonStyle.Value = CommonStyle.default)
+
+val Panel = ReactComponentB[PanelProps]("Panel")
+  .render { (P, C) =>
+    div(cls := s"panel panel-${P.style}")(
+      div(cls := "panel-heading")(P.heading),
+      div(cls := "panel-body")(C)
+    )
+  }.build
+```
+
+The panel provides no interactivity but this time we define a separate `heading1 in addition to using the children property.
+
+#### JavaScript chart component
+
+If you'd want a nice charting component in your web UI you could go ahead and write a lot of SVG-generating code, but why bother when
+there are so many components available for your benefit. Scala.js provides many ways to [use JavaScript](http://www.scala-js.org/doc/calling-javascript.html)
+from your own Scala code and some of them are more type-safe than others. A good way is to define a *facade* for the 3rd party JS module and
+for any data structures it may expose. This way you can be sure to use it in a type-safe manner.
+
+In the tutorial we are using [Chart.js](http://www.chartjs.org/) but the same principles apply to practically all JS components out there.
+
+The Chart.js draws the chart onto a HTML5 canvas and is instantiated by following JavaScript code
+
+```javascript
+var ctx = document.getElementById("myChart").getContext("2d");
+var myNewChart = new Chart(ctx).Line(data);
+```
+
+To do the same in Scala.js we define a simple *facade* trait as follows
+
+```scala
+@JSName("Chart")
+class JSChart(ctx: js.Dynamic) extends js.Object {
+  def Line(data: ChartData): js.Dynamic = js.native
+  def Bar(data: ChartData): js.Dynamic = js.native
+}
+```
+Note that this defines only couple of charts available in the Chart.js component, but it's trivial to add more if you need them. We are also
+skipping the `options` parameter for charts to keep things simple.
+
+To actually instantiate the chart, we need access to the canvas element and with React this is a bit problematic since it builds a virtual-DOM and
+updates the real DOM behind the scene. Therefore the canvas element does not exist at the time of `render` function call. To work around this problem
+we need to build the chart in the `componentDidMount` function, which is called after the real DOM has been updated. This function is called with
+a `scope` parameter that gives us access to the actual DOM node through `getDOMNode()`. The chart is built by creating a new instance of `Chart`
+and calling the appropriate chart function.
+
+```scala
+val Chart = ReactComponentB[ChartProps]("Chart")
+  .render((P) => {
+    canvas(width := P.width, height := P.height)
+  }).componentDidMount(scope => {
+    // access context of the canvas
+    val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")
+    // create the actual chart using the 3rd party component
+    scope.props.style match {
+      case LineChart => new JSChart(ctx).Line(scope.props.data)
+      case BarChart => new JSChart(ctx).Bar(scope.props.data)
+      case _ => throw new IllegalArgumentException
+    }
+  }).build
+```
+
+Chart.js input data is a JavaScript object like below
+
+```javascript
+var data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 86, 27, 90]
+        }
+    ]
+};
+```
+
+To build the same in Scala.js we could directly use `js.Dynamic.literal` but that would be very unsafe and cumbersome. A better alternative is to define
+a builder function to create a it and a facade to access it.
+
+```scala
+trait ChartData extends js.Object {
+  def labels: js.Array[String] = js.native
+  def datasets: js.Array[ChartDataset] = js.native
+}
+
+object ChartData {
+  def apply(labels: Seq[String], datasets: Seq[ChartDataset]): ChartData = {
+    js.Dynamic.literal(
+      labels = labels.toJSArray,
+      datasets = datasets.toJSArray
+    ).asInstanceOf[ChartData]
+  }
+}
+```
+
+In this case defining the `ChartData` trait is actually not necessary, since we don't really use it except to enforce type safety. But if you actually
+need to access a JavaScript object defined outside your application, this is the way to do it. Defining chart data is now as simple as
+
+```scala
+val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
+```
+
+If you need to build/access a very complex JavaScript objects, consider an option builder approach like the one in
+[Querki](https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/jsext/JSOptionBuilder.scala) by
+[jducoeur](https://github.com/jducoeur) (for example [JQueryUIDialog](https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/facades/jqueryui/JQueryUIDialog.scala)).
+
+### Todo module
+
+The Todo module and its React component are a bit more interesting than Dashboard as they provide some interaction. The module contains a `TodoList`
+component, displaying a list of Todo items retrieved from the server. User can then click the checkbox next to the item to indicate if that item
+is completed or not. Internally the state of Todo items is maintained by the `Todo` module and `TodoList` just passively displays them.
+
+As with other React components, the state of the component is maintained in an immutable `case class`
+
+```scala
+case class TodoState(items:Seq[TodoItem])
+```
+
+Updates to the state are perfomed by the `Backend` class in the `updateTodo` method.
+
+```scala
+class Backend(t: BackendScope[_, TodoState]) {
+  def updateTodo(item:TodoItem): Unit = {
+    // update the state with the new TodoItem
+    t.modState(s => TodoState(s.items.map( i => if(i.id == item.id) item else i)))
+    // inform the server about this update
+    AjaxClient[Api].updateTodo(item).call()
+  }
+
+  def refresh(): Unit = {
+    // load Todos from the server
+    AjaxClient[Api].getTodos().call().foreach { todos =>
+      t.modState(_ => TodoState(todos))
+    }
+  }
+}
+```
+
+Note how in React the state is an immutable object and all modifications are performed through the `modState` method. This ensures that the UI
+keeps in sync with any changes to the data. To modify a single item the function walks through existing items, replaces the one with the matching
+id with the new item and recreates the `TodoState` object.
+
+The call to `updateTodo` comes from the `TodoList` whenever a checkbox state is changed. The callback function is provided to the `TodoList` when
+it's instantiated in the `render` method.
+
+```scala
+val TODOComponent = ReactComponentB[Router]("TODO")
+  .initialState(TodoState(Seq())) // initial state is an empty list
+  .backend(new Backend(_))
+  .render((router, S, B) => {
+    Panel(PanelProps("What needs to be done"),
+      TodoList(TodoListProps(S.items, B.updateTodo)))
+  })
+  .componentDidMount(_.backend.refresh())
+  .build
+```
+
+`TodoList` looks like this
+
+```scala
+case class TodoListProps(items: Seq[TodoItem], stateChange: (TodoItem) => Unit)
+
+val TodoList = ReactComponentB[TodoListProps]("TodoList")
+  .render(P => {
+    def renderItem(item: TodoItem) = {
+      // convert priority into Bootstrap style
+      val priority = item.priority match {
+        case TodoLow => "list-group-item-info"
+        case TodoNormal => ""
+        case TodoHigh => "list-group-item-danger"
+      }
+      li(cls := s"list-group-item $priority")(
+        input(`type` := "checkbox", checked := item.completed, onChange --> P.stateChange(item.copy(completed = !item.completed))),
+        if(item.completed) s(item.content) else span(item.content)
+      )
+    }
+    ul(cls := "list-group")(P.items map renderItem)
+  })
+  .build
+```
+
+When checkbox state changes, `P.stateChange` is called with an updated Todo item.
+
+But now it's time to get to the bottom of client-server communications!
 
 ### Autowire and uPickle
 
-TODO
+Web clients communicate with the server most commonly with *Ajax* which is quite loosely defined collection of techniques. Most notable
+JavaScript libraries like JQuery provide higher level access to the low level protocols exposed by the browser. Scala.js provides a nice
+Ajax wrapper in `dom.extensions.Ajax` (or `dom.ext.Ajax` in scalajs-dom 0.8+) but it's still quite tedious to serialize/deserialize objects
+and take care of all the dirty little details.
 
+But fear not, there is no need to do all that yourself as our friend [Li Haoyi (lihaoyi)](https://github.com/lihaoyi) has created and
+published two great libraries called [uPickle](https://github.com/lihaoyi/upickle) and [Autowire](https://github.com/lihaoyi/autowire).
+
+To build your own client-server communication pathway all you need to do is to define a single object on the client side and another on the
+server side.
+
+```scala
+// client side
+object AjaxClient extends autowire.Client[String, upickle.Reader, upickle.Writer]{
+  override def doCall(req: Request): Future[String] = {
+    dom.extensions.Ajax.post(
+      url = "/api/" + req.path.mkString("/"),
+      data = upickle.write(req.args)
+    ).map(_.responseText)
+  }
+
+  def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
+  def write[Result: upickle.Writer](r: Result) = upickle.write(r)
+}
+```
+
+The only variable specific to your application is the URL you want to use to call the server. Otherwise everything else it automatically
+generated for you through the magic of macros. The server side is even simpler, just letting Autowire know that you want to use uPickle
+for serialization.
+
+```scala
+// server side
+object Router extends autowire.Server[String, upickle.Reader, upickle.Writer]{
+  def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
+  def write[Result: upickle.Writer](r: Result) = upickle.write(r)
+}
+```
+
+Now that you have the `AjaxClient` set up, calling server is as simple as
+
+```scala
+import scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import autowire._
+
+AjaxClient[Api].getTodos().call().foreach { todos =>
+  println(s"Got some things to do $todos")
+}
+```
+
+Note that you need those two imports to access the Autowire magic and to provide an execution context for the futures.
+
+The `Api` is just a simple trait shared between the client and server.
+
+```scala
+trait Api {
+  // message of the day
+  def motd(name:String) : String
+
+  // get Todo items
+  def getTodos() : Seq[TodoItem]
+
+  // update a Todo
+  def updateTodo(item:TodoItem)
+}
+```
+
+Please check out uPickle documentation on what it can and cannot serialize. You might need to use something else if your data is complicated.
+Case classes, base collections and basic data types are a safe bet.
+
+So how does this work on the server side?
+
+## Server side
+
+The tutorial server is very simplistic and does not represent a typical Spray application, but it's enough to provide some basic support
+for the client side. Routing logic on the server side is defined using Spray DSL
+
+```scala
+startServer("0.0.0.0", port = port) {
+  get {
+    pathSingleSlash {
+      // serve the main page
+      getFromResource("web/index.html")
+    } ~
+    // serve other requests directly from the resource directory
+      getFromResourceDirectory("web")
+  } ~ post {
+    path("api" / Segments) { s =>
+      extract(_.request.entity.asString) { e =>
+        complete {
+          // handle API requests via autowire
+          Router.route[Api](apiService)(
+            autowire.Core.Request(s, upickle.read[Map[String, String]](e))
+          )
+        }
+      }
+    }
+  }
+}
+```
+
+The main HTML page and related resources are provided directly from the project resources directory (coming from the `shared` sub-project, actually).
+The interesting part is handling `api` requests using Autowire router. Like on the client side, Autowire takes care of the complicated stuff
+so you just need to plug it in and let it do its magic. The `ApiService` is just a normal class and it doesn't need to concern itself with
+serialization or URL request path mappings. It just implements the same `Api` as it used on the client side. Simple, eh!
+
+```scala
+class ApiService extends Api {
+  override def motd(name: String): String = s"Welcome to SPA, $name! Time is now ${new Date}"
+  override def getTodos(): Seq[TodoItem] = {
+    // provide some fake Todos
+    Seq(
+      TodoItem("1","Wear shirt that says “Life”. Hand out lemons on street corner.", TodoLow, false),
+      TodoItem("2","Make vanilla pudding. Put in mayo jar. Eat in public.", TodoNormal, false),
+      TodoItem("3","Walk away slowly from an explosion without looking back.", TodoHigh, false),
+      TodoItem("4","Sneeze in front of the pope. Get blessed.", TodoNormal, true)
+    )
+  }
+  // update a Todo
+  override def updateTodo(item: TodoItem): Unit = {
+    // TODO, update database etc :)
+    println(s"Todo item was updated: $item")
+  }
+}
+```
 
 # SBT build definition
 
-TODO
+Since Scala.js is quite new and it's been evolving even rather recently, building Scala.js applications with SBT is not as clear as it could
+be. Yes, the documentation and tutorials give you the basics, but what if you want something more, like put the output of Scala.js compiler
+into another directory?
+
+The `build.scala` in this tutorial shows you some typical cases you might run into in your own application.
+
+### Serving compiled JS from both projects
+
+Scala.js SBT [Workbench plugin](https://github.com/lihaoyi/workbench) enables quick development by serving client files straight from SBT
+without the need for your own server. The relevant part in `build.scala` is
+
+```scala
+// define where the JS-only application will be hosted by the Workbench plugin
+localUrl :=("localhost", 13131),
+refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile),
+bootSnippet := "SPAMain().main();"
+```
+
+Whenever you run `fastOptJS` the plugin will automatically refresh the browser with an updated version. How's that for fast turn-around times!
+
+But since Scala.js compile output is stored under the JS project by default, how can we serve it from the JVM project? The solution is to
+instruct Scala.js to save its output in a specific directory under the JVM project and then make a copy back to the JS side. For this you need
+a bit more SBT code to make it work
+
+```scala
+// configure a specific directory for scalajs output
+val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
+
+// make all JS builds use the output dir defined later
+lazy val js2jvmSettings = Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
+  crossTarget in(spaJS, Compile, packageJSKey) := scalajsOutputDir.value
+}
+
+// instantiate the JS project for SBT with some additional settings
+lazy val spaJS: Project = spa.js.settings(
+  fastOptJS in Compile := {
+    // make a copy of the produced JS-file (and source maps) under the spaJS project as well,
+    // because the original goes under the spaJVM project
+    // NOTE: this is only done for fastOptJS, not for fullOptJS
+    val base = (fastOptJS in Compile).value
+    IO.copyFile(base.data, (classDirectory in Compile).value / "web" / "js" / base.data.getName)
+    IO.copyFile(base.data, (classDirectory in Compile).value / "web" / "js" / (base.data.getName + ".map"))
+    base
+  }
+)
+
+// instantiate the JVM project for SBT with some additional settings
+lazy val spaJVM: Project = spa.jvm.settings(js2jvmSettings: _*).settings(
+  // scala.js output is directed under "web/js" dir in the spaJVM project
+  scalajsOutputDir := (classDirectory in Compile).value / "web" / "js",
+  // compile depends on running fastOptJS on the JS project
+  compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(spaJS, Compile))
+)
+```
+
+### Sharing web resources between JS and JVM projects
+
+In addition to the compiled Scala.js code, you need other resources such as the `index.html` some CSS and JS files for your application to work.
+You should store these under the `shared` project resources and let the JS/JVM project know about these extra resource directories.
+
+```scala
+val SharedSrcDir = "shared"
+
+// copy resources from the "shared" project
+unmanagedResourceDirectories in Compile += file(".") / SharedSrcDir / "src" / "main" / "resources",
+unmanagedResourceDirectories in Test += file(".") / SharedSrcDir / "src" / "test" / "resources",
+```
+
+### Running the server in a separate JVM
+
+For fast development, it's nice to have the SBT console available even while the server is running. So instead of `spaJVM/run` you should use
+the great [Revolver plugin](https://github.com/spray/sbt-revolver) and run the server with `re-start` and `re-stop`. This way you can start your
+server and then instruct SBT to track changes to the client code with `~fastOptJS` and all your client changes are automatically deployed
+without restarting your server.
+
+To configure the Revolver you'll need the following
+
+```scala
+import spray.revolver.RevolverPlugin._
+...
+jvmSettings(Revolver.settings: _*).
+...
+// set some basic options when running the project with Revolver
+javaOptions in Revolver.reStart ++= Seq("-Xmx1G"),
+// configure a specific port for debugging, so you can easily debug multiple projects at the same time if necessary
+Revolver.enableDebugging(port = 5111, suspend = false)
+```
 
 # FAQ
 
-TODO
+Coming later...
 
 # What next?
 
-TODO
-
+- some testing would be nice, even with perfect code like this :)
+- more complex 3rd party JavaScript component integrations
+- building an optimized version of the Scala.js client
+- debugging, source maps
+- authentication support
+- you tell me!

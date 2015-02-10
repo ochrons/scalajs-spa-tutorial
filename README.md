@@ -178,7 +178,7 @@ Ok, we've got the HTML page defined, menu generated and the active component (Da
 
 ### Dashboard
 
-[Dashboard module](js/src/main/scala/spatutorial/client/modules/SPAMain.scala) contains a single `trait` defining the route. Within this
+[Dashboard module](js/src/main/scala/spatutorial/client/modules/Dashboard.scala) contains a single `trait` defining the route. Within this
 trait a `ReactComponent` is built, and the route and menu items registered.
 
 The dashboard component is really simple in terms of React components as it contains no internal state nor backend functionality. It's
@@ -238,7 +238,7 @@ def refresh() {
 }
 ```
 
-How the magic of calling the server actually happens is covered in a [later chapter](#Autowire-and-uPickle).
+How the magic of calling the server actually happens is covered in a [later chapter](#autowire-and-upickle).
 
 ### Integrating JavaScript components
 

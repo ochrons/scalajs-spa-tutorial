@@ -6,7 +6,7 @@ import spray.routing.SimpleRoutingApp
 
 import scala.util.Properties
 
-object Router extends autowire.Server[String, upickle.Reader, upickle.Writer]{
+object Router extends autowire.Server[String, upickle.Reader, upickle.Writer] {
   def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
 }
@@ -28,7 +28,7 @@ object MainApp extends SimpleRoutingApp {
           // serve the main page
           getFromResource("web/index.html")
         } ~
-        // serve other requests directly from the resource directory
+          // serve other requests directly from the resource directory
           getFromResourceDirectory("web")
       } ~ post {
         path("api" / Segments) { s =>

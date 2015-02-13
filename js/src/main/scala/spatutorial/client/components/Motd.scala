@@ -1,12 +1,13 @@
 package spatutorial.client.components
 
-import japgolly.scalajs.react.{BackendScope, ReactComponentB}
+import autowire._
 import japgolly.scalajs.react.vdom.all._
-import scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.services.AjaxClient
 import spatutorial.shared.Api
-import autowire._
+
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 /**
  * This is a simple component demonstrating how to interact with the server

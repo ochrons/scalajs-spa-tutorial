@@ -18,8 +18,8 @@ by [Li Haoyi (lihaoyi)](https://github.com/lihaoyi).
 # Getting started
 
 Fork a copy of the repository and clone it to your computer using Git. Run `sbt` in the project folder and after SBT has completed loading the project,
- start the server with `re-start`. This will compile both the client and server side Scala application, package it and start the server. You can now navigate to
- `localhost:8080` on your web browser to open the Dashboard view. It should look something like this
+start the server with `re-start`. This will compile both the client and server side Scala application, package it and start the server. You can now navigate to
+`localhost:8080` on your web browser to open the Dashboard view. It should look something like this
 
 ![dashboard](/../screenshots/screenshots/dashboard.PNG?raw=true)
 
@@ -73,9 +73,11 @@ Once the browser has loaded all the resources, it will call the `SPAMain().main(
 object SPAMain extends JSApp {
   @JSExport
   def main(): Unit = {
+    // build a baseUrl, this method works for both local and server addresses (assuming you use #)
     val baseUrl = BaseUrl(dom.window.location.href.takeWhile(_ != '#'))
     val router = MainRouter.router(baseUrl)
 
+    // tell React to render the router in the document body
     React.render(router(), dom.document.body)
   }
 }
@@ -108,90 +110,103 @@ The way it works is that you basically create route components, register them wi
 provided examples build all routes within a single class, but in real life we want more modularity. In this tutorial we have a total of *two* modules/routes/views
 just to demonstrate how to use the router.
 
-Let's start by defining a `BaseRoute` that also allows the modules to register themselves for the main menu.
+As this is a Single Page Application, all routes are defined under one router, `MainRouter`, which extends `RoutingRules` trait.
 
 ```scala
-trait BaseRoute extends RoutingRules {
-  var menuItems = Vector.empty[RouterMenuItem]
-
-  def registerMenu(item: RouterMenuItem) = menuItems :+= item
-}
+object MainRouter extends RoutingRules {
+  // register the components and store locations
+  val dashboardLoc = register(rootLocation(Dashboard.component))
+  val todoLoc = register(location("#todo", ToDo.component))
 ```
 
-Not much there, since everything interesting comes from `RoutingRules`. Each route component is defined as a trait inside the module's object, like this:
+Here we just register the two routes with the `RoutingRules`. First route is our main route which is attached to the special `rootLocation`. The second
+route is attached to `#todo` path. You could also use "clean" paths without the hash, but then your server must be prepared to server correct content
+even when there is a sub-path defined. The hash also makes it easy to work with a local-only setup, when the files are served by the Workbench plugin.
+
+The `MainRouter` also provides the base HTML code and integrates a `MainMenu` component for the application in its `interceptRender` function. SPA tutorial
+uses Bootstrap CSS to provide a nice looking layout, but you can use whatever CSS framework you wish just by changing the CSS class definitions.
 
 ```scala
-trait DashboardRoute extends BaseRoute {
-  // create the React component for Dashboard
-  val DashboardComponent = ReactComponentB[Router]("Dashboard")
-  // ....
+import japgolly.scalajs.react.vdom.prefix_<^._
 
-  // register the component and store location
-  val dashboard: Loc = register(rootLocation(DashboardComponent))
-
-  // register it for the Main Menu
-  registerMenu(RouterMenuItem("Dashboard", Icon.dashboard, dashboard))
-}
-```
-
-Each route component calls the `register` function to register the route (in this case the root location) and `registerMenu` function to register itself
-to the main menu.
-
-The routes are combined in `MainRouter.scala` into a single trait, defining the menu order at the same time.
-
-```scala
-// ordering of routes here determines the order in the main menu as well
-trait AllRoutes extends Dashboard.DashboardRoute with TODO.TODORoute
-```
-
-Finally the actual router is created by extending `AllRoutes`.
-
-The `MainRouter` also provides the base HTML code and the main menu for the application in its `interceptRender` function. SPA tutorial uses Bootstrap CSS to
-provide a nice looking layout, but you can use whatever CSS framework you wish just by changing the CSS class definitions.
-
-```scala
 override protected def interceptRender(ic: InterceptionR) = {
-  div(
-    nav(cls := "navbar navbar-inverse navbar-fixed-top")(
-      div(cls := "container")(
-        div(cls := "navbar-header")(span(cls := "navbar-brand")("SPA Tutorial")),
-        div(cls := "collapse navbar-collapse")(
-          ul(cls := "nav navbar-nav")(
-            // build a list of registered menu items
-            for (item <- menuItems) yield {
-              li((ic.loc == item.location) ?= (cls := "active"),
-                ic.router.link(item.location.asInstanceOf[ApprovedPath[P]])(item.icon, " ", item.label))
-            }
-          )
+  <.div(
+    <.nav(^.className := "navbar navbar-inverse navbar-fixed-top")(
+      <.div(^.className := "container")(
+        <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
+        <.div(^.className := "collapse navbar-collapse")(
+          MainMenu(MainMenu.MenuProps(ic.loc, ic.router))
         )
       )
     ),
     // currently active module is shown in this container
-    div(cls := "container")(ic.element)
+    <.div(^.className := "container")(ic.element)
   )
 }
 ```
 
-See how the code looks just like HTML, except it's type safe and the IDE provides auto-complete!
+See how the code looks just like HTML, except it's type safe and the IDE provides auto-complete! If you insist on having even closer resemblance to HTML,
+you can replace the `prefix_<^` with `all` giving you simple `div` and `className` tag names. Be warned, however, that this may lead to nasty surprises
+down the road because the HTML namespace contains a lot of short, common tag names like `a` and `id`. The little extra effort from `<.` and `^.` pays
+off in the long run.
+
+### Main menu
+
+The main menu is just another React component that is given the current location and the router as properties. The contents of the menu is defined
+statically within the class itself, because the referred locations are anyway all known at compile time. For other kinds of menus you'd want to use
+a dynamic system, but static is just fine here.
+
+```scala
+case class MenuItem(label: String, icon: Icon, location: MainRouter.Loc)
+
+val menuItems = Seq(
+  MenuItem("Dashboard", Icon.dashboard, MainRouter.dashboardLoc),
+  MenuItem("Todo", Icon.check, MainRouter.todoLoc)
+)
+```
+
+For each menu item we define a label, an icon and the location that was registered in the `MainRouter`.
+
+To render the menu we just loop over the items and create appropriate tags. For links we need to use the `router` provided in the properties.
+
+```scala
+val MainMenu = ReactComponentB[MenuProps]("MainMenu")
+  .render(P => {
+  <.ul(^.className := "nav navbar-nav")(
+    // build a list of menu items
+    for (item <- menuItems) yield {
+      <.li((P.activeLocation == item.location) ?= (^.className := "active"),
+        P.router.link(item.location)(item.icon, " ", item.label)
+      )
+    }
+  )
+})
+  .build
+```
 
 Ok, we've got the HTML page defined, menu generated and the active component (Dashboard) within the placeholder, what happens next?
 
 ### Dashboard
 
-[Dashboard module](js/src/main/scala/spatutorial/client/modules/Dashboard.scala) contains a single `trait` defining the route. Within this
-trait a `ReactComponent` is built, and the route and menu items registered.
-
-The dashboard component is really simple in terms of React components as it contains no internal state nor backend functionality. It's
-basically just a placeholder for two other components `Motd` and `Chart`. The only method is the `render` method which is responsible for
-rendering the component when it's mounted by React. It also provides fake data for the Chart component, to keep simple.
+[Dashboard module](js/src/main/scala/spatutorial/client/modules/Dashboard.scala) is really simple in terms of React components as it contains
+no internal state nor backend functionality. It's basically just a placeholder for two other components `Motd` and `Chart`. The only method is
+the `render` method which is responsible for rendering the component when it's mounted by React. It also provides fake data for the Chart
+component, to keep simple.
 
 ```scala
-val DashboardComponent = ReactComponentB[Router]("Dashboard")
+val component = ReactComponentB[MainRouter.Router]("Dashboard")
   .render(router => {
+  // create dummy data for the chart
   val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
-  div(
-    // just a header, MessageOfTheDay and chart components
-    h2("Dashboard"), Motd(), Chart(cp)
+  // get internal links
+  val appLinks = MainRouter.appLinks(router)
+  <.div(
+    // header, MessageOfTheDay and chart components
+    <.h2("Dashboard"),
+    Motd(),
+    Chart(cp),
+    // create a link to the Todo view
+    <.div(appLinks.todo("Check your todos!"))
   )
 }).build
 ```
@@ -240,6 +255,24 @@ def refresh() {
 
 How the magic of calling the server actually happens is covered in a [later chapter](#autowire-and-upickle).
 
+#### Links to other routes
+
+Sometimes you need to create a link that takes the user to an another module behind a route. To create these links in a type-safe manner,
+the tutorial code defines a specific trait with functions that return valid links.
+
+```scala
+trait AppLinks {
+  def dashboard(content: TagMod*): ReactTag
+  def todo(content: TagMod*): ReactTag
+}
+```
+
+This `AppLinks` trait can be passed down from the top-level modules to those components that need to create links. To get an instance of the
+`AppLinks` you need to call `MainRouter.appLinks(router)`. It requires the router as a parameter, which is only available in the internal
+methods like `render` of the top-level modules.
+
+The content of the link can be anything from a simple text string to a complex VDOM structure.
+
 ### Integrating JavaScript components
 
 Although Scala.js provides a superb environment for developing web clients, sometimes it makes sense to utilize the hard work of
@@ -270,7 +303,7 @@ case class ButtonProps(onClick: () => Unit, style: CommonStyle.Value = CommonSty
 
 val Button = ReactComponentB[ButtonProps]("Button")
   .render { (P, C) =>
-    button(cls := s"btn btn-${P.style}", `type` := "button", onClick --> P.onClick())(C)
+    <.button(^.cls := s"btn btn-${P.style}", ^.tpe := "button", ^.onClick --> P.onClick())(C)
   }.build
 ```
 
@@ -285,14 +318,33 @@ case class PanelProps(heading:String, style: CommonStyle.Value = CommonStyle.def
 
 val Panel = ReactComponentB[PanelProps]("Panel")
   .render { (P, C) =>
-    div(cls := s"panel panel-${P.style}")(
-      div(cls := "panel-heading")(P.heading),
-      div(cls := "panel-body")(C)
+    <.div(^.className := s"panel panel-${P.style}")(
+      <.div(^.className := "panel-heading")(P.heading),
+      <.div(^.className := "panel-body")(C)
     )
   }.build
 ```
 
-The panel provides no interactivity but this time we define a separate `heading1 in addition to using the children property.
+The panel provides no interactivity but this time we define a separate `heading` in addition to using the children property.
+
+#### Icons
+
+Custom fonts are a great way to generate scalable icons that look good on all displays. In the tutorial we use
+[Font Awesome](http://fortawesome.github.io/Font-Awesome/) icons and a simple wrapper that generates appropriate HTML tags to display the icon.
+
+```scala
+object Icon {
+  type Icon = ReactTag
+  def apply(name: String): Icon = <.i(^.className := s"fa fa-$name")
+
+  def adjust = apply("adjust")
+  def adn = apply("adn")
+  .
+  .
+  def youtubePlay = apply("youtube-play")
+  def youtubeSquare = apply("youtube-square")
+}
+```
 
 #### JavaScript chart component
 
@@ -331,7 +383,7 @@ and calling the appropriate chart function.
 ```scala
 val Chart = ReactComponentB[ChartProps]("Chart")
   .render((P) => {
-    canvas(width := P.width, height := P.height)
+    <.canvas(^.width := P.width, ^.height := P.height)
   }).componentDidMount(scope => {
     // access context of the canvas
     val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")
@@ -461,12 +513,12 @@ val TodoList = ReactComponentB[TodoListProps]("TodoList")
         case TodoNormal => ""
         case TodoHigh => "list-group-item-danger"
       }
-      li(cls := s"list-group-item $priority")(
+      li(className := s"list-group-item $priority")(
         input(`type` := "checkbox", checked := item.completed, onChange --> P.stateChange(item.copy(completed = !item.completed))),
         if(item.completed) s(item.content) else span(item.content)
       )
     }
-    ul(cls := "list-group")(P.items map renderItem)
+    ul(className := "list-group")(P.items map renderItem)
   })
   .build
 ```

@@ -1,27 +1,26 @@
 package spatutorial.client.modules
 
-import japgolly.scalajs.react.extra.router.{ApprovedPath, Location, Redirect, RoutingRules}
-import japgolly.scalajs.react.vdom.all._
-import spatutorial.client.components.Icon._
+import japgolly.scalajs.react.extra.router._
+import japgolly.scalajs.react.vdom.prefix_<^._
 
-case class RouterMenuItem(label: String, icon: Icon, location: Location[_ <: BaseRoute])
-
-/**
- * Provides a base for all routes. Allows registration of modules to be displayed in the main menu
- */
-trait BaseRoute extends RoutingRules {
-  var menuItems = Vector.empty[RouterMenuItem]
-
-  def registerMenu(item: RouterMenuItem) = menuItems :+= item
+// define a trait to access all application routes
+trait AppLinks {
+  def dashboard(content: TagMod*): ReactTag
+  def todo(content: TagMod*): ReactTag
 }
 
-// ordering of routes here determines the order in the main menu as well
-trait AllRoutes extends Dashboard.DashboardRoute with TODO.TODORoute
+object MainRouter extends RoutingRules {
+  // register the components and store locations
+  val dashboardLoc = register(rootLocation(Dashboard.component))
+  val todoLoc = register(location("#todo", ToDo.component))
 
-object MainRouter extends AllRoutes {
+  def appLinks(router: Router): AppLinks = new AppLinks {
+    override def dashboard(content: TagMod*) = router.link(dashboardLoc)(content)
+    override def todo(content: TagMod*) = router.link(todoLoc)(content)
+  }
 
   // redirect all invalid routes to dashboard
-  override protected val notFound = redirect(dashboard, Redirect.Replace)
+  override protected val notFound = redirect(dashboardLoc, Redirect.Replace)
 
   /**
    * Creates the basic page structure under the body tag.
@@ -30,23 +29,17 @@ object MainRouter extends AllRoutes {
    * @return
    */
   override protected def interceptRender(ic: InterceptionR) = {
-    div(
-      nav(cls := "navbar navbar-inverse navbar-fixed-top")(
-        div(cls := "container")(
-          div(cls := "navbar-header")(span(cls := "navbar-brand")("SPA Tutorial")),
-          div(cls := "collapse navbar-collapse")(
-            ul(cls := "nav navbar-nav")(
-              // build a list of registered menu items
-              for (item <- menuItems) yield {
-                li((ic.loc == item.location) ?= (cls := "active"),
-                  ic.router.link(item.location.asInstanceOf[ApprovedPath[P]])(item.icon, " ", item.label))
-              }
-            )
+    <.div(
+      <.nav(^.className := "navbar navbar-inverse navbar-fixed-top")(
+        <.div(^.className := "container")(
+          <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
+          <.div(^.className := "collapse navbar-collapse")(
+            MainMenu(MainMenu.MenuProps(ic.loc, ic.router))
           )
         )
       ),
       // currently active module is shown in this container
-      div(cls := "container")(ic.element)
+      <.div(^.className := "container")(ic.element)
     )
   }
 }

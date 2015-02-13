@@ -1,8 +1,8 @@
 package spatutorial.client.components
 
-import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
-import org.scalajs.dom.HTMLCanvasElement
+import org.scalajs.dom.raw.HTMLCanvasElement
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -57,13 +57,13 @@ object Chart {
 
   case object BarChart extends ChartStyle
 
-  case class ChartProps(name: String, style: ChartStyle, data: ChartData, width:Int = 400, height:Int = 200)
+  case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 400, height: Int = 200)
 
   class Backend(t: BackendScope[ChartProps, _])
 
   val Chart = ReactComponentB[ChartProps]("Chart")
     .render((P) => {
-    canvas(width := P.width, height := P.height)
+    <.canvas(^.width := P.width, ^.height := P.height)
   }).componentDidMount(scope => {
     // access context of the canvas
     val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")

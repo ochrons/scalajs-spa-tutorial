@@ -20,7 +20,7 @@ object SPABuild extends Build {
   lazy val spa = crossProject.in(file(".")).
     settings(
       name := "scalajs-spa",
-      version := "0.1.0",
+      version := "0.1.1",
       scalaVersion := "2.11.5",
       scalacOptions ++= Seq(
         "-Xlint",
@@ -58,9 +58,9 @@ object SPABuild extends Build {
     jsSettings(
       libraryDependencies ++= Seq(
         // dependencies only used by the JS project (note the use of %%% instead of %%)
-        "org.scala-js" %%% "scalajs-dom" % "0.7.0",
-        "com.github.japgolly.scalajs-react" %%% "core" % "0.7.2",
-        "com.github.japgolly.scalajs-react" %%% "extra" % "0.7.2"
+        "org.scala-js" %%% "scalajs-dom" % "0.8.0",
+        "com.github.japgolly.scalajs-react" %%% "core" % "0.8.0",
+        "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.0"
       ),
       // copy resources from the "shared" project
       unmanagedResourceDirectories in Compile += file(".") / SharedSrcDir / "src" / "main" / "resources",

@@ -1,7 +1,7 @@
 package spatutorial.client.components
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.shared._
 
 object TodoList {
@@ -17,12 +17,12 @@ object TodoList {
         case TodoNormal => ""
         case TodoHigh => "list-group-item-danger"
       }
-      li(cls := s"list-group-item $priority")(
-        input(`type` := "checkbox", checked := item.completed, onChange --> P.stateChange(item.copy(completed = !item.completed))),
-        if(item.completed) s(item.content) else span(item.content)
+      <.li(^.className := s"list-group-item $priority")(
+        <.input(^.tpe := "checkbox", ^.checked := item.completed, ^.onChange --> P.stateChange(item.copy(completed = !item.completed))),
+        if (item.completed) <.s(item.content) else <.span(item.content)
       )
     }
-    ul(cls := "list-group")(P.items map renderItem)
+    <.ul(^.className := "list-group")(P.items map renderItem)
   })
     .build
 

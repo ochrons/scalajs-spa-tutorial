@@ -674,7 +674,7 @@ refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile),
 bootSnippet := "SPAMain().main();"
 ```
 
-Whenever you run `fastOptJS` the plugin will automatically refresh the browser with an updated version. How's that for fast turn-around times!
+To use the Workbench plugin, point your browser to http://localhost:13131/jvm/target/scala-2.11/classes/web/index.html. Whenever you run `fastOptJS` the plugin will automatically refresh the browser with an updated version. How's that for fast turn-around times!
 
 But since Scala.js compile output is stored under the JS project by default, how can we serve it from the JVM project? The solution is to
 instruct Scala.js to save its output in a specific directory under the JVM project and then make a copy back to the JS side. For this you need

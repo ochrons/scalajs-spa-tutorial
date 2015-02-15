@@ -1,7 +1,7 @@
 package spatutorial.client.components
 
 import autowire._
-import japgolly.scalajs.react.vdom.all._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.services.AjaxClient
@@ -30,8 +30,8 @@ object Motd {
     .initialState(State("loading...")) // show a loading text while message is being fetched from the server
     .backend(new Backend(_))
     .render((_, S, B) => {
-    Panel(PanelProps("Message of the day"), div(S.message),
-      Button(ButtonProps(B.refresh, CommonStyle.danger), Icon.refresh, span(" Update"))
+    Panel(Panel.Props("Message of the day"), <.div(S.message),
+      Button(Button.Props(B.refresh, CommonStyle.danger), Icon.refresh, " Update")
     )
   })
     .componentDidMount(scope => {

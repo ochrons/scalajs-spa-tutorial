@@ -1,38 +1,43 @@
 package spatutorial.client.modules
 
-import autowire._
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.components.TodoList.TodoListProps
 import spatutorial.client.components._
-import spatutorial.client.services.AjaxClient
+import spatutorial.client.services._
+import spatutorial.client.ukko._
 import spatutorial.shared._
-
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 object Todo {
 
-  case class TodoState(items: Seq[TodoItem] = Seq(), showTodoForm: Boolean = false)
+  case class TodoState(items: Seq[TodoItem] = Seq(), selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
-  class Backend(t: BackendScope[_, TodoState]) {
-    def updateTodo(item: TodoItem): Unit = {
-      // inform the server about this update
-      AjaxClient[Api].updateTodo(item).call().foreach { _ =>
-        // get new todos after server has updated
-        refresh()
+  class Backend(t: BackendScope[_, TodoState]) extends OnUnmount {
+    def mounted(): Unit = {
+      // listen to change events
+      val removeListener = TodoStore.addListener(ChangeEvent, updated)
+      // register things to do when unmounted
+      onUnmount {
+        removeListener()
       }
+      // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
+      MainDispatcher.dispatch(RefreshTodos)
     }
 
-    def refresh(): Unit = {
-      // load Todos from the server
-      AjaxClient[Api].getTodos().call().foreach { todos =>
-        t.modState(_ => TodoState(todos))
-      }
+    def updated(event: EventType, store: TodoStore): Unit = {
+      // get updated todos from the store
+      t.modState(_.copy(items = store.todos))
     }
 
-    def addTodo(): Unit = {
-      t.modState(s => s.copy(showTodoForm = true))
+    def editTodo(item: Option[TodoItem]): Unit = {
+      // activate the todo dialog
+      t.modState(s => s.copy(selectedItem = item, showTodoForm = true))
+    }
+
+    def deleteTodo(item: TodoItem): Unit = {
+      TodoActions.deleteTodo(item)
     }
 
     def todoEdited(item: TodoItem, cancelled: Boolean): Unit = {
@@ -41,8 +46,9 @@ object Todo {
         println("Todo editing cancelled")
       } else {
         println(s"Todo edited: $item")
-        updateTodo(item)
+        TodoActions.updateTodo(item)
       }
+      // hide the todo dialog
       t.modState(s => s.copy(showTodoForm = false))
     }
   }
@@ -52,14 +58,15 @@ object Todo {
     .initialState(TodoState()) // initial state is an empty list
     .backend(new Backend(_))
     .render((router, S, B) => {
-    Panel(Panel.Props("What needs to be done"), TodoList(TodoListProps(S.items, B.updateTodo)),
-      Button(Button.Props(B.addTodo), Icon.plusSquare, " New"),
-      // if modal is open, add it to the panel
-      if (S.showTodoForm) TodoForm(TodoForm.Props(None, B.todoEdited))
-      else // otherwise add a placeholder
+    Panel(Panel.Props("What needs to be done"), TodoList(TodoListProps(S.items, TodoActions.updateTodo, item => B.editTodo(Some(item)), B.deleteTodo)),
+      Button(Button.Props(() => B.editTodo(None)), Icon.plusSquare, " New"),
+      // if the dialog is open, add it to the panel
+      if (S.showTodoForm) TodoForm(TodoForm.Props(S.selectedItem, B.todoEdited))
+      else // otherwise add an empty placeholder
         Seq.empty[ReactElement])
   })
-    .componentDidMount(_.backend.refresh())
+    .componentDidMount(_.backend.mounted())
+    .configure(OnUnmount.install)
     .build
 }
 
@@ -100,10 +107,11 @@ object TodoForm {
     .initialStateP(p => State(p.item.getOrElse(TodoItem("", "", TodoNormal, false))))
     .backend(new Backend(_))
     .render((P, S, B) => {
+    val headerText = if (S.item.id == "") "Add new todo" else "Edit todo"
     Modal(Modal.Props(
       // header contains a cancel button (X)
-      header = be => <.span(<.button(^.tpe := "button", ^.className := "close", ^.onClick --> be.hide(), Icon.close), <.h4("Add new todo")),
-      // footer has the OK button
+      header = be => <.span(<.button(^.tpe := "button", ^.className := "close", ^.onClick --> be.hide(), Icon.close), <.h4(headerText)),
+      // footer has the OK button that submits the form before hiding it
       footer = be => <.span(Button(Button.Props(() => {B.submitForm(); be.hide()}), "OK")),
       // this is called after the modal has been hidden (animation is completed)
       closed = B.formClosed),

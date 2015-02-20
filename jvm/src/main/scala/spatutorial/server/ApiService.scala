@@ -16,21 +16,32 @@ class ApiService extends Api {
 
   override def getTodos(): Seq[TodoItem] = {
     // provide some fake Todos
+    println(s"Sending ${todos.size} Todo items")
     todos
   }
 
   // update a Todo
-  override def updateTodo(item: TodoItem): Unit = {
+  override def updateTodo(item: TodoItem): Seq[TodoItem] = {
     // TODO, update database etc :)
-    println(s"Todo item was updated: $item")
     if(todos.exists(_.id == item.id)) {
       todos = todos.collect {
         case i if i.id == item.id => item
         case i => i
       }
+      println(s"Todo item was updated: $item")
     } else {
       // add a new item
-      todos :+= item.copy(id = UUID.randomUUID().toString)
+      val newItem = item.copy(id = UUID.randomUUID().toString)
+      todos :+= newItem
+      println(s"Todo item was added: $newItem")
     }
+    todos
+  }
+
+  // delete a Todo
+  override def deleteTodo(itemId: String): Seq[TodoItem] = {
+    println(s"Deleting item with id = $itemId")
+    todos = todos.filterNot(_.id == itemId)
+    todos
   }
 }

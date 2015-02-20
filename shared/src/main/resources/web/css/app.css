@@ -2,3 +2,6 @@ body {
     padding-top: 50px;
 }
 
+.label-as-badge {
+    border-radius: 1em;
+}

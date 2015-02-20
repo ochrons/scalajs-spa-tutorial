@@ -1,5 +1,12 @@
 # Change history
 
+## 0.1.3
+
+* Unidirectional data flow framework *Ukko* following Facebook Flux and actor architectures
+* Todo list implemented with the new data flow model
+* Main menu item *Todo* now shows count of open todos
+* Testing with *uTest*
+
 ## 0.1.2
 
 * Simple jQuery integration added (Bootstrap Modal)

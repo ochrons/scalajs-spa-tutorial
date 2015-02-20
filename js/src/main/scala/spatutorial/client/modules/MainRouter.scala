@@ -10,7 +10,7 @@ trait AppLinks {
 }
 
 object MainRouter extends RoutingRules {
-  // register the components and store locations
+  // register the modules and store locations
   val dashboardLoc = register(rootLocation(Dashboard.component))
   val todoLoc = register(location("#todo", Todo.component))
 

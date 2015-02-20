@@ -19,4 +19,5 @@ project/plugins/project/
 # IntelliJ IDEA
 .idea
 *.iml
+out
 

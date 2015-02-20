@@ -8,5 +8,8 @@ trait Api {
   def getTodos(): Seq[TodoItem]
 
   // update a Todo
-  def updateTodo(item: TodoItem)
+  def updateTodo(item: TodoItem): Seq[TodoItem]
+
+  // delete a Todo
+  def deleteTodo(itemId: String): Seq[TodoItem]
 }

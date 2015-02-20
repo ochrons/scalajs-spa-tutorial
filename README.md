@@ -1,6 +1,5 @@
 # Scala.js SPA-tutorial
 
-
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ochrons/scalajs-spa-tutorial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Tutorial for creating a simple Single Page Application with [Scala.js](http://www.scala-js.org/) and [Spray](http://spray.io/).
@@ -19,9 +18,14 @@ Tutorial for creating a simple Single Page Application with [Scala.js](http://ww
             - [Icons](#icons)
             - [JavaScript chart component](#javascript-chart-component)
             - [Bootstrap jQuery components](#bootstrap-jquery-components)
-        - [Todo module](#todo-module)
+        - [Todo module and data flow](#todo-module-and-data-flow)
+            - [Unidirectional data flow](#unidirectional-data-flow)
+            - [Modifying a Todo state](#modifying-a-todo-state)
+            - [Wiring](#wiring)
+            - [Editing todos](#editing-todos)
         - [Autowire and uPickle](#autowire-and-upickle)
     - [Server side](#server-side)
+- [Testing](#testing)
 - [SBT build definition](#sbt-build-definition)
     - [Serving compiled JS from both projects](#serving-compiled-js-from-both-projects)
     - [Sharing web resources between JS and JVM projects](#sharing-web-resources-between-js-and-jvm-projects)
@@ -183,15 +187,21 @@ statically within the class itself, because the referred locations are anyway al
 a dynamic system, but static is just fine here.
 
 ```scala
-case class MenuItem(label: String, icon: Icon, location: MainRouter.Loc)
+case class MenuItem(label: (State) => ReactNode, icon: Icon, location: MainRouter.Loc)
 
-val menuItems = Seq(
-  MenuItem("Dashboard", Icon.dashboard, MainRouter.dashboardLoc),
-  MenuItem("Todo", Icon.check, MainRouter.todoLoc)
+private val menuItems = Seq(
+  MenuItem(_ => "Dashboard", Icon.dashboard, MainRouter.dashboardLoc),
+  MenuItem(buildTodoMenu, Icon.check, MainRouter.todoLoc)
+)
+
+private def buildTodoMenu(S:State):ReactNode = Seq(
+  <.span("Todo "),
+  if(S.todoCount > 0) <.span(^.className := "label label-danger label-as-badge", S.todoCount) else <.span()
 )
 ```
 
-For each menu item we define a label, an icon and the location that was registered in the `MainRouter`.
+For each menu item we define a function to generate the label, an icon and the location that was registered in the `MainRouter`. For Dashboard
+the label is simple text, but for Todo we also render the number of open todos.
 
 To render the menu we just loop over the items and create appropriate tags. For links we need to use the `router` provided in the properties.
 
@@ -455,7 +465,7 @@ var data = {
 ```
 
 To build the same in Scala.js we could directly use `js.Dynamic.literal` but that would be very unsafe and cumbersome. A better alternative is to define
-a builder function to create a it and a facade to access it.
+a builder function to create it and a facade to access it.
 
 ```scala
 trait ChartData extends js.Object {
@@ -480,7 +490,7 @@ need to access a JavaScript object defined outside your application, this is the
 val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
 ```
 
-If you need to build/access a very complex JavaScript objects, consider an option builder approach like the one in
+If you need to build/access very complex JavaScript objects, consider an option builder approach like the one in
 [Querki](https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/jsext/JSOptionBuilder.scala) by
 [jducoeur](https://github.com/jducoeur) (for example [JQueryUIDialog](https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/facades/jqueryui/JQueryUIDialog.scala)).
 
@@ -493,7 +503,8 @@ With React, however, it's easy (and recommended) to create the HTML for the moda
 the contents of the dialog box.
 
 Before diving into the integration of the Bootstrap Modal, let's first examine how jQuery components can be integrated in general. We've provided a truly
-skeleton jQuery integration, just enough for the modal to work, so you'll want to use something [more complete](https://github.com/scala-js/scala-js-jquery) for
+[skeleton jQuery integration]((https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/components/JQuery.scala)),
+just enough for the modal to work, so you'll want to use something [more complete](https://github.com/scala-js/scala-js-jquery) for
 most purposes. The jQuery integration is also briefly explained in [Scala.js documentation](http://www.scala-js.org/doc/calling-javascript.html) so we won't go
 into the details too much. Basically you need to define a global `jQuery` variable, through which you can then access the jQuery functionality. This is done
 in the [`package.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/components/package.scala) for the
@@ -543,8 +554,8 @@ case class Props(header: (Backend) => ReactNode, footer: (Backend) => ReactNode,
                  keyboard: Boolean = true)
 ```
 
-Additionally, the Bootstrap modals are faded in and out, so before the parent can go and remove the modal HTML from DOM, it needs to wait for the
-fade out to complete. This is accomplished by listening to an event and calling the parent's `closed` function afterwards.
+Additionally, the Bootstrap modals are faded in and out, so the parent cannot go ahead and remove the modal HTML from DOM right away, but
+it needs to wait for the fade-out to complete. This is accomplished by listening to an event and calling the parent's `closed` function afterwards.
 ```scala
 // jQuery event handler to be fired when the modal has been hidden
 def hidden(e: JQueryEventObject): js.Any = {
@@ -564,85 +575,143 @@ To show the dialog box after it has been created, we again call `modal()` via jQ
   jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
 ```
 
-### Todo module
+### Todo module and data flow
 
 The Todo module and its React component are a bit more interesting than Dashboard as they provide some interaction. The module contains a `TodoList`
 component, displaying a list of Todo items retrieved from the server. User can then click the checkbox next to the item to indicate if that item
 is completed or not. Internally the state of Todo items is maintained by the `Todo` module and `TodoList` just passively displays them.
 
-As with other React components, the state of the component is maintained in an immutable `case class`
+Before going into the details of the actual Todo module and related components, let's ponder a while about data flow in a Scala.js React application.
+
+#### Unidirectional data flow
+
+Several JS frameworks out there (like AngularJS) use mutable state and two-way data binding. In this tutorial, however, we are taking
+cues from Facebook's [Flux](https://github.com/facebook/flux), which is an architecture for unidirectional data flow and immutable state. 
+This architecture works especially well in more complex applications, where two-way data binding can quickly lead to all kinds of hard issues. 
+It's also a relatively simple concept, so it works well even in a simple tutorial application like this. Below you can see a diagram of the
+Flux architecture.
+
+![Flux architecture](http://facebook.github.io/flux/img/flux-simple-f8-diagram-with-client-action-1300w.png)
+
+It consists of a Dispatcher that takes in *Actions*, and dispatches them to all *Stores* that then inform
+*Views* to update themselves with the new data. This kind of message dispatching sounds quite familiar if you've used actor frameworks
+like [Akka](http://akka.io) before, so we might as well call those parts with a bit different names.
+
+![Actor architecture](/../screenshots/screenshots/dispatcher-actor.png?raw=true)
+
+It's not a real actor framework, for example the dispatcher sends all messages to all registered actors, but it's close enough for our
+purposes. To explain how this works in practice, let's look at the concrete examples in the Todo module.
+
+#### Modifying a Todo state 
+
+The `TodoList` component renders a checkbox for each Todo, which can be used to mark the Todo as *completed*.
 
 ```scala
-case class TodoState(items:Seq[TodoItem])
+<.input(^.tpe := "checkbox", ^.checked := item.completed, ^.onChange --> P.stateChange(item.copy(completed = !item.completed))),
 ```
 
-Updates to the state are performed by the `Backend` class in the `updateTodo` method, which then refreshes the new Todo items from the server.
+Clicking the checkbox calls the `stateChange` method, which maps to `updateTodo` method in `TodoActions` object. The `TodoActions` is a
+collection of functions to communicate with the server about changes to the todo list.
 
 ```scala
-class Backend(t: BackendScope[_, TodoState]) {
-  def updateTodo(item: TodoItem): Unit = {
-    // inform the server about this update
-    AjaxClient[Api].updateTodo(item).call().foreach { _ =>
-      // get new todos after server has updated
-      refresh()
+object TodoActions {
+  def updateTodo(item: TodoItem) = {
+    // inform the server to update/add the item
+    AjaxClient[Api].updateTodo(item).call().foreach { todos =>
+      MainDispatcher.dispatch(UpdateAllTodos(todos))
     }
   }
+```
 
-  def refresh(): Unit = {
-    // load Todos from the server
-    AjaxClient[Api].getTodos().call().foreach { todos =>
-      t.modState(_ => TodoState(todos))
-    }
+Note that nothing really happens on the client side as a result of clicking the checkbox. All it does is tell the server that the state
+of completion has changed on the selected Todo. Only after call to the server returns with an updated list of todos, is the client updated.
+The update happens indirectly by sending a `UpdateAllTodos` message to the `MainDispatcher`. This message is then dispatched to all registered
+actors, which in this case means only `TodoStore`.
+
+```scala
+override def receive = {
+  case UpdateAllTodos(todos) =>
+    state = state.copy(items = todos)
+    // inform listeners
+    emitEvent(ChangeEvent, this)
+```
+
+`TodoStore` updates its internal state with the new items and then emits a `ChangeEvent` to all interested listeners. As it happens, there are
+actually two separate components listening to changes in the `TodoStore`. One is the Todo module where we started:
+
+```scala
+def updated(event: EventType, store:TodoStore): Unit = {
+  // get updated todos from the store
+  t.modState(_.copy(items = store.todos))
+}
+```
+
+It updates its internal state with the new todos, which in turn causes a call to render to refresh the view. This cascades down to `TodoList` and
+to the individual Todo that was originally clicked. Mission accomplished!
+
+But as we mentioned before, there was another component interested in changes to the Todos. This is the main menu item for Todo, which shows
+the number of incomplete Todos.
+
+```scala
+class Backend(t: BackendScope[MenuProps, State]) extends OnUnmount {
+  def updated(event:EventType, store:TodoStore):Unit = {
+    // count how many incomplete todos there are
+    t.modState(_ => State(store.todos.count(!_.completed)) )
   }
 ```
 
-Note how in React the state is an immutable object and all modifications are performed through the `modState` method. This ensures that the UI
-keeps in sync with any changes to the data.
+This is the beauty of unidirectional data flow, where the components do not need to know where the change came from, or who might be
+interested in the change. All state changes are propagated to interested parties automatically.
 
-The call to `updateTodo` comes from the `TodoList` whenever a checkbox state is changed. The callback function is provided to the `TodoList` when
-it's instantiated in the `render` method.
+Next, let's look how to set up everything for data to flow.
 
+#### Wiring
+
+![Wiring](/../screenshots/screenshots/control-flow.png?raw=true)
+
+As you can see in the diagram above, there's all kinds of control flow activity going on in the application. Relevant classes are:
+
+**MainDispatcher**
+* Singleton instance of `Dispatcher` that everything is using
+**TodoStore**
+* A store implementing both `Actor` for receiving messages from `Dispatcher` and `EventEmitter` to emit events to views
+**TodoActions**
+* Helper class to make Ajax calls the server and initiate updates via the dispatcher
+
+`TodoStore` registers itself with the `MainDispatcher` in its singleton constructor.
 ```scala
-val TODOComponent = ReactComponentB[Router]("TODO")
-  .initialState(TodoState(Seq())) // initial state is an empty list
-  .backend(new Backend(_))
-  .render((router, S, B) => {
-    Panel(Panel.Props("What needs to be done"),
-      TodoList(TodoListProps(S.items, B.updateTodo)))
-  })
-  .componentDidMount(_.backend.refresh())
-  .build
+MainDispatcher.register(this)
 ```
 
-`TodoList` looks like this
+The `Todo` module and `MainMenu` register themselves as a listener for `TodoStore` when they are mounted. They also initiate a refresh
+for the todos.
 
 ```scala
-case class TodoListProps(items: Seq[TodoItem], stateChange: (TodoItem) => Unit)
-
-val TodoList = ReactComponentB[TodoListProps]("TodoList")
-  .render(P => {
-    def renderItem(item: TodoItem) = {
-      // convert priority into Bootstrap style
-      val priority = item.priority match {
-        case TodoLow => "list-group-item-info"
-        case TodoNormal => ""
-        case TodoHigh => "list-group-item-danger"
-      }
-      li(className := s"list-group-item $priority")(
-        input(`type` := "checkbox", checked := item.completed, onChange --> P.stateChange(item.copy(completed = !item.completed))),
-        if(item.completed) s(item.content) else span(item.content)
-      )
-    }
-    ul(className := "list-group")(P.items map renderItem)
-  })
-  .build
+def mounted(): Unit = {
+  // listen to change events
+  val removeListener = TodoStore.addListener(ChangeEvent, updated)
+  // register things to do when unmounted
+  onUnmount {
+    removeListener()
+  }
+  // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
+  MainDispatcher.dispatch(RefreshTodos)
+}
 ```
 
-When checkbox state changes, `P.stateChange` is called with an updated Todo item.
+Note the use of [onUnmount](https://github.com/japgolly/scalajs-react/tree/master/extra#onunmount) to automatically remove the listener
+when the component is unmounted.
 
-For adding new Todo items, the user interface provides a button and a modal dialog box (using the `Modal` component described earlier). `TodoForm` is
-a simple React component built around a `Modal` which allows users to edit an existing Todo item, or create a new one (there is no difference between
-these two from the component's point of view). It looks like this
+Finally views hook up different callbacks to `TodoActions` when something happens to the todos.
+
+#### Editing todos
+
+For adding new Todo items, the user interface provides a button and a modal dialog box (using the `Modal` component described earlier). Editing
+an existing item is performed by clicking an *Edit* button next to the todo description. Both actions open the same dialog. Finally you can also
+delete a todo by clicking the *Delete* button.
+
+`TodoForm` is a simple React component built around a `Modal` which allows users to edit an existing Todo item, or create a new one 
+(there is no difference between these two from the component's point of view). It looks like this
 
 ![Dialog box](/../screenshots/screenshots/dialogbox.png?raw=true)
 
@@ -657,14 +726,15 @@ case class State(item: TodoItem, cancelled: Boolean = true)
 
 Building the component looks a bit complicated, so let's walk through it.
 ```scala
-  val component = ReactComponentB[Props]("TodoForm")
-    .initialStateP(p => State(p.item.getOrElse(TodoItem("", "", TodoNormal, false))))
-    .backend(new Backend(_))
-    .render((P, S, B) => {
+val component = ReactComponentB[Props]("TodoForm")
+  .initialStateP(p => State(p.item.getOrElse(TodoItem("", "", TodoNormal, false))))
+  .backend(new Backend(_))
+  .render((P, S, B) => {
+    val headerText = if (S.item.id == "") "Add new todo" else "Edit todo"
     Modal(Modal.Props(
       // header contains a cancel button (X)
-      header = be => <.span(<.button(^.tpe := "button", ^.className := "close", ^.onClick --> be.hide(), Icon.close), <.h4("Add new todo")),
-      // footer has the OK button
+      header = be => <.span(<.button(^.tpe := "button", ^.className := "close", ^.onClick --> be.hide(), Icon.close), <.h4(headerText)),
+      // footer has the OK button that submits the form before hiding it
       footer = be => <.span(Button(Button.Props(() => {B.submitForm(); be.hide()}), "OK")),
       // this is called after the modal has been hidden (animation is completed)
       closed = B.formClosed),
@@ -684,11 +754,12 @@ Building the component looks a bit complicated, so let's walk through it.
     )
   }).build
 ```
+
 State is first initialized with the provided item or with a new empty item. Within the `render` method a new `Modal` is created and in the properties we assign
 couple of button controls. Note how both `header` and `footer` are actually functions that are given the `Modal`'s `Backend` so that they can call the `hide()`
 function. In the OK button the state is first updated to _not cancelled_.
 
-The form itself is quite straightforward with handlers to update internal state as fields change. Note that with React the `select` element works a bit
+The form itself is quite straightforward, with handlers to update internal state as fields change. Note that with React the `select` element works a bit
 differently from regular HTML5 and you must use `value` property to select the option instead of the typical `selected` attribute.
 
 When the form closes, the parent's `submitHandler` gets called with the item and a flag indicating if the dialog box was cancelled.
@@ -811,7 +882,7 @@ serialization or URL request path mappings. It just implements the same `Api` as
 ```scala
 class ApiService extends Api {
   var todos = Seq(
-    TodoItem("1", "Wear shirt that says ΓÇ£LifeΓÇ¥. Hand out lemons on street corner.", TodoLow, false),
+    TodoItem("1", "Wear shirt that says ╬ô├ç┬úLife╬ô├ç┬Ñ. Hand out lemons on street corner.", TodoLow, false),
     TodoItem("2", "Make vanilla pudding. Put in mayo jar. Eat in public.", TodoNormal, false),
     TodoItem("3", "Walk away slowly from an explosion without looking back.", TodoHigh, false),
     TodoItem("4", "Sneeze in front of the pope. Get blessed.", TodoNormal, true)
@@ -840,6 +911,29 @@ class ApiService extends Api {
   }
 }
 ```
+
+# Testing
+
+Testing Scala.js application is as easy as testing regular Scala applications, except you have to choose a test framework that is OK with
+the limitations of JavaScript environment. Many popular frameworks like ScalaTest and Specs2 depend on JVM features (like reflection) that
+is not available in the JS land, so Li Haoyi went ahead and created [uTest](https://github.com/lihaoyi/utest), a simple yet powerful
+testing framework that works wonderfully well with Scala.js.
+
+To define tests, you just need to extend from `TestSuite` and override the `tests` method.
+
+```scala
+object DispatcherTests extends TestSuite {
+  override def tests = TestSuite {
+    'test { ... }
+  }
+}
+```
+
+Take a look at [`DispatcherTests.scala`](js/src/test/scala/spatutorial/client/ukko/DispatcherTests.scala) for some examples of test cases.
+
+To run tests in SBT, you'll need to add a dependency for `"com.lihaoyi" %% "utest" % "0.3.0"` and configure the test framework with
+`testFrameworks += new TestFramework("utest.runner.Framework")`. Now you can run the tests using regular `test` and `testOnly` commands
+in the SBT prompt.
 
 # SBT build definition
 
@@ -933,12 +1027,10 @@ Revolver.enableDebugging(port = 5111, suspend = false)
 
 # FAQ
 
-Coming later...
+No questions asked so far!
 
 # What next?
 
-- some testing would be nice, even with perfect code like this :)
-- more complex 3rd party JavaScript component integrations
 - building an optimized version of the Scala.js client
 - debugging, source maps
 - authentication/authorization support

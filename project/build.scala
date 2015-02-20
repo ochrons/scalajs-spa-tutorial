@@ -20,11 +20,10 @@ object SPABuild extends Build {
   lazy val spa = crossProject.in(file(".")).
     settings(
       name := "scalajs-spa",
-      version := "0.1.2",
+      version := "0.1.3",
       scalaVersion := "2.11.5",
       scalacOptions ++= Seq(
         "-Xlint",
-        "-Ywarn-dead-code",
         "-unchecked",
         "-deprecation",
         "-feature"
@@ -60,11 +59,14 @@ object SPABuild extends Build {
         // dependencies only used by the JS project (note the use of %%% instead of %%)
         "org.scala-js" %%% "scalajs-dom" % "0.8.0",
         "com.github.japgolly.scalajs-react" %%% "core" % "0.8.0",
-        "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.0"
+        "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.0",
+        "com.lihaoyi" %%% "utest" % "0.3.0"
       ),
       // copy resources from the "shared" project
       unmanagedResourceDirectories in Compile += file(".") / SharedSrcDir / "src" / "main" / "resources",
       unmanagedResourceDirectories in Test += file(".") / SharedSrcDir / "src" / "test" / "resources",
+      // use uTest framework for tests
+      testFrameworks += new TestFramework("utest.runner.Framework"),
       // define where the JS-only application will be hosted by the Workbench plugin
       localUrl :=("localhost", 13131),
       refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile),

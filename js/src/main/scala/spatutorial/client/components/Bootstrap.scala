@@ -25,11 +25,11 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default)
+    case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addClasses:String = "")
 
     val component = ReactComponentB[Props]("Button")
       .render { (P, C) =>
-      <.button(^.className := s"btn btn-${P.style}", ^.tpe := "button", ^.onClick --> P.onClick())(C)
+      <.button(^.className := s"btn btn-${P.style} ${P.addClasses}", ^.tpe := "button", ^.onClick --> P.onClick())(C)
     }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children)

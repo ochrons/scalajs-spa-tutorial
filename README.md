@@ -624,9 +624,9 @@ object TodoActions {
 ```
 
 Note that nothing really happens on the client side as a result of clicking the checkbox. All it does is tell the server that the state
-of completion has changed on the selected Todo. Only after call to the server returns with an updated list of todos, is the client updated.
-The update happens indirectly by sending a `UpdateAllTodos` message to the `MainDispatcher`. This message is then dispatched to all registered
-actors, which in this case means only `TodoStore`.
+of completion has changed on the selected Todo. Only after the call to the server returns with an updated list of todos, is the client updated.
+The update happens indirectly by sending an `UpdateAllTodos` message to the `MainDispatcher`. This message is then dispatched to all registered
+actors, which in this case means only the `TodoStore`.
 
 ```scala
 override def receive = {
@@ -646,11 +646,11 @@ def updated(event: EventType, store:TodoStore): Unit = {
 }
 ```
 
-It updates its internal state with the new todos, which in turn causes a call to render to refresh the view. This cascades down to `TodoList` and
+It updates its internal state with the new todos, which in turn causes a call to `render` to refresh the view. This cascades down to `TodoList` and
 to the individual Todo that was originally clicked. Mission accomplished!
 
 But as we mentioned before, there was another component interested in changes to the Todos. This is the main menu item for Todo, which shows
-the number of incomplete Todos.
+the number of open Todos.
 
 ```scala
 class Backend(t: BackendScope[MenuProps, State]) extends OnUnmount {
@@ -673,8 +673,10 @@ As you can see in the diagram above, there's all kinds of control flow activity 
 
 **MainDispatcher**
 * Singleton instance of `Dispatcher` that everything is using
+
 **TodoStore**
 * A store implementing both `Actor` for receiving messages from `Dispatcher` and `EventEmitter` to emit events to views
+
 **TodoActions**
 * Helper class to make Ajax calls the server and initiate updates via the dispatcher
 
@@ -683,8 +685,8 @@ As you can see in the diagram above, there's all kinds of control flow activity 
 MainDispatcher.register(this)
 ```
 
-The `Todo` module and `MainMenu` register themselves as a listener for `TodoStore` when they are mounted. They also initiate a refresh
-for the todos.
+The `Todo` module and `MainMenu` register themselves, when they are mounted, as listeners for the `TodoStore` change events. 
+They also initiate a refresh request for the todos.
 
 ```scala
 def mounted(): Unit = {
@@ -915,8 +917,8 @@ class ApiService extends Api {
 # Testing
 
 Testing Scala.js application is as easy as testing regular Scala applications, except you have to choose a test framework that is OK with
-the limitations of JavaScript environment. Many popular frameworks like ScalaTest and Specs2 depend on JVM features (like reflection) that
-is not available in the JS land, so Li Haoyi went ahead and created [uTest](https://github.com/lihaoyi/utest), a simple yet powerful
+the limitations of the JavaScript environment. Many popular frameworks like ScalaTest and Specs2 depend on JVM features (like reflection) that
+are not available in the JS land, so Li Haoyi went ahead and created [uTest](https://github.com/lihaoyi/utest), a simple yet powerful
 testing framework that works wonderfully well with Scala.js.
 
 To define tests, you just need to extend from `TestSuite` and override the `tests` method.
@@ -931,7 +933,7 @@ object DispatcherTests extends TestSuite {
 
 Take a look at [`DispatcherTests.scala`](js/src/test/scala/spatutorial/client/ukko/DispatcherTests.scala) for some examples of test cases.
 
-To run tests in SBT, you'll need to add a dependency for `"com.lihaoyi" %% "utest" % "0.3.0"` and configure the test framework with
+To run tests in SBT, you'll need to add a dependency for `"com.lihaoyi" %%% "utest" % "0.3.0"` and configure the test framework with
 `testFrameworks += new TestFramework("utest.runner.Framework")`. Now you can run the tests using regular `test` and `testOnly` commands
 in the SBT prompt.
 

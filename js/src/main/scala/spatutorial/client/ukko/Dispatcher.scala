@@ -3,6 +3,7 @@ package spatutorial.client.ukko
 import scala.collection.immutable.Queue
 
 trait Dispatcher {
+
   import Dispatcher._
 
   protected var actors = Set.empty[Actor]

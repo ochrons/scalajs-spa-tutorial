@@ -165,7 +165,7 @@ override protected def interceptRender(ic: InterceptionR) = {
       <.div(^.className := "container")(
         <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
         <.div(^.className := "collapse navbar-collapse")(
-          MainMenu(MainMenu.MenuProps(ic.loc, ic.router))
+          MainMenu(MainMenu.Props(ic.loc, ic.router, TodoStore.todos))
         )
       )
     ),
@@ -187,18 +187,20 @@ statically within the class itself, because the referred locations are anyway al
 a dynamic system, but static is just fine here.
 
 ```scala
-case class MenuItem(label: (State) => ReactNode, icon: Icon, location: MainRouter.Loc)
+case class MenuItem(label: (Props) => ReactNode, icon: Icon, location: MainRouter.Loc)
 
 private val menuItems = Seq(
   MenuItem(_ => "Dashboard", Icon.dashboard, MainRouter.dashboardLoc),
   MenuItem(buildTodoMenu, Icon.check, MainRouter.todoLoc)
 )
 
-private def buildTodoMenu(S:State):ReactNode = Seq(
-  <.span("Todo "),
-  if(S.todoCount > 0) <.span(^.className := "label label-danger label-as-badge", S.todoCount) else <.span()
-)
-```
+private def buildTodoMenu(props: MenuProps): ReactNode = {
+  val todoCount = props.todos().count(!_.completed)
+  Seq(
+    <.span("Todo "),
+    if (todoCount > 0) <.span(^.className := "label label-danger label-as-badge", todoCount) else <.span()
+  )
+}```
 
 For each menu item we define a function to generate the label, an icon and the location that was registered in the `MainRouter`. For Dashboard
 the label is simple text, but for Todo we also render the number of open todos.
@@ -212,7 +214,7 @@ val MainMenu = ReactComponentB[MenuProps]("MainMenu")
     // build a list of menu items
     for (item <- menuItems) yield {
       <.li((P.activeLocation == item.location) ?= (^.className := "active"),
-        P.router.link(item.location)(item.icon, " ", item.label)
+        P.router.link(item.location)(item.icon, " ", item.label(P))
       )
     }
   )
@@ -629,35 +631,44 @@ The update happens indirectly by sending an `UpdateAllTodos` message to the `Mai
 actors, which in this case means only the `TodoStore`.
 
 ```scala
+// refine a reactive variable
+private val items = Var(Seq.empty[TodoItem])
+
+private def updateItems(newItems: Seq[TodoItem]): Unit = {
+  // check if todos have really changed
+  if (newItems != items()) {
+    // use Rx to update, which propagates down to dependencies
+    items() = newItems
+  }
+}
+
 override def receive = {
   case UpdateAllTodos(todos) =>
-    state = state.copy(items = todos)
-    // inform listeners
-    emitEvent(ChangeEvent, this)
+    updateItems(todos)
 ```
 
-`TodoStore` updates its internal state with the new items and then emits a `ChangeEvent` to all interested listeners. As it happens, there are
-actually two separate components listening to changes in the `TodoStore`. One is the Todo module where we started:
+`TodoStore` updates its internal state with the new items (only if there is a real change) and this change is propagated using 
+[ScalaRx](https://github.com/lihaoyi/scala.rx) to all interested parties. As it happens, there are
+actually two separate components observing changes in the `TodoStore`. One is the Todo module where we started:
 
 ```scala
-def updated(event: EventType, store:TodoStore): Unit = {
-  // get updated todos from the store
-  t.modState(_.copy(items = store.todos))
-}
+// get todos from the Rx defined in props
+TodoList(TodoListProps(P.todos(), TodoActions.updateTodo, item => B.editTodo(Some(item)), B.deleteTodo))
 ```
 
-It updates its internal state with the new todos, which in turn causes a call to `render` to refresh the view. This cascades down to `TodoList` and
-to the individual Todo that was originally clicked. Mission accomplished!
+It forces an update on the component, which in turn causes a call to `render` to refresh the view. Within the view, the new todos are fetched from
+`TodoStore` using a reactive variable (`Rx`). This change cascades down to `TodoList` and to the individual Todo that was originally clicked. 
+Mission accomplished!
 
 But as we mentioned before, there was another component interested in changes to the Todos. This is the main menu item for Todo, which shows
 the number of open Todos.
 
 ```scala
-class Backend(t: BackendScope[MenuProps, State]) extends OnUnmount {
-  def updated(event:EventType, store:TodoStore):Unit = {
-    // count how many incomplete todos there are
-    t.modState(_ => State(store.todos.count(!_.completed)) )
-  }
+val todoCount = props.todos().count(!_.completed)
+Seq(
+  <.span("Todo "),
+  if (todoCount > 0) <.span(^.className := "label label-danger label-as-badge", todoCount) else <.span()
+)
 ```
 
 This is the beauty of unidirectional data flow, where the components do not need to know where the change came from, or who might be
@@ -675,33 +686,35 @@ As you can see in the diagram above, there's all kinds of control flow activity 
 * Singleton instance of `Dispatcher` that everything is using
 
 **TodoStore**
-* A store implementing both `Actor` for receiving messages from `Dispatcher` and `EventEmitter` to emit events to views
+* A store implementing both `Actor` for receiving messages from `Dispatcher`. Provides reactive variables (`Rx`) to propagate changes.
 
 **TodoActions**
-* Helper class to make Ajax calls the server and initiate updates via the dispatcher
+* Helper class to make Ajax calls to the server and initiate updates via the dispatcher
 
 `TodoStore` registers itself with the `MainDispatcher` in its singleton constructor.
 ```scala
 MainDispatcher.register(this)
 ```
 
-The `Todo` module and `MainMenu` register themselves, when they are mounted, as listeners for the `TodoStore` change events. 
+The `Todo` module and `MainMenu` register themselves, when they are mounted, as observers to changes in `TodoStore` items. 
 They also initiate a refresh request for the todos.
 
 ```scala
 def mounted(): Unit = {
-  // listen to change events
-  val removeListener = TodoStore.addListener(ChangeEvent, updated)
-  // register things to do when unmounted
+  // hook up to TodoStore changes
+  val obsTodos = t.props.todos.foreach { _ => t.forceUpdate() }
   onUnmount {
-    removeListener()
+    // stop observing when unmounted
+    obsTodos.kill()
   }
   // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
   MainDispatcher.dispatch(RefreshTodos)
 }
 ```
-
-Note the use of [onUnmount](https://github.com/japgolly/scalajs-react/tree/master/extra#onunmount) to automatically remove the listener
+The `foreach` call returns an `Obs` which we can use to observe changes. Whenever `todos` change, the function body is executed, forcing an update on
+the React component. The value of `todos` is not used here, but within the view definition.
+ 
+Note the use of [onUnmount](https://github.com/japgolly/scalajs-react/tree/master/extra#onunmount) to automatically remove the observer
 when the component is unmounted.
 
 Finally views hook up different callbacks to `TodoActions` when something happens to the todos.
@@ -1034,6 +1047,6 @@ No questions asked so far!
 # What next?
 
 - building an optimized version of the Scala.js client
-- debugging, source maps
+- debugging, source maps, logging
 - authentication/authorization support
 - you tell me!

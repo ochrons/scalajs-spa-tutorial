@@ -60,6 +60,7 @@ object SPABuild extends Build {
         "org.scala-js" %%% "scalajs-dom" % "0.8.0",
         "com.github.japgolly.scalajs-react" %%% "core" % "0.8.0",
         "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.0",
+        "com.lihaoyi" %%% "scalarx" % "0.2.7",
         "com.lihaoyi" %%% "utest" % "0.3.0"
       ),
       // copy resources from the "shared" project

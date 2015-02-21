@@ -8,7 +8,7 @@ object DispatcherTests extends TestSuite {
     def actorCount = actors.size
   }
 
-  abstract class TestActor(val name:String) extends Actor
+  abstract class TestActor(val name: String) extends Actor
 
   override def tests = TestSuite {
     'register {
@@ -30,7 +30,7 @@ object DispatcherTests extends TestSuite {
         }
       }
     }
-    
+
     'dispatch {
       var state = 0
       val actor = new TestActor("actor") {
@@ -73,11 +73,10 @@ object DispatcherTests extends TestSuite {
       assert(state == "FirstSecondThird")
 
       'isDispatching {
-
       }
       'circularDependency {
         // create a waitFor dependency between the actors
-        var actor3:Actor = null
+        var actor3: Actor = null
         val actor1 = new TestActor("actor1") {
           override def receive: Receive = {
             case "next" =>

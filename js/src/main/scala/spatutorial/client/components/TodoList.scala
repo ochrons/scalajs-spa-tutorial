@@ -23,7 +23,7 @@ object TodoList {
         <.span(" "),
         if (item.completed) <.s(item.content) else <.span(item.content),
         Button(Button.Props(() => P.editItem(item), addClasses = "pull-right btn-xs"), "Edit"),
-          Button(Button.Props(() => P.deleteItem(item), addClasses = "pull-right btn-xs"), "Delete")
+        Button(Button.Props(() => P.deleteItem(item), addClasses = "pull-right btn-xs"), "Delete")
       )
     }
     <.ul(^.className := "list-group")(P.items map renderItem)

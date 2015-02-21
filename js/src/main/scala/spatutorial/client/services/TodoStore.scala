@@ -1,8 +1,10 @@
 package spatutorial.client.services
 
 import autowire._
+import rx._
 import spatutorial.client.ukko._
 import spatutorial.shared.{Api, TodoItem}
+
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 case object RefreshTodos
@@ -11,28 +13,31 @@ case class UpdateAllTodos(todos: Seq[TodoItem])
 
 case class UpdateTodo(item: TodoItem)
 
-trait TodoStore extends Actor with EventEmitter[TodoStore] {
-  override val name: String = "TodoStore"
+trait TodoStore extends Actor {
+  override val name = "TodoStore"
 
-  private case class State(items: Seq[TodoItem])
+  // refine a reactive variable
+  private val items = Var(Seq.empty[TodoItem])
 
-  private var state: State = State(Seq())
+  private def updateItems(newItems: Seq[TodoItem]): Unit = {
+    // check if todos have really changed
+    if (newItems != items()) {
+      // use Rx to update, which propagates down to dependencies
+      items() = newItems
+    }
+  }
 
   override def receive = {
     case RefreshTodos =>
       // load all todos from the server
       AjaxClient[Api].getTodos().call().foreach { todos =>
-        state = state.copy(items = todos)
-        // inform listeners
-        emitEvent(ChangeEvent, this)
+        updateItems(todos)
       }
     case UpdateAllTodos(todos) =>
-      state = state.copy(items = todos)
-      // inform listeners
-      emitEvent(ChangeEvent, this)
+      updateItems(todos)
   }
 
-  def todos = state.items
+  def todos = items
 }
 
 // create a singleton instance of TodoStore
@@ -49,7 +54,7 @@ object TodoActions {
     }
   }
 
-  def deleteTodo(item:TodoItem) = {
+  def deleteTodo(item: TodoItem) = {
     // tell server to delete a todo
     AjaxClient[Api].deleteTodo(item.id).call().foreach { todos =>
       MainDispatcher.dispatch(UpdateAllTodos(todos))

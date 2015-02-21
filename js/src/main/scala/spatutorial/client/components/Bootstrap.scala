@@ -25,7 +25,7 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addClasses:String = "")
+    case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addClasses: String = "")
 
     val component = ReactComponentB[Props]("Button")
       .render { (P, C) =>

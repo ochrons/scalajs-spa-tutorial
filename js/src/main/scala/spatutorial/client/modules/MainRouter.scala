@@ -2,6 +2,7 @@ package spatutorial.client.modules
 
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import spatutorial.client.services.TodoStore
 
 // define a trait to access all application routes
 trait AppLinks {
@@ -12,7 +13,7 @@ trait AppLinks {
 object MainRouter extends RoutingRules {
   // register the modules and store locations
   val dashboardLoc = register(rootLocation(Dashboard.component))
-  val todoLoc = register(location("#todo", Todo.component))
+  val todoLoc = register(location("#todo", Todo(TodoStore)))
 
   def appLinks(router: Router): AppLinks = new AppLinks {
     override def dashboard(content: TagMod*) = router.link(dashboardLoc)(content)
@@ -34,7 +35,7 @@ object MainRouter extends RoutingRules {
         <.div(^.className := "container")(
           <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
           <.div(^.className := "collapse navbar-collapse")(
-            MainMenu(MainMenu.MenuProps(ic.loc, ic.router))
+            MainMenu(MainMenu.Props(ic.loc, ic.router, TodoStore.todos))
           )
         )
       ),

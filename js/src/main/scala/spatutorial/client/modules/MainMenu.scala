@@ -3,56 +3,54 @@ package spatutorial.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import rx._
+import rx.ops._
 import spatutorial.client.components.Icon._
 import spatutorial.client.components._
 import spatutorial.client.services._
-import spatutorial.client.ukko.{EventType, ChangeEvent}
+import spatutorial.shared.TodoItem
 
 object MainMenu {
 
-  case class MenuProps(activeLocation: MainRouter.Loc, router: MainRouter.Router)
+  case class Props(activeLocation: MainRouter.Loc, router: MainRouter.Router, todos: Rx[Seq[TodoItem]])
 
-  case class State(todoCount:Int)
+  case class MenuItem(label: (Props) => ReactNode, icon: Icon, location: MainRouter.Loc)
 
-  case class MenuItem(label: (State) => ReactNode, icon: Icon, location: MainRouter.Loc)
-
-  class Backend(t: BackendScope[MenuProps, State]) extends OnUnmount {
-    def mounted():Unit = {
-      // listen to change events
-      val removeListener = TodoStore.addListener(ChangeEvent, updated)
-      // register things to do when unmounted
+  class Backend(t: BackendScope[Props, _]) extends OnUnmount {
+    def mounted(): Unit = {
+      // hook up to Todo changes
+      val obsItems = t.props.todos.foreach { _ => t.forceUpdate()}
       onUnmount {
-        removeListener()
+        // stop observing when unmounted (= never in this SPA)
+        obsItems.kill()
       }
       MainDispatcher.dispatch(RefreshTodos)
-    }
-
-    def updated(event:EventType, store:TodoStore):Unit = {
-      // count how many incomplete todos there are
-      t.modState(_ => State(store.todos.count(!_.completed)) )
     }
   }
 
   // build the Todo menu item, showing the number of open todos
-  private def buildTodoMenu(S:State):ReactNode = Seq(
-    <.span("Todo "),
-    if(S.todoCount > 0) <.span(^.className := "label label-danger label-as-badge", S.todoCount) else <.span()
-  )
+  private def buildTodoMenu(props: Props): ReactNode = {
+    val todoCount = props.todos().count(!_.completed)
+    Seq(
+      <.span("Todo "),
+      if (todoCount > 0) <.span(^.className := "label label-danger label-as-badge", todoCount) else <.span()
+    )
+  }
 
   private val menuItems = Seq(
     MenuItem(_ => "Dashboard", Icon.dashboard, MainRouter.dashboardLoc),
     MenuItem(buildTodoMenu, Icon.check, MainRouter.todoLoc)
   )
 
-  private val MainMenu = ReactComponentB[MenuProps]("MainMenu")
-    .initialState(new State(0))
+  private val MainMenu = ReactComponentB[Props]("MainMenu")
+    .stateless
     .backend(new Backend(_))
-    .render((P, S, B) => {
+    .render((P, _, B) => {
     <.ul(^.className := "nav navbar-nav")(
       // build a list of menu items
       for (item <- menuItems) yield {
         <.li((P.activeLocation == item.location) ?= (^.className := "active"),
-          P.router.link(item.location)(item.icon, " ", item.label(S))
+          P.router.link(item.location)(item.icon, " ", item.label(P))
         )
       }
     )
@@ -60,5 +58,5 @@ object MainMenu {
     .componentDidMount(_.backend.mounted())
     .build
 
-  def apply(props: MenuProps) = MainMenu(props)
+  def apply(props: Props) = MainMenu(props)
 }

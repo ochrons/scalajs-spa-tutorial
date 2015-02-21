@@ -1,5 +1,9 @@
 # Change history
 
+## 0.1.4
+
+* Introduced [ScalaRx](https://github.com/lihaoyi/scala.rx) to propagate changes from store to views, replaced EventEmitter
+
 ## 0.1.3
 
 * Unidirectional data flow framework *Ukko* following Facebook Flux and actor architectures

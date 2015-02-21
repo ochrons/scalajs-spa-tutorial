@@ -3,32 +3,30 @@ package spatutorial.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import rx._
+import rx.ops._
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.components.TodoList.TodoListProps
 import spatutorial.client.components._
 import spatutorial.client.services._
-import spatutorial.client.ukko._
 import spatutorial.shared._
 
 object Todo {
 
-  case class TodoState(items: Seq[TodoItem] = Seq(), selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
+  case class Props(todos: Rx[Seq[TodoItem]], router: MainRouter.Router)
 
-  class Backend(t: BackendScope[_, TodoState]) extends OnUnmount {
+  case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
+
+  class Backend(t: BackendScope[Props, State]) extends OnUnmount {
     def mounted(): Unit = {
-      // listen to change events
-      val removeListener = TodoStore.addListener(ChangeEvent, updated)
-      // register things to do when unmounted
+      // hook up to TodoStore changes
+      val obsTodos = t.props.todos.foreach { _ => t.forceUpdate()}
       onUnmount {
-        removeListener()
+        // stop observing when unmounted
+        obsTodos.kill()
       }
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
       MainDispatcher.dispatch(RefreshTodos)
-    }
-
-    def updated(event: EventType, store: TodoStore): Unit = {
-      // get updated todos from the store
-      t.modState(_.copy(items = store.todos))
     }
 
     def editTodo(item: Option[TodoItem]): Unit = {
@@ -54,11 +52,11 @@ object Todo {
   }
 
   // create the React component for ToDo management
-  val component = ReactComponentB[MainRouter.Router]("TODO")
-    .initialState(TodoState()) // initial state is an empty list
+  val component = ReactComponentB[Props]("TODO")
+    .initialState(State()) // initial state from TodoStore
     .backend(new Backend(_))
-    .render((router, S, B) => {
-    Panel(Panel.Props("What needs to be done"), TodoList(TodoListProps(S.items, TodoActions.updateTodo, item => B.editTodo(Some(item)), B.deleteTodo)),
+    .render((P, S, B) => {
+    Panel(Panel.Props("What needs to be done"), TodoList(TodoListProps(P.todos(), TodoActions.updateTodo, item => B.editTodo(Some(item)), B.deleteTodo)),
       Button(Button.Props(() => B.editTodo(None)), Icon.plusSquare, " New"),
       // if the dialog is open, add it to the panel
       if (S.showTodoForm) TodoForm(TodoForm.Props(S.selectedItem, B.todoEdited))
@@ -68,6 +66,11 @@ object Todo {
     .componentDidMount(_.backend.mounted())
     .configure(OnUnmount.install)
     .build
+
+  /** Returns a function compatible with router location system while using our own props */
+  def apply(store: TodoStore) = (router: MainRouter.Router) => {
+    component(Props(store.todos, router))
+  }
 }
 
 object TodoForm {

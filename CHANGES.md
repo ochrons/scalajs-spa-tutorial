@@ -1,5 +1,10 @@
 # Change history
 
+## 0.1.5
+
+* Cleaner SBT build definition (credits to @PerWiklander)
+* Managing JS, CSS and other resources with WebJars
+
 ## 0.1.4
 
 * Introduced [ScalaRx](https://github.com/lihaoyi/scala.rx) to propagate changes from store to views, replaced EventEmitter

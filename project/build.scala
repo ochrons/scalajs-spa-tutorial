@@ -3,6 +3,10 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import sbt.Keys._
 import sbt._
 import spray.revolver.RevolverPlugin._
+import com.typesafe.sbt.web.Import._
+import com.typesafe.sbt.web.SbtWeb
+import WebKeys._
+import com.typesafe.sbt.less.Import._
 
 /**
  * Application settings. Configure the build for your application here.
@@ -13,7 +17,7 @@ object Settings {
   val name = "scalajs-spa"
   
   /** The version of your application */
-  val version = "0.1.3"
+  val version = "0.1.5"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -39,8 +43,10 @@ object Settings {
    * the special %%% function selects the correct version for each project
    */
   val sharedDependencies = Def.setting(Seq(
-    "com.lihaoyi"   %%% "autowire"  % "0.2.4",
-    "com.lihaoyi"   %%% "upickle"   % "0.2.6"
+    "com.lihaoyi"   %%% "autowire"   % "0.2.4",
+    "com.lihaoyi"   %%% "upickle"    % "0.2.6",
+    "org.webjars"   % "font-awesome" % "4.3.0-1" % Compile,
+    "org.webjars"   % "bootstrap"    % "3.3.2" % Compile
   ))
 
   /** Dependencies only used by the JVM project */
@@ -69,7 +75,7 @@ object Settings {
 
 object ApplicationBuild extends Build {
   // root project aggregating the JS and JVM projects
-  lazy val root = project.in(file(".")).
+  lazy val root = project.in(file(".")).enablePlugins(SbtWeb).
     aggregate(js, jvm).
     settings(
       publish := {},
@@ -78,14 +84,34 @@ object ApplicationBuild extends Build {
 
   val sharedSrcDir = "shared"
 
+  val copyWebJarResources = TaskKey[Unit]("Copy resources from WebJars")
+
   // a special crossProject for configuring a JS/JVM/shared structure
   lazy val sharedProject = crossProject.in(file("."))
     .settings(
-      name                  :=  Settings.name,
-      version               :=  Settings.version,
-      scalaVersion          :=  Settings.versions.scala,
-      scalacOptions         ++= Settings.scalacOptions,
-      libraryDependencies   ++= Settings.sharedDependencies.value
+      name                         :=  Settings.name,
+      version                      :=  Settings.version,
+      scalaVersion                 :=  Settings.versions.scala,
+      scalacOptions                ++= Settings.scalacOptions,
+      sourceDirectory in Assets    := baseDirectory.value / "src" / "main" / "assets",
+      LessKeys.compress in Assets  := true,
+      libraryDependencies          ++= Settings.sharedDependencies.value,
+      copyWebJarResources          := {
+        // copy the compiled CSS
+        val s = streams.value
+        s.log("Copying webjar resources")
+        val compiledCss = webTarget.value / "less" / "main" / "stylesheets"
+        val targetDir = (classDirectory in Compile).value / "web"
+        IO.createDirectory(targetDir / "stylesheets")
+        IO.copyDirectory(compiledCss, targetDir / "stylesheets")
+        // copy font-awesome fonts from WebJar
+        val fonts = (webModuleDirectory in Assets).value / "webjars" / "lib" / "font-awesome" / "fonts"
+        IO.createDirectory(targetDir / "fonts")
+        IO.copyDirectory(fonts, targetDir / "fonts")
+      },
+      // run the copy after compile/assets but before managed resources
+      copyWebJarResources <<= copyWebJarResources dependsOn (compile in Compile, assets in Compile),
+      managedResources in Compile <<= (managedResources in Compile) dependsOn copyWebJarResources
     )
     
     // set up settings specific to the JVM project
@@ -96,7 +122,7 @@ object ApplicationBuild extends Build {
       // copy resources from the "shared" project
       unmanagedResourceDirectories in Compile += file(".") / sharedSrcDir / "src" / "main" / "resources",
       unmanagedResourceDirectories in Test    += file(".") / sharedSrcDir / "src" / "test" / "resources",
-      
+
       javaOptions in Revolver.reStart ++= Settings.jvmRuntimeOptions,
       
       // configure a specific port for debugging, so you can easily debug multiple projects at the same time if necessary
@@ -115,7 +141,7 @@ object ApplicationBuild extends Build {
       // copy resources from the "shared" project
       unmanagedResourceDirectories in Compile += file(".") / sharedSrcDir / "src" / "main" / "resources",
       unmanagedResourceDirectories in Test    += file(".") / sharedSrcDir / "src" / "test" / "resources",
-      
+
       // use uTest framework for tests
       testFrameworks += new TestFramework("utest.runner.Framework"),
       
@@ -152,7 +178,7 @@ object ApplicationBuild extends Build {
       IO.copyFile(base, (classDirectory in Compile).value / "web" / "js" / base.getName)
       base
     }
-  )
+  ).enablePlugins(SbtWeb)
 
   // instantiate the JVM project for SBT with some additional settings
   lazy val jvm: Project = sharedProject.jvm.settings(js2jvmSettings: _*).settings(
@@ -161,5 +187,5 @@ object ApplicationBuild extends Build {
     
     // compile depends on running fastOptJS on the JS project
     compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(js, Compile))
-  )
+  ).enablePlugins(SbtWeb)
 }

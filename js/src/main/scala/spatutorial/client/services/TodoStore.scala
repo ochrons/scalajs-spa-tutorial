@@ -3,7 +3,7 @@ package spatutorial.client.services
 import autowire._
 import rx._
 import spatutorial.client.ukko._
-import spatutorial.shared.{Api, TodoItem}
+import spatutorial.shared.{TodoItem, Api}
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
@@ -37,7 +37,8 @@ trait TodoStore extends Actor {
       updateItems(todos)
   }
 
-  def todos = items
+  // return as Rx to prevent mutation in dependencies
+  def todos:Rx[Seq[TodoItem]] = items
 }
 
 // create a singleton instance of TodoStore

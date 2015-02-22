@@ -17,14 +17,18 @@ object Todo {
 
   case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
-  class Backend(t: BackendScope[Props, State]) extends OnUnmount {
+  abstract class RxObserver[BS <: BackendScope[_,_]](scope: BS) extends OnUnmount {
+    protected def observe[T](rx:Rx[T]): Unit = {
+      val obs = rx.foreach( _ => scope.forceUpdate() )
+      // stop observing when unmounted
+      onUnmount(obs.kill())
+    }
+  }
+
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(): Unit = {
       // hook up to TodoStore changes
-      val obsTodos = t.props.todos.foreach { _ => t.forceUpdate()}
-      onUnmount {
-        // stop observing when unmounted
-        obsTodos.kill()
-      }
+      observe(t.props.todos)
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
       MainDispatcher.dispatch(RefreshTodos)
     }

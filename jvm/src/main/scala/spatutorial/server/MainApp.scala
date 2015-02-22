@@ -2,6 +2,7 @@ package spatutorial.server
 
 import akka.actor.ActorSystem
 import spatutorial.shared.Api
+import spray.http._
 import spray.routing.SimpleRoutingApp
 
 import scala.util.Properties

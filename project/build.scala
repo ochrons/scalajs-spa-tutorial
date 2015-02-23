@@ -57,6 +57,14 @@ object Settings {
     "com.lihaoyi"                       %%% "scalarx"     % "0.2.7",
     "com.lihaoyi"                       %%% "utest"       % "0.3.0"
   ))
+  
+  /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
+  val jsDependencies = Def.setting(Seq(
+    "org.webjars"                         % "react"       % "0.12.1"  / "react-with-addons.js"  commonJSName "React",
+    "org.webjars"                         % "jquery"      % "1.11.1"  / "jquery.js",
+    "org.webjars"                         % "bootstrap"   % "3.3.2"   / "bootstrap.js"          dependsOn    "jquery.js",
+    "org.webjars"                         % "chartjs"     % "1.0.1"   / "Chart.js"
+  ))
 }
 
 object ApplicationBuild extends Build {
@@ -99,7 +107,10 @@ object ApplicationBuild extends Build {
     .jsSettings(workbenchSettings: _*)
     .jsSettings(
       libraryDependencies ++= Settings.scalajsDependencies.value,
-      
+      jsDependencies      ++= Settings.jsDependencies.value,
+  
+      skip in packageJSDependencies := false,
+  
       // copy resources from the "shared" project
       unmanagedResourceDirectories in Compile += file(".") / sharedSrcDir / "src" / "main" / "resources",
       unmanagedResourceDirectories in Test    += file(".") / sharedSrcDir / "src" / "test" / "resources",
@@ -117,7 +128,7 @@ object ApplicationBuild extends Build {
   val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
 
   // make all JS builds use the output dir defined later
-  lazy val js2jvmSettings = Seq(packageScalaJSLauncher, fastOptJS, fullOptJS) map { packageJSKey =>
+  lazy val js2jvmSettings = Seq(fastOptJS, fullOptJS, packageJSDependencies) map { packageJSKey =>
     crossTarget in(js, Compile, packageJSKey) := scalajsOutputDir.value
   }
 
@@ -130,6 +141,14 @@ object ApplicationBuild extends Build {
       val base = (fastOptJS in Compile).value
       IO.copyFile(base.data, (classDirectory in Compile).value / "web" / "js" / base.data.getName)
       IO.copyFile(base.data, (classDirectory in Compile).value / "web" / "js" / (base.data.getName + ".map"))
+      base
+    },
+  
+    packageJSDependencies in Compile := {
+      // make a copy of the produced jsdeps file under the js project as well,
+      // because the original goes under the jvm project
+      val base = (packageJSDependencies in Compile).value
+      IO.copyFile(base, (classDirectory in Compile).value / "web" / "js" / base.getName)
       base
     }
   )

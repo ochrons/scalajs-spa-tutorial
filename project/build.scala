@@ -108,7 +108,7 @@ object ApplicationBuild extends Build {
     .jsSettings(
       libraryDependencies ++= Settings.scalajsDependencies.value,
       jsDependencies      ++= Settings.jsDependencies.value,
-      jsDependencies      +=  RuntimeDOM,
+      jsDependencies      +=  RuntimeDOM % "test",
   
       skip in packageJSDependencies := false,
   

@@ -1045,7 +1045,7 @@ unmanagedResourceDirectories in Test += file(".") / SharedSrcDir / "src" / "test
 
 ## Using resources from WebJars
 
-[WebJars](http://www.webjars.org) are a wonderful way to simplify including external resources such as JavaScript libraries and CSS definitions into
+[WebJars](http://www.webjars.org) are a wonderful way to simplify inclusion of external resources such as JavaScript libraries and CSS definitions into
 your own project. Instead of downloading JS/CSS packages like Bootstrap and extracting them within your project (or referring to external CDN
 served resources), you can just add a dependency to the appropriate WebJar and you're all set! Well, except you aren't, unless you were using something
 like Play, which this tutorial isn't using. So how do you actually get those resources out of a WebJar and into your web resource directory? The process
@@ -1073,7 +1073,7 @@ val jsDependencies = Def.setting(Seq(
       skip in packageJSDependencies := false,
 ```
 
-This will produce a file named `web\js\scalajs-spa-jsdeps.js` containing all those JavaScript files combined.
+This will produce a file named `web/js/scalajs-spa-jsdeps.js` containing all those JavaScript files combined.
 
 ### WebJar CSS/LESS
 
@@ -1091,7 +1091,7 @@ jvm.enablePlugins(SbtWeb)
 js.enablePlugins(SbtWeb)
 ```
 
-Because `sbt-less` and other `sbt-web` plugins are heavily related to Play framework, we'll need to do some additional configuration to make it work with
+Because `sbt-less` and other `sbt-web` plugins are heavily related to the Play framework, we'll need to do some additional configuration to make it work with
 our simple tutorial. We'll be storing LESS files under `src/main/assets` to keep them separated from directly copied resources.
 
 ```scala
@@ -1128,13 +1128,13 @@ the LESS files you can easily [configure the library](http://getbootstrap.com/cs
 @brand-danger:  #00534f;
 ```
 
-The problem with the `sbt-less` plugin is that it saves the compiled CSS file into a wrong directory (since we are not using Play), so we need to copy it
+The problem with the `sbt-less` plugin is that it saves the compiled CSS file into wrong directory (since we are not using Play), so we need to copy it
 to the correct location. This will be covered in the next section.
 
 ### WebJar resource files
 
-Sometimes the WebJars contain other useful resources, such as font files for Font Awesome in our case. Just including the WebJar as a dependency will provide
-us the extracted contents, but it's in the wrong place and doesn't get bundled into the final package. So we will need to copy relevant files into where
+Sometimes WebJars contain other useful resources, such as the font files for Font Awesome in our case. Just including the WebJar as a dependency will provide
+us the extracted contents, but it's in the wrong place and doesn't get bundled into the final package. So we will need to copy relevant files where
 we want them.
 
 To achieve this, we'll define our very own SBT task to do the job.
@@ -1160,7 +1160,7 @@ Without going into the SBT details, this task copies the generated CSS file (and
 under the Font Awesome `fonts` folder into the appropriate place under our project. If you need to copy other resources, you can use the same code just by
 modifying the path definitions.
 
-Finally we need to tell SBT to actually run this task at the appropriate moment. Since we need the compiled LESS result, it has to happen after the fact,
+Finally we need to tell SBT to actually run this task at the appropriate moment. Since we need the compiled CSS output, it has to happen after the fact,
 but it also has to happen before the application is finally put together so that the files are in place for packaging or running the app.
 
 ```scala

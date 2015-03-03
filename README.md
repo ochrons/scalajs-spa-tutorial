@@ -207,7 +207,8 @@ private def buildTodoMenu(props: MenuProps): ReactNode = {
     <.span("Todo "),
     if (todoCount > 0) <.span(^.className := "label label-danger label-as-badge", todoCount) else <.span()
   )
-}```
+}
+```
 
 For each menu item we define a function to generate the label, an icon and the location that was registered in the `MainRouter`. For Dashboard
 the label is simple text, but for Todo we also render the number of open todos.
@@ -928,7 +929,7 @@ serialization or URL request path mappings. It just implements the same `Api` as
 ```scala
 class ApiService extends Api {
   var todos = Seq(
-    TodoItem("1", "Wear shirt that says ╬ô├▓┬╝Γö£Γöñ╬ô├╢┬úΓö£┬║╬ô├╢┬╝Γö£ΓòæLife╬ô├▓┬╝Γö£Γöñ╬ô├╢┬úΓö£┬║╬ô├╢┬╝Γö£├ª. Hand out lemons on street corner.", TodoLow, false),
+    TodoItem("1", "Wear shirt that says 'Life'. Hand out lemons on street corner.", TodoLow, false),
     TodoItem("2", "Make vanilla pudding. Put in mayo jar. Eat in public.", TodoNormal, false),
     TodoItem("3", "Walk away slowly from an explosion without looking back.", TodoHigh, false),
     TodoItem("4", "Sneeze in front of the pope. Get blessed.", TodoNormal, true)

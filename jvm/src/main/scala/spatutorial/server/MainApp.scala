@@ -6,10 +6,17 @@ import spray.http._
 import spray.routing.SimpleRoutingApp
 
 import scala.util.Properties
+import com.typesafe.config.ConfigFactory
 
 object Router extends autowire.Server[String, upickle.Reader, upickle.Writer] {
   def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
   def write[Result: upickle.Writer](r: Result) = upickle.write(r)
+}
+
+object Config {
+  val c = ConfigFactory.load().getConfig("spatutorial")
+
+  val productionMode = c.getBoolean("productionMode")
 }
 
 object MainApp extends SimpleRoutingApp {
@@ -27,7 +34,10 @@ object MainApp extends SimpleRoutingApp {
       get {
         pathSingleSlash {
           // serve the main page
-          getFromResource("web/index.html")
+          if(Config.productionMode)
+            getFromResource("web/index-full.html")
+          else
+            getFromResource("web/index.html")
         } ~
           // serve other requests directly from the resource directory
           getFromResourceDirectory("web")

@@ -1,5 +1,10 @@
 # Change history
 
+## 0.1.6
+
+* Added production build features
+* Updated to Scala.js 0.6.1 and scalajs-react 0.8.1
+
 ## 0.1.5
 
 * Cleaner SBT build definition (credits to @PerWiklander)

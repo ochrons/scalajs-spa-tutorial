@@ -5,11 +5,11 @@ import japgolly.scalajs.react.extra.router.BaseUrl
 import org.scalajs.dom
 import spatutorial.client.modules.MainRouter
 
-import scala.scalajs.js.JSApp
+import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 
 @JSExport("SPAMain")
-object SPAMain extends JSApp {
+object SPAMain extends js.JSApp {
   @JSExport
   def main(): Unit = {
     // build a baseUrl, this method works for both local and server addresses (assuming you use #)

@@ -26,6 +26,12 @@ Tutorial for creating a simple Single Page Application with [Scala.js](http://ww
         - [Autowire and uPickle](#autowire-and-upickle)
     - [Server side](#server-side)
 - [Testing](#testing)
+- [Debugging and logging](#debugging-and-logging)
+    - [Setting source maps](#setting-source-maps)
+    - [Actual debugging](#actual-debugging)
+    - [Logging](#logging)
+        - [Sending client logs to the server](#sending-client-logs-to-the-server)
+        - [Limiting log messages in production](#limiting-log-messages-in-production)
 - [SBT build definition](#sbt-build-definition)
     - [Serving compiled JS from both projects](#serving-compiled-js-from-both-projects)
     - [Sharing web resources between JS and JVM projects](#sharing-web-resources-between-js-and-jvm-projects)
@@ -982,6 +988,133 @@ To run tests in SBT, you'll need to add a dependency for `"com.lihaoyi" % "utest
 `testFrameworks += new TestFramework("utest.runner.Framework")`. Now you can run the tests using regular `test` and `testOnly` commands
 in the SBT prompt.
 
+# Debugging and logging
+
+Scala.js supports source maps, making debugging your code in the browser quite easy. You can set breakpoints in the original source-code
+and inspect local variables etc. just like in a real IDE debugger. See the documentation for your browser developer tools for more information.
+
+## Setting source maps
+
+By default Scala.js generates source-maps using local file paths, but for some reason this doesn't work on (my) Chrome, even though it works just
+fine in Firefox. To get around this limitation, we'll modify the source-map to use relative URLs and serve source files directly from our
+web server. To remap source paths, use following configuration in the build file.
+
+```scala
+scalacOptions ++= Seq({
+  val a = js.base.toURI.toString.replaceFirst("[^/]+/?$", "")
+  s"-P:scalajs:mapSourceURI:$a->/srcmaps/"
+})
+```
+
+This will replace the local file path with a relative URL starting with `/srcmaps/` which we will then use on our server to provide the source files.
+In the server code you'll need to add following:
+
+```scala
+pathPrefix("srcmaps") {
+  if(!Config.productionMode)
+    getFromDirectory("../")
+  else
+    complete(StatusCodes.NotFound)
+}
+```
+
+Note how serving source files it only enabled in development builds. As the server is running in the `jvm` directory, the relative path `../` will point
+to the directory directly above it, which will allow access to the source file under `js/src`. If your project configuration is different, you may
+need to change this.
+
+## Actual debugging
+
+When running the application, you can access the sources through the developer tools window as shown below.
+
+![debug sources](/../screenshots/screenshots/debug1.png?raw=true)
+
+You can set breakpoints and investigate variables to see what's going on in your code. Some of the variable names have funny extensions like `completed$1`
+but this is just due to name mangling by Scala. Below you can see how the debugger has hit a breakpoint and the local variables are displayed automatically.
+
+![breakpoints](/../screenshots/screenshots/debug2.png?raw=true)
+
+## Logging
+
+Most of us are used to great logging infrastructure available on the server side and sometimes it helps in situations where direct debugging is difficult
+or plain impossible (for example a customer is using your app). Luckily there are nice logging libraries available also for Javascript that we can utilize
+through thin facades.
+
+To emulate log4j style API, we'll define a `LoggerFactory` providing `Logger` instances. These will hook up to the underlying
+[Javascript library](http://log4javascript.org/) to provide the real functionality. See
+[`Log4JavaScript.scala`](js/src/main/scala/spatutorial/client/logger/Log4JavaScript.scala) for details.
+
+The `package object logger` provides a default logger called `log` for easy access to logging functionality. If you want to create separate loggers,
+you may do so through `LoggerFactory.getLogger(name)` method. To create an entry in the log, all you need to do is call the appropriate log-level function
+with a message and an optional `Exception`.
+
+```scala
+log.debug(s"User selected ${items.size} items")
+
+log.error("Invalid response from server", ex)
+```
+
+The default logger prints all messages to the browser console, but you can also use a more advanced popup window logger, to analyze log messages with
+better granularity and filtering. Use `getPopupLogger` to create such logger.
+
+### Sending client logs to the server
+
+The logging library also provides functionality to send all your log messages to the server, for easier analysis in error situations. It packages each
+log message into a small JSON object and POSTs it to the specified URL. On the server side we define a path to receive and print those log messages.
+
+```scala
+path("logging") {
+  entity(as[String]) { msg =>
+    ctx =>
+      println(s"ClientLog: $msg")
+    ctx.complete(StatusCodes.OK)
+  }
+}
+```
+
+To enable server side logging, call `log.enableServerLogging("/logging")`. In the server logs the client log messages will be shown as below:
+
+```
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500652089,"level":"INFO","url":"http://localhost:8080/#todo","message":"This message goes to server as well"}]
+sharedProjectJVM Sending 4 Todo items
+sharedProjectJVM Sending 4 Todo items
+sharedProjectJVM Todo item was updated: TodoItem(3,Walk away slowly from an explosion without looking back.,TodoHigh,false)
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500661456,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500664865,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"Todo editing cancelled"}]
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500668485,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500671017,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500671751,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500672101,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"Todo edited:
+  TodoItem(3,Walk away slowly from an explosion without looking back.,TodoNormal,false)"}]
+```
+
+Many of the advanced features of the underlying logging library are not exposed in this tutorial project, but you can look at the current implementation and
+continue from there if you find the missing features useful!
+
+### Limiting log messages in production
+
+While extensive debug messages are a life saver in development, you don't want to flood your customer's browser console with debug messages. To disable
+low level log messages in the production build we'll use a special Scala annotation called [@elidable](http://www.scala-lang.org/api/current/index.html#scala.annotation.elidable).
+It works much like `#ifdef` in C/C++ removing the function and all calls to the function in the final byte-code. Therefore there is no performance penalty
+whatsoever even if you litter your code with hundreds of `log.debug` calls, as they are all totally optimized away.
+
+```scala
+  @elidable(FINEST) def trace(msg: String, e: Exception): Unit
+  @elidable(FINEST) def trace(msg: String): Unit
+  @elidable(FINE) def debug(msg: String, e: Exception): Unit
+  @elidable(FINE) def debug(msg: String): Unit
+  @elidable(INFO) def info(msg: String, e: Exception): Unit
+  @elidable(INFO) def info(msg: String): Unit
+```
+
+To control what calls to eliminate and what to keep, use a `scalac` command line option `-Xelide-below <level>`. This is automatically set to `WARNING` in
+the release command.
+```scala
+// in settings we have scalacOptions ++= elideOptions.value,
+set elideOptions in js := Seq("-Xelide-below", "WARNING")
+```
+
+In the production build all log calls below the `WARNING` level will be optimized away.
+
 # SBT build definition
 
 Since Scala.js is quite new and it's been evolving even rather recently, building Scala.js applications with SBT is not as clear as it could
@@ -1336,6 +1469,5 @@ No questions asked so far!
 
 # What next?
 
-- debugging, source maps, logging
 - authentication/authorization support
 - you [tell me!](https://github.com/ochrons/scalajs-spa-tutorial/issues)

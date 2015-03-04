@@ -10,6 +10,7 @@ import spatutorial.client.components.TodoList.TodoListProps
 import spatutorial.client.components._
 import spatutorial.client.services._
 import spatutorial.shared._
+import spatutorial.client.logger._
 
 object Todo {
 
@@ -45,9 +46,9 @@ object Todo {
     def todoEdited(item: TodoItem, cancelled: Boolean): Unit = {
       if (cancelled) {
         // nothing to do here
-        println("Todo editing cancelled")
+        log.debug("Todo editing cancelled")
       } else {
-        println(s"Todo edited: $item")
+        log.debug(s"Todo edited: $item")
         TodoActions.updateTodo(item)
       }
       // hide the todo dialog
@@ -114,6 +115,7 @@ object TodoForm {
     .initialStateP(p => State(p.item.getOrElse(TodoItem("", "", TodoNormal, false))))
     .backend(new Backend(_))
     .render((P, S, B) => {
+    log.debug(s"User is ${if(S.item.id == "") "adding" else "editing"} a todo")
     val headerText = if (S.item.id == "") "Add new todo" else "Edit todo"
     Modal(Modal.Props(
       // header contains a cancel button (X)

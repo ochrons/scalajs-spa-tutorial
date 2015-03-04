@@ -19,7 +19,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "0.1.6"
+  val version = "0.1.7"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -71,14 +71,16 @@ object Settings {
     "org.webjars" % "react" % "0.12.1" / "react-with-addons.js" commonJSName "React",
     "org.webjars" % "jquery" % "1.11.1" / "jquery.js",
     "org.webjars" % "bootstrap" % "3.3.2" / "bootstrap.js" dependsOn "jquery.js",
-    "org.webjars" % "chartjs" % "1.0.1" / "Chart.js"
+    "org.webjars" % "chartjs" % "1.0.1" / "Chart.js",
+    "org.webjars" % "log4javascript" % "1.4.10" / "js/log4javascript_uncompressed.js"
   ))
   /** Same dependecies, but for production build, using minified versions */
   val jsDependenciesProduction = Def.setting(Seq(
     "org.webjars" % "react" % "0.12.1" / "react-with-addons.min.js" commonJSName "React",
     "org.webjars" % "jquery" % "1.11.1" / "jquery.min.js",
     "org.webjars" % "bootstrap" % "3.3.2" / "bootstrap.min.js" dependsOn "jquery.min.js",
-    "org.webjars" % "chartjs" % "1.0.1" / "Chart.min.js"
+    "org.webjars" % "chartjs" % "1.0.1" / "Chart.min.js",
+    "org.webjars" % "log4javascript" % "1.4.10" / "js/log4javascript.js"
   ))
 }
 
@@ -96,6 +98,7 @@ object ApplicationBuild extends Build {
   val sharedSrcDir = "shared"
 
   val productionBuild = settingKey[Boolean]("Build for production")
+  val elideOptions = settingKey[Seq[String]]("Set limit for elidable functions")
   val copyWebJarResources = taskKey[Unit]("Copy resources from WebJars")
 
   // a special crossProject for configuring a JS/JVM/shared structure
@@ -147,10 +150,17 @@ object ApplicationBuild extends Build {
       libraryDependencies ++= Settings.scalajsDependencies.value,
       // by default we do development build
       productionBuild := false,
+      elideOptions := Seq(),
+      scalacOptions ++= elideOptions.value,
       // select JS dependencies according to build setting
       jsDependencies ++= {if (!productionBuild.value) Settings.jsDependencies.value else Settings.jsDependenciesProduction.value},
       // RuntimeDOM is needed for tests
       jsDependencies += RuntimeDOM % "test",
+      scalacOptions ++= Seq({
+        val a = js.base.toURI.toString.replaceFirst("[^/]+/?$", "")
+        s"-P:scalajs:mapSourceURI:$a->/srcmaps/"
+      }),
+
 
       // yes, we want to package JS dependencies
       skip in packageJSDependencies := false,
@@ -200,11 +210,14 @@ object ApplicationBuild extends Build {
   // Command for building a release
   val ReleaseCmd = Command.command("release") {
     state => "set productionBuild in js := true" ::
+      "set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
       "sharedProjectJS/test" ::
       "sharedProjectJS/fullOptJS" ::
       "sharedProjectJS/packageJSDependencies" ::
-      "test" ::
-      "stage" ::
+      "sharedProjectJVM/test" ::
+      "sharedProjectJVM/stage" ::
+      "set productionBuild in js := false" ::
+      "set elideOptions in js := Seq()" ::
       state
   }
 

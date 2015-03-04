@@ -1,5 +1,10 @@
 # Change history
 
+## 0.1.7
+
+* Support for logging on the client side (also delivers log messages to the server!)
+* Source maps are served by the web server, to enable debugging with original source files on Chrome
+
 ## 0.1.6
 
 * Added production build features

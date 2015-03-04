@@ -38,6 +38,11 @@ object MainApp extends SimpleRoutingApp {
             getFromResource("web/index-full.html")
           else
             getFromResource("web/index.html")
+        } ~ pathPrefix("srcmaps") {
+          if(!Config.productionMode)
+            getFromDirectory("../")
+          else
+            complete(StatusCodes.NotFound)
         } ~
           // serve other requests directly from the resource directory
           getFromResourceDirectory("web")
@@ -50,6 +55,12 @@ object MainApp extends SimpleRoutingApp {
                 autowire.Core.Request(s, upickle.read[Map[String, String]](e))
               )
             }
+          }
+        } ~ path("logging") {
+          entity(as[String]) { msg =>
+            ctx =>
+              println(s"ClientLog: $msg")
+            ctx.complete(StatusCodes.OK)
           }
         }
       }

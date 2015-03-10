@@ -1,5 +1,10 @@
 # Change history
 
+## 0.1.8
+
+* Upgraded many libraries to their latest versions
+* Changed how the MainRouter is initialized and used to make it more convenient
+
 ## 0.1.7
 
 * Support for logging on the client side (also delivers log messages to the server!)

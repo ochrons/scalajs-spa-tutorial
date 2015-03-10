@@ -116,12 +116,8 @@ Once the browser has loaded all the resources, it will call the `SPAMain().main(
 object SPAMain extends JSApp {
   @JSExport
   def main(): Unit = {
-    // build a baseUrl, this method works for both local and server addresses (assuming you use #)
-    val baseUrl = BaseUrl(dom.window.location.href.takeWhile(_ != '#'))
-    val router = MainRouter.router(baseUrl)
-
     // tell React to render the router in the document body
-    React.render(router(), dom.document.body)
+    React.render(MainRouter.routerComponent(), dom.document.body)
   }
 }
 ```
@@ -178,7 +174,7 @@ override protected def interceptRender(ic: InterceptionR) = {
       <.div(^.className := "container")(
         <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
         <.div(^.className := "collapse navbar-collapse")(
-          MainMenu(MainMenu.Props(ic.loc, ic.router, TodoStore.todos))
+          MainMenu(MainMenu.Props(ic.loc, TodoStore.todos))
         )
       )
     ),
@@ -228,7 +224,7 @@ val MainMenu = ReactComponentB[MenuProps]("MainMenu")
     // build a list of menu items
     for (item <- menuItems) yield {
       <.li((P.activeLocation == item.location) ?= (^.className := "active"),
-        P.router.link(item.location)(item.icon, " ", item.label(P))
+        MainRouter.routerLink(item.location)(item.icon, " ", item.label(P))
       )
     }
   )
@@ -258,7 +254,7 @@ val component = ReactComponentB[MainRouter.Router]("Dashboard")
     Motd(),
     Chart(cp),
     // create a link to the Todo view
-    <.div(appLinks.todo("Check your todos!"))
+    <.div(MainRouter.todoLink("Check your todos!"))
   )
 }).build
 ```
@@ -310,20 +306,19 @@ How the magic of calling the server actually happens is covered in a [later chap
 #### Links to other routes
 
 Sometimes you need to create a link that takes the user to an another module behind a route. To create these links in a type-safe manner,
-the tutorial code defines a specific trait with functions that return valid links.
+the tutorial code defines functions inside `MainRouter` that return valid links (anchor tags with `onClick` hooked to appropriate router handler).
 
 ```scala
-trait AppLinks {
-  def dashboard(content: TagMod*): ReactTag
-  def todo(content: TagMod*): ReactTag
-}
+def dashboardLink = router.link(dashboardLoc)
+def todoLink = router.link(todoLoc)
+def routerLink(loc: Loc) = router.link(loc)
 ```
 
-This `AppLinks` trait can be passed down from the top-level modules to those components that need to create links. To get an instance of the
-`AppLinks` you need to call `MainRouter.appLinks(router)`. It requires the router as a parameter, which is only available in the internal
-methods like `render` of the top-level modules.
+These functions return a `ReactTag` that you can assign children just by adding them to the call.
 
-The content of the link can be anything from a simple text string to a complex VDOM structure.
+```scala
+MainRouter.todoLink("Check your todos!")
+```
 
 ### Integrating JavaScript components
 
@@ -601,7 +596,7 @@ Before going into the details of the actual Todo module and related components, 
 
 #### Unidirectional data flow
 
-Several JS frameworks out there (like AngularJS) use mutable state and two-way data binding. In this tutorial, however, we are taking
+Several JS frameworks out there (for example AngularJS) use mutable state and two-way data binding. In this tutorial, however, we are taking
 cues from Facebook's [Flux](https://github.com/facebook/flux), which is an architecture for unidirectional data flow and immutable state. 
 This architecture works especially well in more complex applications, where two-way data binding can quickly lead to all kinds of hard issues. 
 It's also a relatively simple concept, so it works well even in a simple tutorial application like this. Below you can see a diagram of the
@@ -725,6 +720,7 @@ def mounted(): Unit = {
   MainDispatcher.dispatch(RefreshTodos)
 }
 ```
+
 The `foreach` call returns an `Obs` which we can use to observe changes. Whenever `todos` change, the function body is executed, forcing an update on
 the React component. The actual value of `todos` is not used here, but within the view definition.
  
@@ -1018,7 +1014,7 @@ pathPrefix("srcmaps") {
 }
 ```
 
-Note how serving source files it only enabled in development builds. As the server is running in the `jvm` directory, the relative path `../` will point
+Note how serving source files is only enabled in development builds. As the server is running in the `jvm` directory, the relative path `../` will point
 to the directory directly above it, which will allow access to the source file under `js/src`. If your project configuration is different, you may
 need to change this.
 
@@ -1032,6 +1028,9 @@ You can set breakpoints and investigate variables to see what's going on in your
 but this is just due to name mangling by Scala. Below you can see how the debugger has hit a breakpoint and the local variables are displayed automatically.
 
 ![breakpoints](/../screenshots/screenshots/debug2.png?raw=true)
+
+You might also want to install Facebook [React DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) into
+your Chrome browser to help visualize active React components in the DevTools window.
 
 ## Logging
 
@@ -1202,10 +1201,11 @@ configuration in the `build.scala` file:
 ```scala
 /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
 val jsDependencies = Def.setting(Seq(
-  "org.webjars"  % "react"      % "0.12.1"  / "react-with-addons.js"  commonJSName "React",
-  "org.webjars"  % "jquery"     % "1.11.1"  / "jquery.js",
-  "org.webjars"  % "bootstrap"  % "3.3.2"   / "bootstrap.js"          dependsOn    "jquery.js",
-  "org.webjars"  % "chartjs"    % "1.0.1"   / "Chart.js"
+  "org.webjars" % "react" % versions.react / "react-with-addons.js" commonJSName "React",
+  "org.webjars" % "jquery" % versions.jQuery / "jquery.js",
+  "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" dependsOn "jquery.js",
+  "org.webjars" % "chartjs" % versions.chartjs / "Chart.js",
+  "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js"
 ))
 
 .jsSettings(
@@ -1385,12 +1385,13 @@ pre-packaged minified versions instead of running the minification process yours
 We need to define a separate list of JS dependencies for the production build, using the `.min.js` versions:
 
 ```scala
-  val jsDependenciesProduction = Def.setting(Seq(
-    "org.webjars" % "react" % "0.12.1" / "react-with-addons.min.js" commonJSName "React",
-    "org.webjars" % "jquery" % "1.11.1" / "jquery.min.js",
-    "org.webjars" % "bootstrap" % "3.3.2" / "bootstrap.min.js" dependsOn "jquery.min.js",
-    "org.webjars" % "chartjs" % "1.0.1" / "Chart.min.js"
-  ))
+val jsDependenciesProduction = Def.setting(Seq(
+  "org.webjars" % "react" % versions.react / "react-with-addons.min.js" commonJSName "React",
+  "org.webjars" % "jquery" % versions.jQuery / "jquery.min.js",
+  "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.min.js" dependsOn "jquery.min.js",
+  "org.webjars" % "chartjs" % versions.chartjs / "Chart.min.js",
+  "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript.js"
+))
 ```
 
 Because packaging the JS libs is a different task in SBT (it doesn't relate to `fastOptJS` or `fullOptJS`) we need another way to tell SBT to use these
@@ -1447,20 +1448,25 @@ to get everything done. That's what computers are really good at, so let's build
 ```scala
 val ReleaseCmd = Command.command("release") {
   state => "set productionBuild in js := true" ::
+    "set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
     "sharedProjectJS/test" ::
     "sharedProjectJS/fullOptJS" ::
     "sharedProjectJS/packageJSDependencies" ::
-    "test" ::
-    "stage" ::
+    "sharedProjectJVM/test" ::
+    "sharedProjectJVM/stage" ::
+    "set productionBuild in js := false" ::
+    "set elideOptions in js := Seq()" ::
     state
 }
 ```
-and enable it in the JVM project
+
+and enable it in the root project
+
 ```scala
   commands += ReleaseCmd,
 ```
 
-With this command, you can just execute `release` under the `sharedProjectJVM` and SBT will run all those individual commands to build
+With this command, you can just execute `release` under the `root` and SBT will run all those individual commands to build
 your application package.
 
 # FAQ

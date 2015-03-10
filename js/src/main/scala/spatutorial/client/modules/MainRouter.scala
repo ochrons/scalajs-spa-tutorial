@@ -2,23 +2,28 @@ package spatutorial.client.modules
 
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom
 import spatutorial.client.services.TodoStore
 
-// define a trait to access all application routes
-trait AppLinks {
-  def dashboard(content: TagMod*): ReactTag
-  def todo(content: TagMod*): ReactTag
+object AppLinks {
 }
 
 object MainRouter extends RoutingRules {
+  // build a baseUrl, this method works for both local and server addresses (assuming you use #)
+  val baseUrl = BaseUrl(dom.window.location.href.takeWhile(_ != '#'))
+
   // register the modules and store locations
   val dashboardLoc = register(rootLocation(Dashboard.component))
   val todoLoc = register(location("#todo", Todo(TodoStore)))
 
-  def appLinks(router: Router): AppLinks = new AppLinks {
-    override def dashboard(content: TagMod*) = router.link(dashboardLoc)(content)
-    override def todo(content: TagMod*) = router.link(todoLoc)(content)
-  }
+  // functions to provide links (<a href...>) to routes
+  def dashboardLink = router.link(dashboardLoc)
+  def todoLink = router.link(todoLoc)
+  def routerLink(loc: Loc) = router.link(loc)
+
+  // initialize router and its React component
+  val router = routingEngine(baseUrl)
+  val routerComponent = Router.component(router)
 
   // redirect all invalid routes to dashboard
   override protected val notFound = redirect(dashboardLoc, Redirect.Replace)
@@ -35,7 +40,7 @@ object MainRouter extends RoutingRules {
         <.div(^.className := "container")(
           <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
           <.div(^.className := "collapse navbar-collapse")(
-            MainMenu(MainMenu.Props(ic.loc, ic.router, TodoStore.todos))
+            MainMenu(MainMenu.Props(ic.loc, TodoStore.todos))
           )
         )
       ),

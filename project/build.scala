@@ -19,7 +19,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "0.1.7"
+  val version = "0.1.8"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -36,8 +36,15 @@ object Settings {
 
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
-    val scala = "2.11.5"
-    val scalajsReact = "0.8.1"
+    val scala = "2.11.6"
+    val scalajsReact = "0.8.2"
+    val react = "0.12.1"
+    val jQuery = "1.11.1"
+    val bootstrap = "3.3.2"
+    val chartjs = "1.0.1"
+    val log4js = "1.4.10"
+    val spray = "1.3.2"
+    val akka = "2.3.9"
   }
 
   /**
@@ -45,42 +52,42 @@ object Settings {
    * the special %%% function selects the correct version for each project
    */
   val sharedDependencies = Def.setting(Seq(
-    "com.lihaoyi" %%% "autowire" % "0.2.4",
-    "com.lihaoyi" %%% "upickle" % "0.2.6",
-    "org.webjars" % "font-awesome" % "4.3.0-1" % Compile,
-    "org.webjars" % "bootstrap" % "3.3.2" % Compile
+    "com.lihaoyi" %%% "autowire" % "0.2.5",
+    "com.lihaoyi" %%% "upickle" % "0.2.7",
+    "com.lihaoyi" %%% "utest" % "0.3.1",
+    "org.webjars" % "font-awesome" % "4.3.0-1" % Provided,
+    "org.webjars" % "bootstrap" % versions.bootstrap % Provided
   ))
 
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
-    "io.spray" %% "spray-can" % "1.3.2",
-    "io.spray" %% "spray-routing" % "1.3.2",
-    "com.typesafe.akka" %% "akka-actor" % "2.3.6"
+    "io.spray" %% "spray-can" % versions.spray,
+    "io.spray" %% "spray-routing" % versions.spray,
+    "com.typesafe.akka" %% "akka-actor" % versions.akka
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
   val scalajsDependencies = Def.setting(Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % versions.scalajsReact,
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
-    "com.lihaoyi" %%% "scalarx" % "0.2.7",
-    "com.lihaoyi" %%% "utest" % "0.3.0"
+    "com.lihaoyi" %%% "scalarx" % "0.2.8"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
   val jsDependencies = Def.setting(Seq(
-    "org.webjars" % "react" % "0.12.1" / "react-with-addons.js" commonJSName "React",
-    "org.webjars" % "jquery" % "1.11.1" / "jquery.js",
-    "org.webjars" % "bootstrap" % "3.3.2" / "bootstrap.js" dependsOn "jquery.js",
-    "org.webjars" % "chartjs" % "1.0.1" / "Chart.js",
-    "org.webjars" % "log4javascript" % "1.4.10" / "js/log4javascript_uncompressed.js"
+    "org.webjars" % "react" % versions.react / "react-with-addons.js" commonJSName "React",
+    "org.webjars" % "jquery" % versions.jQuery / "jquery.js",
+    "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" dependsOn "jquery.js",
+    "org.webjars" % "chartjs" % versions.chartjs / "Chart.js",
+    "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js"
   ))
   /** Same dependecies, but for production build, using minified versions */
   val jsDependenciesProduction = Def.setting(Seq(
-    "org.webjars" % "react" % "0.12.1" / "react-with-addons.min.js" commonJSName "React",
-    "org.webjars" % "jquery" % "1.11.1" / "jquery.min.js",
-    "org.webjars" % "bootstrap" % "3.3.2" / "bootstrap.min.js" dependsOn "jquery.min.js",
-    "org.webjars" % "chartjs" % "1.0.1" / "Chart.min.js",
-    "org.webjars" % "log4javascript" % "1.4.10" / "js/log4javascript.js"
+    "org.webjars" % "react" % versions.react / "react-with-addons.min.js" commonJSName "React",
+    "org.webjars" % "jquery" % versions.jQuery / "jquery.min.js",
+    "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.min.js" dependsOn "jquery.min.js",
+    "org.webjars" % "chartjs" % versions.chartjs / "Chart.min.js",
+    "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript.js"
   ))
 }
 
@@ -91,10 +98,24 @@ object ApplicationBuild extends Build {
     settings(
       name := "SPAtutorial",
       version := Settings.version,
+      commands += ReleaseCmd,
       publish := {},
       publishLocal := {}
     )
 
+  // Command for building a release
+  val ReleaseCmd = Command.command("release") {
+    state => "set productionBuild in js := true" ::
+      "set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
+      "sharedProjectJS/test" ::
+      "sharedProjectJS/fullOptJS" ::
+      "sharedProjectJS/packageJSDependencies" ::
+      "sharedProjectJVM/test" ::
+      "sharedProjectJVM/stage" ::
+      "set productionBuild in js := false" ::
+      "set elideOptions in js := Seq()" ::
+      state
+  }
   val sharedSrcDir = "shared"
 
   val productionBuild = settingKey[Boolean]("Build for production")
@@ -152,6 +173,7 @@ object ApplicationBuild extends Build {
       productionBuild := false,
       elideOptions := Seq(),
       scalacOptions ++= elideOptions.value,
+      // scalacOptions in (Compile, fullOptJS) ++= Seq("-Xelide-below", "WARNING"),
       // select JS dependencies according to build setting
       jsDependencies ++= {if (!productionBuild.value) Settings.jsDependencies.value else Settings.jsDependenciesProduction.value},
       // RuntimeDOM is needed for tests
@@ -207,19 +229,6 @@ object ApplicationBuild extends Build {
     }
   ).enablePlugins(SbtWeb)
 
-  // Command for building a release
-  val ReleaseCmd = Command.command("release") {
-    state => "set productionBuild in js := true" ::
-      "set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
-      "sharedProjectJS/test" ::
-      "sharedProjectJS/fullOptJS" ::
-      "sharedProjectJS/packageJSDependencies" ::
-      "sharedProjectJVM/test" ::
-      "sharedProjectJVM/stage" ::
-      "set productionBuild in js := false" ::
-      "set elideOptions in js := Seq()" ::
-      state
-  }
 
   // instantiate the JVM project for SBT with some additional settings
   lazy val jvm: Project = sharedProject.jvm.settings(js2jvmSettings: _*).settings(
@@ -228,7 +237,6 @@ object ApplicationBuild extends Build {
     // set environment variables in the execute scripts
     NativePackagerKeys.batScriptExtraDefines += "set PRODUCTION_MODE=true",
     NativePackagerKeys.bashScriptExtraDefines += "export PRODUCTION_MODE=true",
-    commands += ReleaseCmd,
     // reStart depends on running fastOptJS on the JS project
     Revolver.reStart <<= Revolver.reStart dependsOn (fastOptJS in(js, Compile))
   ).enablePlugins(SbtWeb).enablePlugins(JavaAppPackaging)

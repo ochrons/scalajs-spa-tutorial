@@ -12,7 +12,7 @@ import spatutorial.shared.TodoItem
 
 object MainMenu {
 
-  case class Props(activeLocation: MainRouter.Loc, router: MainRouter.Router, todos: Rx[Seq[TodoItem]])
+  case class Props(activeLocation: MainRouter.Loc, todos: Rx[Seq[TodoItem]])
 
   case class MenuItem(label: (Props) => ReactNode, icon: Icon, location: MainRouter.Loc)
 
@@ -50,7 +50,7 @@ object MainMenu {
       // build a list of menu items
       for (item <- menuItems) yield {
         <.li((P.activeLocation == item.location) ?= (^.className := "active"),
-          P.router.link(item.location)(item.icon, " ", item.label(P))
+          MainRouter.routerLink(item.location)(item.icon, " ", item.label(P))
         )
       }
     )

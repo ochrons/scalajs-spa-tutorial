@@ -5,11 +5,16 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.language.implicitConversions
 import scala.scalajs.js
+import japgolly.scalacss.ScalaCssReact._
+import japgolly.scalacss.Defaults._
 
 /**
  * Common Bootstrap components for scalajs-react
  */
 object Bootstrap {
+
+  // shorthand for styles
+  @inline private def bss = GlobalStyles.bootstrapStyles
 
   trait BootstrapJQuery extends JQuery {
     def modal(action: String): BootstrapJQuery = js.native
@@ -25,11 +30,11 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addClasses: String = "")
+    case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
     val component = ReactComponentB[Props]("Button")
       .render { (P, C) =>
-      <.button(^.className := s"btn btn-${P.style} ${P.addClasses}", ^.tpe := "button", ^.onClick --> P.onClick())(C)
+      <.button(bss.buttonOpt(P.style), P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick())(C)
     }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children)
@@ -42,9 +47,9 @@ object Bootstrap {
 
     val component = ReactComponentB[Props]("Panel")
       .render { (P, C) =>
-      <.div(^.className := s"panel panel-${P.style}")(
-        <.div(^.className := "panel-heading")(P.heading),
-        <.div(^.className := "panel-body")(C)
+      <.div(bss.panelOpt(P.style))(
+        <.div(bss.panelHeading)(P.heading),
+        <.div(bss.panelBody)(C)
       )
     }.build
 
@@ -75,12 +80,13 @@ object Bootstrap {
       .stateless
       .backend(new Backend(_))
       .render((P, C, _, B) => {
-      <.div(^.className := "modal fade", ^.role := "dialog", ^.aria.hidden := true,
-        <.div(^.className := "modal-dialog",
-          <.div(^.className := "modal-content",
-            <.div(^.className := "modal-header", P.header(B)),
-            <.div(^.className := "modal-body", C),
-            <.div(^.className := "modal-footer", P.footer(B))
+      val modalStyle = bss.Modal
+      <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
+        <.div(modalStyle.dialog,
+          <.div(modalStyle.content,
+            <.div(modalStyle.header, P.header(B)),
+            <.div(modalStyle.body, C),
+            <.div(modalStyle.footer, P.footer(B))
           )
         )
       )
@@ -97,5 +103,4 @@ object Bootstrap {
     def apply(props: Props, children: ReactNode*) = component(props, children)
     def apply() = component
   }
-
 }

@@ -38,6 +38,7 @@ object Settings {
   object versions {
     val scala = "2.11.6"
     val scalajsReact = "0.8.2"
+    val scalaCSS = "0.1.0"
     val react = "0.12.1"
     val jQuery = "1.11.1"
     val bootstrap = "3.3.2"
@@ -70,6 +71,7 @@ object Settings {
   val scalajsDependencies = Def.setting(Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % versions.scalajsReact,
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
+    "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "com.lihaoyi" %%% "scalarx" % "0.2.8"
   ))
 

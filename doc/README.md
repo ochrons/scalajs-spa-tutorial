@@ -14,3 +14,6 @@ Before going through this tutorial, it would be helpful if you already know the 
 [Scala.js tutorial](http://www.scala-js.org/doc/tutorial.html) and the great e-book [Hands-on Scala.js](http://lihaoyi.github.io/hands-on-scala-js/#Hands-onScala.js)
 by [Li Haoyi (lihaoyi)](https://github.com/lihaoyi).
 
+# Code
+
+Tutorial code is hosted in a [Github repo](https://github.com/ochrons/scalajs-spa-tutorial).

@@ -9,9 +9,5 @@ object GlobalStyles extends StyleSheet.Inline {
     paddingTop(50.px))
   )
 
-  style(unsafeRoot(".label-as-badge")(
-    borderRadius(1.em))
-  )
-
   val bootstrapStyles = new BootstrapStyles
 }

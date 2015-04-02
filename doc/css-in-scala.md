@@ -11,15 +11,11 @@ out and see which one fits your application better. In this tutorial we are usin
 ## Defining global styles
 
 In our tutorial we are relying on Bootstrap to provide most of the CSS, so the global style definitions are really simple. The original CSS basically
-contains only two definitions and of those the second one is just overriding a Bootstrap style.
+contains only one definition.
 
 ```css
 body {
     padding-top: 50px;
-}
-
-.label-as-badge {
-    border-radius: 1em;
 }
 ```
 
@@ -32,12 +28,10 @@ object GlobalStyles extends StyleSheet.Inline {
   style(unsafeRoot("body")(
     paddingTop(50.px))
   )
-
-  style(unsafeRoot(".label-as-badge")(
-    borderRadius(1.em))
-  )
 }
 ```
+
+For more extensive examples, please refer to [ScalaCSS documentation](https://japgolly.github.io/scalacss/book).
 
 Each call to `style` registers a new style in the internal registry. To actually generate the CSS we need in the HTML page, we have to call
 
@@ -45,7 +39,7 @@ Each call to `style` registers a new style in the internal registry. To actually
   GlobalStyles.addToDocument()
 ```
 
-in our application initialization code. Note that this is [specific initialization to scalajs-react](http://japgolly.github.io/scalacss/book/ext/react.html)
+in our application initialization code. Note that this is [specific initialization to scalajs-react](https://japgolly.github.io/scalacss/book/ext/react.html)
 and there are other methods for creating and inserting CSS in other situations.
 
 ## Wrapping external CSS

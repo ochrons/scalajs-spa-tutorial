@@ -80,7 +80,7 @@ object Bootstrap {
       .stateless
       .backend(new Backend(_))
       .render((P, C, _, B) => {
-      val modalStyle = bss.Modal
+      val modalStyle = bss.modal
       <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
         <.div(modalStyle.dialog,
           <.div(modalStyle.content,

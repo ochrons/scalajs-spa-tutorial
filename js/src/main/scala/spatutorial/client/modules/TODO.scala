@@ -1,5 +1,6 @@
 package spatutorial.client.modules
 
+import japgolly.scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -8,9 +9,9 @@ import rx.ops._
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.components.TodoList.TodoListProps
 import spatutorial.client.components._
+import spatutorial.client.logger._
 import spatutorial.client.services._
 import spatutorial.shared._
-import spatutorial.client.logger._
 
 object Todo {
 
@@ -18,9 +19,9 @@ object Todo {
 
   case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
-  abstract class RxObserver[BS <: BackendScope[_,_]](scope: BS) extends OnUnmount {
-    protected def observe[T](rx:Rx[T]): Unit = {
-      val obs = rx.foreach( _ => scope.forceUpdate() )
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+    protected def observe[T](rx: Rx[T]): Unit = {
+      val obs = rx.foreach(_ => scope.forceUpdate())
       // stop observing when unmounted
       onUnmount(obs.kill())
     }
@@ -79,6 +80,8 @@ object Todo {
 }
 
 object TodoForm {
+  // shorthand for styles
+  @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(item: Option[TodoItem], submitHandler: (TodoItem, Boolean) => Unit)
 
@@ -115,23 +118,23 @@ object TodoForm {
     .initialStateP(p => State(p.item.getOrElse(TodoItem("", "", TodoNormal, false))))
     .backend(new Backend(_))
     .render((P, S, B) => {
-    log.debug(s"User is ${if(S.item.id == "") "adding" else "editing"} a todo")
+    log.debug(s"User is ${if (S.item.id == "") "adding" else "editing"} a todo")
     val headerText = if (S.item.id == "") "Add new todo" else "Edit todo"
     Modal(Modal.Props(
       // header contains a cancel button (X)
-      header = be => <.span(<.button(^.tpe := "button", ^.className := "close", ^.onClick --> be.hide(), Icon.close), <.h4(headerText)),
+      header = be => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> be.hide(), Icon.close), <.h4(headerText)),
       // footer has the OK button that submits the form before hiding it
       footer = be => <.span(Button(Button.Props(() => {B.submitForm(); be.hide()}), "OK")),
       // this is called after the modal has been hidden (animation is completed)
       closed = B.formClosed),
-      <.div(^.className := "form-group",
+      <.div(bss.formGroup,
         <.label(^.`for` := "description", "Description"),
-        <.input(^.tpe := "text", ^.className := "form-control", ^.id := "description", ^.value := S.item.content,
+        <.input(^.tpe := "text", bss.formControl, ^.id := "description", ^.value := S.item.content,
           ^.placeholder := "write description", ^.onChange ==> B.updateDescription)),
-      <.div(^.className := "form-group",
+      <.div(bss.formGroup,
         <.label(^.`for` := "priority", "Priority"),
         // using defaultValue = "Normal" instead of option/selected due to React
-        <.select(^.className := "form-control", ^.id := "priority", ^.value := S.item.priority.toString, ^.onChange ==> B.updatePriority,
+        <.select(bss.formControl, ^.id := "priority", ^.value := S.item.priority.toString, ^.onChange ==> B.updatePriority,
           <.option(^.value := TodoHigh.toString, "High"),
           <.option(^.value := TodoNormal.toString, "Normal"),
           <.option(^.value := TodoLow.toString, "Low")

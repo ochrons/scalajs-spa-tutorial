@@ -16,7 +16,7 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
     styleS(addClassNames(base, s"$base-$opt"))
   )
 
-  def styleWrap(cls: String) = style(addClassName(cls))
+  def styleWrap(classNames: String*) = style(addClassNames(classNames: _*))
 
   val buttonOpt = commonStyle(csDomain, "btn")
 
@@ -36,7 +36,7 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
 
   val panelBody = styleWrap("panel-body")
 
-  object Modal {
+  object modal {
     val modal = styleWrap("modal")
     val fade = styleWrap("fade")
     val dialog = styleWrap("modal-dialog")
@@ -45,8 +45,8 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
     val body = styleWrap("modal-body")
     val footer = styleWrap("modal-footer")
   }
-  
-  object ListGroup {
+
+  object listGroup {
     val listGroup = styleWrap("list-group")
     val item = styleWrap("list-group-item")
     val itemOpt = commonStyle(contextDomain, "list-group-item")
@@ -54,4 +54,12 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
 
   val pullRight = styleWrap("pull-right")
   val buttonXS = styleWrap("btn-xs")
+  val close = styleWrap("close")
+
+  val labelAsBadge = styleWrap("label-as-badge")
+
+  val navbar = styleWrap("nav", "navbar-nav")
+
+  val formGroup = styleWrap("form-group")
+  val formControl = styleWrap("form-control")
 }

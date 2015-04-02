@@ -1,5 +1,10 @@
 # Change history
 
+## 0.1.9
+
+* Style definitions are now done with [ScalaCSS](https://github.com/japgolly/scalacss/)
+* Documentation is now in a separate [GitBook](http://ochrons.github.io/scalajs-spa-tutorial/)
+
 ## 0.1.8
 
 * Upgraded many libraries to their latest versions

@@ -19,7 +19,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "0.1.8"
+  val version = "0.1.9"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -37,7 +37,7 @@ object Settings {
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
     val scala = "2.11.6"
-    val scalajsReact = "0.8.2"
+    val scalajsReact = "0.8.3"
     val scalaCSS = "0.1.0"
     val react = "0.12.1"
     val jQuery = "1.11.1"

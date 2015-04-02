@@ -12,8 +12,5 @@ It started as a way to learn more about Scala.js and related libraries, but then
 The code covers typical aspects of building a SPA using Scala.js but it doesn't try to be an all-encompassing example for all the things possible with Scala.js.
 Before going through this tutorial, it would be helpful if you already know the basics of Scala.js and have read through the official
 [Scala.js tutorial](http://www.scala-js.org/doc/tutorial.html) and the great e-book [Hands-on Scala.js](http://lihaoyi.github.io/hands-on-scala-js/#Hands-onScala.js)
-by [Li Haoyi (@lihaoyi)](https://github.com/lihaoyi).
+by [Li Haoyi (lihaoyi)](https://github.com/lihaoyi).
 
-# Documentation
-
-Tutorial [documentation](https://ochrons.github.io/scalajs-spa-tutorial) is now presented as a GitBook.

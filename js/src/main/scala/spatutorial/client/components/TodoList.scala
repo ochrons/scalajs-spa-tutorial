@@ -14,7 +14,7 @@ object TodoList {
 
   val TodoList = ReactComponentB[TodoListProps]("TodoList")
     .render(P => {
-    val style = bss.ListGroup
+    val style = bss.listGroup
     def renderItem(item: TodoItem) = {
       // convert priority into Bootstrap style
       val itemStyle = item.priority match {

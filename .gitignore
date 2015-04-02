@@ -20,5 +20,7 @@ project/plugins/project/
 .idea
 *.iml
 out
-
 *.sc
+
+# GitBook
+doc/_book

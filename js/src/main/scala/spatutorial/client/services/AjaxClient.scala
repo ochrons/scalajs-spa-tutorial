@@ -10,7 +10,8 @@ object AjaxClient extends autowire.Client[String, upickle.Reader, upickle.Writer
   override def doCall(req: Request): Future[String] = {
     dom.ext.Ajax.post(
       url = "/api/" + req.path.mkString("/"),
-      data = upickle.write(req.args)
+      data = upickle.write(req.args),
+      headers = Map("Content-Type" -> "application/json;charset=UTF-8")
     ).map(_.responseText)
   }
 

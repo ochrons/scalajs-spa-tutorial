@@ -18,12 +18,13 @@ startServer("0.0.0.0", port = port) {
   } ~ post {
     path("api" / Segments) { s =>
       extract(_.request.entity.asString) { e =>
-        complete {
+        ctx =>
           // handle API requests via autowire
-          Router.route[Api](apiService)(
+          val result = Router.route[Api](apiService)(
             autowire.Core.Request(s, upickle.read[Map[String, String]](e))
           )
-        }
+          // force the use of application/json content type
+          result.map(json => ctx.complete(HttpEntity(ContentTypes.`application/json`, json)))
       }
     }
   }

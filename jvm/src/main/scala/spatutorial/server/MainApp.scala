@@ -1,12 +1,12 @@
 package spatutorial.server
 
 import akka.actor.ActorSystem
+import com.typesafe.config.ConfigFactory
 import spatutorial.shared.Api
 import spray.http._
 import spray.routing.SimpleRoutingApp
 
 import scala.util.Properties
-import com.typesafe.config.ConfigFactory
 
 object Router extends autowire.Server[String, upickle.Reader, upickle.Writer] {
   def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
@@ -34,12 +34,12 @@ object MainApp extends SimpleRoutingApp {
       get {
         pathSingleSlash {
           // serve the main page
-          if(Config.productionMode)
+          if (Config.productionMode)
             getFromResource("web/index-full.html")
           else
             getFromResource("web/index.html")
         } ~ pathPrefix("srcmaps") {
-          if(!Config.productionMode)
+          if (!Config.productionMode)
             getFromDirectory("../")
           else
             complete(StatusCodes.NotFound)
@@ -49,18 +49,19 @@ object MainApp extends SimpleRoutingApp {
       } ~ post {
         path("api" / Segments) { s =>
           extract(_.request.entity.asString) { e =>
-            complete {
+            ctx =>
               // handle API requests via autowire
-              Router.route[Api](apiService)(
+              val result = Router.route[Api](apiService)(
                 autowire.Core.Request(s, upickle.read[Map[String, String]](e))
               )
-            }
+              // force the use of application/json content type
+              result.map(json => ctx.complete(HttpEntity(ContentTypes.`application/json`, json)))
           }
         } ~ path("logging") {
           entity(as[String]) { msg =>
             ctx =>
               println(s"ClientLog: $msg")
-            ctx.complete(StatusCodes.OK)
+              ctx.complete(StatusCodes.OK)
           }
         }
       }

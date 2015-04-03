@@ -45,7 +45,7 @@ and there are other methods for creating and inserting CSS in other situations.
 ## Wrapping external CSS
 
 As most of the styles we use are defined in Bootstrap CSS, we want to access those in a more convenient manner. Especially if at some point we would want
-to switch from Bootstrap to, say, ModernizeCSS, it would be really nice if all the CSS class names would occur only in a single location.
+to switch from Bootstrap to, say, [MaterializeCSS](http://materializecss.com/), it would be really nice if all the CSS class names would occur only in a single location.
 
 In Bootstrap it's very common to define a style using a base class and a contextual class, for example:
 

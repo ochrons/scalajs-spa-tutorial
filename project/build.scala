@@ -19,7 +19,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "0.1.9"
+  val version = "0.1.10"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -54,7 +54,7 @@ object Settings {
    */
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % "0.2.5",
-    "com.lihaoyi" %%% "upickle" % "0.2.7",
+    "me.chrons" %%% "boopickle" % "0.1.1",
     "com.lihaoyi" %%% "utest" % "0.3.1",
     "org.webjars" % "font-awesome" % "4.3.0-1" % Provided,
     "org.webjars" % "bootstrap" % versions.bootstrap % Provided

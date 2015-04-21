@@ -9,7 +9,7 @@
         - [CSS in Scala](css-in-scala.md)
         - [Integrating JavaScript components](integrating-javascript-components.md)
         - [Todo module and data flow](todo-module-and-data-flow.md)
-        - [Autowire and uPickle](autowire-and-upickle.md)
+        - [Autowire and BooPickle](autowire-and-boopickle.md)
     - [Server side](server-side.md)
 - [Testing](testing.md)
 - [Debugging](debugging.md)

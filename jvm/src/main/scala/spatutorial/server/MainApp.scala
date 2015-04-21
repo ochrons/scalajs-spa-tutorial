@@ -1,16 +1,20 @@
 package spatutorial.server
 
+import java.nio.ByteBuffer
+
 import akka.actor.ActorSystem
+import akka.util.ByteString
+import boopickle._
 import com.typesafe.config.ConfigFactory
-import spatutorial.shared.Api
+import spatutorial.shared._
 import spray.http._
 import spray.routing.SimpleRoutingApp
 
 import scala.util.Properties
 
-object Router extends autowire.Server[String, upickle.Reader, upickle.Writer] {
-  def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
-  def write[Result: upickle.Writer](r: Result) = upickle.write(r)
+object Router extends autowire.Server[ByteBuffer, Unpickler, Pickler] {
+  def read[Result: Unpickler](p: ByteBuffer) = Unpickle[Result].fromBytes(p)
+  def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
 }
 
 object Config {
@@ -48,14 +52,13 @@ object MainApp extends SimpleRoutingApp {
           getFromResourceDirectory("web")
       } ~ post {
         path("api" / Segments) { s =>
-          extract(_.request.entity.asString) { e =>
+          extract(_.request.entity.data) { requestData =>
             ctx =>
               // handle API requests via autowire
               val result = Router.route[Api](apiService)(
-                autowire.Core.Request(s, upickle.read[Map[String, String]](e))
+                autowire.Core.Request(s, Unpickle[Map[String, ByteBuffer]].fromBytes(requestData.toByteString.asByteBuffer))
               )
-              // force the use of application/json content type
-              result.map(json => ctx.complete(HttpEntity(ContentTypes.`application/json`, json)))
+              result.map(responseData => ctx.complete(HttpEntity(HttpData(ByteString(responseData)))))
           }
         } ~ path("logging") {
           entity(as[String]) { msg =>

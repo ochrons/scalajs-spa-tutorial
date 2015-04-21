@@ -1,5 +1,9 @@
 # Change history
 
+## 0.1.10
+
+* Switched from uPickle to [BooPickle](https://github.com/ochrons/boopickle)
+
 ## 0.1.9
 
 * Style definitions are now done with [ScalaCSS](https://github.com/japgolly/scalacss/)

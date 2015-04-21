@@ -17,14 +17,13 @@ startServer("0.0.0.0", port = port) {
       getFromResourceDirectory("web")
   } ~ post {
     path("api" / Segments) { s =>
-      extract(_.request.entity.asString) { e =>
+      extract(_.request.entity.data) { requestData =>
         ctx =>
           // handle API requests via autowire
           val result = Router.route[Api](apiService)(
-            autowire.Core.Request(s, upickle.read[Map[String, String]](e))
+            autowire.Core.Request(s, Unpickle[Map[String, ByteBuffer]].fromBytes(requestData.toByteString.asByteBuffer))
           )
-          // force the use of application/json content type
-          result.map(json => ctx.complete(HttpEntity(ContentTypes.`application/json`, json)))
+          result.map(responseData => ctx.complete(HttpEntity(HttpData(ByteString(responseData)))))
       }
     }
   }
@@ -33,7 +32,9 @@ startServer("0.0.0.0", port = port) {
 
 The main HTML page and related resources are provided directly from the project resources directory (coming from the `shared` sub-project, actually).
 The interesting part is handling `api` requests using Autowire router. Like on the client side, Autowire takes care of the complicated stuff
-so you just need to plug it in and let it do its magic. The `ApiService` is just a normal class and it doesn't need to concern itself with
+so you just need to plug it in and let it do its magic. Boopickle takes care of deserializing the request and serializing the response into binary. 
+
+The `ApiService` is just a normal class and it doesn't need to concern itself with
 serialization or URL request path mappings. It just implements the same `Api` as it used on the client side. Simple, eh!
 
 ```scala

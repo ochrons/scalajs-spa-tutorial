@@ -65,7 +65,7 @@ def refresh() {
 }
 ```
 
-How the magic of calling the server actually happens is covered in a [later chapter](autowire-and-upickle.md).
+How the magic of calling the server actually happens is covered in a [later chapter](autowire-and-boopickle.md).
 
 ## Links to other routes
 

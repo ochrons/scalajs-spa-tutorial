@@ -5,8 +5,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.language.implicitConversions
 import scala.scalajs.js
-import japgolly.scalacss.ScalaCssReact._
-import japgolly.scalacss.Defaults._
+import scalacss.ScalaCssReact._
+import scalacss.Defaults._
 
 /**
  * Common Bootstrap components for scalajs-react

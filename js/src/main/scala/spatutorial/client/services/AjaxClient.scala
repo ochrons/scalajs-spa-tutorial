@@ -4,15 +4,17 @@ import java.nio.ByteBuffer
 
 import boopickle._
 import org.scalajs.dom
-import org.scalajs.dom.ext.AjaxException
 
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-import scala.scalajs.js.typedarray.TypedArrayBufferOps._
 import scala.scalajs.js.typedarray._
 
 object AjaxClient extends autowire.Client[ByteBuffer, Unpickler, Pickler] {
-  // Scala.js DOM 0.6.2 does not support binary data, so we implement this here
+
+  import org.scalajs.dom.ext.AjaxException
+  import scala.scalajs.js.typedarray.TypedArrayBufferOps._
+
+  // Scala.js DOM 0.8.0 does not support binary data, so we implement this here
   def post(url: String,
            data: ByteBuffer,
            timeout: Int = 0,
@@ -48,13 +50,13 @@ object AjaxClient extends autowire.Client[ByteBuffer, Unpickler, Pickler] {
     ).map(r => TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))
 
     /*
-        // Scala.js DOM 0.6.2 does not support binary data
+        // Scala.js DOM 0.8.1 supports binary data, earlier versions don't
         dom.ext.Ajax.post(
           url = "/api/" + req.path.mkString("/"),
-          data = upickle.write(req.args),
+          data = Pickle.intoBytes(req.args),
           responseType = "arraybuffer",
           headers = Map("Content-Type" -> "application/octet-stream")
-        ).map(_.responseText)
+        ).map(r => TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))
     */
   }
 

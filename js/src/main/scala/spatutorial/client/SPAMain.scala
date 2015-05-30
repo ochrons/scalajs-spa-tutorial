@@ -1,7 +1,7 @@
 package spatutorial.client
 
-import japgolly.scalacss.ScalaCssReact._
-import japgolly.scalacss.Defaults._
+import scalacss.ScalaCssReact._
+import scalacss.Defaults._
 import japgolly.scalajs.react.React
 import org.scalajs.dom
 import spatutorial.client.components.GlobalStyles

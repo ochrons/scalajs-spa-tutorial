@@ -96,7 +96,7 @@ object listGroup {
 
 ## Using styles
 
-To use the defined inline styles in your React components, you need to `import japgolly.scalacss.ScalaCssReact._` to get the relevant implicit conversions.
+To use the defined inline styles in your React components, you need to `import scalacss.ScalaCssReact._` to get the relevant implicit conversions.
 After that it's as simple as getting a reference to your stylesheet and using the styles in your tags like below.
 
 ```scala

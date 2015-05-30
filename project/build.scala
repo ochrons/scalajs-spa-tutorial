@@ -19,7 +19,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "0.1.10"
+  val version = "0.2.0-SNAPSHOT"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -37,8 +37,8 @@ object Settings {
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
     val scala = "2.11.6"
-    val scalajsReact = "0.8.3"
-    val scalaCSS = "0.1.0"
+    val scalajsReact = "0.9.0"
+    val scalaCSS = "0.2.0"
     val react = "0.12.1"
     val jQuery = "1.11.1"
     val bootstrap = "3.3.2"
@@ -54,7 +54,7 @@ object Settings {
    */
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % "0.2.5",
-    "me.chrons" %%% "boopickle" % "0.1.1",
+    "me.chrons" %%% "boopickle" % "0.1.3",
     "com.lihaoyi" %%% "utest" % "0.3.1",
     "org.webjars" % "font-awesome" % "4.3.0-1" % Provided,
     "org.webjars" % "bootstrap" % versions.bootstrap % Provided
@@ -72,6 +72,7 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "core" % versions.scalajsReact,
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
+    "org.scala-js" %%% "scalajs-dom" % "0.8.0",
     "com.lihaoyi" %%% "scalarx" % "0.2.8"
   ))
 

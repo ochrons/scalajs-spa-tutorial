@@ -1,6 +1,6 @@
 package spatutorial.client.modules
 
-import japgolly.scalacss.ScalaCssReact._
+import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -115,7 +115,7 @@ object TodoForm {
   }
 
   val component = ReactComponentB[Props]("TodoForm")
-    .initialStateP(p => State(p.item.getOrElse(TodoItem("", "", TodoNormal, false))))
+    .initialStateP(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
     .backend(new Backend(_))
     .render((P, S, B) => {
     log.debug(s"User is ${if (S.item.id == "") "adding" else "editing"} a todo")

@@ -1,6 +1,6 @@
 package spatutorial.client.modules
 
-import japgolly.scalacss.ScalaCssReact._
+import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._

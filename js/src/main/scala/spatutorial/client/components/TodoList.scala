@@ -4,7 +4,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.client.components.Bootstrap.{CommonStyle, Button}
 import spatutorial.shared._
-import japgolly.scalacss.ScalaCssReact._
+import scalacss.ScalaCssReact._
 
 object TodoList {
   // shorthand for styles

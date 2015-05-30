@@ -24,6 +24,7 @@ trait TodoStore extends Actor {
     if (newItems != items()) {
       // use Rx to update, which propagates down to dependencies
       items() = newItems
+      newItems.foreach(println)
     }
   }
 

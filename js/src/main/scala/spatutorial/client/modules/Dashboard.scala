@@ -1,13 +1,15 @@
 package spatutorial.client.modules
 
 import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react.extra.router2.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import spatutorial.client.SPAMain.{TodoLoc, Loc}
 import spatutorial.client.components._
 
 object Dashboard {
   // create the React component for Dashboard
-  val component = ReactComponentB[MainRouter.Router]("Dashboard")
-    .render(router => {
+  val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
+    .render(ctl => {
     // create dummy data for the chart
     val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
     <.div(
@@ -16,7 +18,7 @@ object Dashboard {
       Motd(),
       Chart(cp),
       // create a link to the Todo view
-      <.div(MainRouter.todoLink("Check your todos!"))
+      <.div(ctl.link(TodoLoc)("Check your todos!"))
     )
   }).build
 }

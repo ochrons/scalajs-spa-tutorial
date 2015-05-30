@@ -1,5 +1,8 @@
 package spatutorial.client.modules
 
+import japgolly.scalajs.react.extra.router2.RouterCtl
+import spatutorial.client.SPAMain.Loc
+
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
@@ -15,7 +18,7 @@ import spatutorial.shared._
 
 object Todo {
 
-  case class Props(todos: Rx[Seq[TodoItem]], router: MainRouter.Router)
+  case class Props(todos: Rx[Seq[TodoItem]], router: RouterCtl[Loc])
 
   case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
@@ -74,7 +77,7 @@ object Todo {
     .build
 
   /** Returns a function compatible with router location system while using our own props */
-  def apply(store: TodoStore) = (router: MainRouter.Router) => {
+  def apply(store: TodoStore) = (router: RouterCtl[Loc]) => {
     component(Props(store.todos, router))
   }
 }

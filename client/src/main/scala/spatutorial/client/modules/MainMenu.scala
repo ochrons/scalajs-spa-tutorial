@@ -21,7 +21,7 @@ object MainMenu {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc:Loc, todos: Rx[Seq[TodoItem]])
 
-  case class MenuItem(label: (Props) => ReactNode, icon: Icon, location: Loc)
+  case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
   class Backend(t: BackendScope[Props, _]) extends OnUnmount {
     def mounted(): Unit = {
@@ -45,8 +45,8 @@ object MainMenu {
   }
 
   private val menuItems = Seq(
-    MenuItem(_ => "Dashboard", Icon.dashboard, DashboardLoc),
-    MenuItem(buildTodoMenu, Icon.check, TodoLoc)
+    MenuItem(1, _ => "Dashboard", Icon.dashboard, DashboardLoc),
+    MenuItem(2, buildTodoMenu, Icon.check, TodoLoc)
   )
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")
@@ -56,7 +56,7 @@ object MainMenu {
     <.ul(bss.navbar)(
       // build a list of menu items
       for (item <- menuItems) yield {
-        <.li((P.currentLoc == item.location) ?= (^.className := "active"),
+        <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (^.className := "active"),
           P.ctl.link(item.location)(item.icon, " ", item.label(P))
         )
       }

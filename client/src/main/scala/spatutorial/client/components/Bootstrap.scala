@@ -60,7 +60,7 @@ object Bootstrap {
   object Modal {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
-    case class Props(header: (Backend) => ReactNode, footer: (Backend) => ReactNode, closed: () => Unit, backdrop: Boolean = true,
+    case class Props(header: (() => Unit) => ReactNode, footer: (() => Unit) => ReactNode, closed: () => Unit, backdrop: Boolean = true,
                      keyboard: Boolean = true)
 
     class Backend(t: BackendScope[Props, Unit]) {
@@ -84,9 +84,9 @@ object Bootstrap {
       <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
         <.div(modalStyle.dialog,
           <.div(modalStyle.content,
-            <.div(modalStyle.header, P.header(B)),
+            <.div(modalStyle.header, P.header(B.hide)),
             <.div(modalStyle.body, C),
-            <.div(modalStyle.footer, P.footer(B))
+            <.div(modalStyle.footer, P.footer(B.hide))
           )
         )
       )
@@ -103,4 +103,5 @@ object Bootstrap {
     def apply(props: Props, children: ReactNode*) = component(props, children)
     def apply() = component
   }
+
 }

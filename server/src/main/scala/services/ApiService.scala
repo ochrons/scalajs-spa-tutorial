@@ -1,4 +1,4 @@
-package spatutorial.server
+package services
 
 import java.util.{UUID, Date}
 

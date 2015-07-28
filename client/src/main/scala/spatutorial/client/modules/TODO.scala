@@ -125,9 +125,9 @@ object TodoForm {
     val headerText = if (S.item.id == "") "Add new todo" else "Edit todo"
     Modal(Modal.Props(
       // header contains a cancel button (X)
-      header = be => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> be.hide(), Icon.close), <.h4(headerText)),
+      header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide(), Icon.close), <.h4(headerText)),
       // footer has the OK button that submits the form before hiding it
-      footer = be => <.span(Button(Button.Props(() => {B.submitForm(); be.hide()}), "OK")),
+      footer = hide => <.span(Button(Button.Props(() => {B.submitForm(); hide()}), "OK")),
       // this is called after the modal has been hidden (animation is completed)
       closed = B.formClosed),
       <.div(bss.formGroup,

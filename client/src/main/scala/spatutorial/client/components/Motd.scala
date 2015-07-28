@@ -6,6 +6,7 @@ import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.services.AjaxClient
 import spatutorial.shared.Api
+import boopickle.Default._
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 

@@ -4,7 +4,7 @@ import autowire._
 import rx._
 import spatutorial.client.ukko._
 import spatutorial.shared.{TodoItem, Api}
-
+import boopickle.Default._
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 case object RefreshTodos
@@ -39,7 +39,7 @@ trait TodoStore extends Actor {
   }
 
   // return as Rx to prevent mutation in dependencies
-  def todos:Rx[Seq[TodoItem]] = items
+  def todos:Rx[Seq[TodoItem]] = Rx { items() }
 }
 
 // create a singleton instance of TodoStore

@@ -1,24 +1,23 @@
 # Dashboard
 
-[Dashboard module](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/modules/Dashboard.scala) is really simple in terms of React components as it contains
-no internal state nor backend functionality. It's basically just a placeholder for two other components `Motd` and `Chart`. The only method is
-the `render` method which is responsible for rendering the component when it's mounted by React. It also provides fake data for the Chart
-component, to keep simple.
+[Dashboard module](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/modules/Dashboard.scala) is really simple 
+in terms of React components as it contains no internal state nor backend functionality. It's basically just a placeholder for two other components 
+`Motd` and `Chart`. The only method is the `render` method which is responsible for rendering the component when it's mounted by React. It also provides 
+fake data for the Chart component, to keep simple.
 
 ```scala
-val component = ReactComponentB[MainRouter.Router]("Dashboard")
-  .render(router => {
+// create the React component for Dashboard
+val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
+  .render(ctl => {
   // create dummy data for the chart
-  val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
-  // get internal links
-  val appLinks = MainRouter.appLinks(router)
+  val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
   <.div(
     // header, MessageOfTheDay and chart components
     <.h2("Dashboard"),
     Motd(),
     Chart(cp),
     // create a link to the Todo view
-    <.div(MainRouter.todoLink("Check your todos!"))
+    <.div(ctl.link(TodoLoc)("Check your todos!"))
   )
 }).build
 ```
@@ -70,17 +69,9 @@ How the magic of calling the server actually happens is covered in a [later chap
 ## Links to other routes
 
 Sometimes you need to create a link that takes the user to an another module behind a route. To create these links in a type-safe manner,
-the tutorial code defines functions inside `MainRouter` that return valid links (anchor tags with `onClick` hooked to appropriate router handler).
+the tutorial passes an instance of `RouterCtl` to components.
 
 ```scala
-def dashboardLink = router.link(dashboardLoc)
-def todoLink = router.link(todoLoc)
-def routerLink(loc: Loc) = router.link(loc)
-```
-
-These functions return a `ReactTag` that you can assign children just by adding them to the call.
-
-```scala
-MainRouter.todoLink("Check your todos!")
+ctl.link(TodoLoc)("Check your todos!")
 ```
 

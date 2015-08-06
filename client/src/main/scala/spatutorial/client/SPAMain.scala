@@ -62,6 +62,6 @@ object SPAMain extends js.JSApp {
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
     // tell React to render the router in the document body
-    React.render(router(), dom.document.body)
+    React.render(router(), dom.document.getElementById("root"))
   }
 }

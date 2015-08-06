@@ -1,6 +1,6 @@
 # Logging
 
-Most of us are used to great logging infrastructure available on the server side and sometimes it helps in situations where direct debugging is difficult
+Most of us are used to the great logging infrastructure available on the server side and sometimes it helps in situations where direct debugging is difficult
 or plain impossible (for example a customer is using your app). Luckily there are nice logging libraries available also for Javascript that we can utilize
 through thin facades.
 
@@ -27,28 +27,28 @@ The logging library also provides functionality to send all your log messages to
 log message into a small JSON object and POSTs it to the specified URL. On the server side we define a path to receive and print those log messages.
 
 ```scala
-path("logging") {
-  entity(as[String]) { msg =>
-    ctx =>
-      println(s"ClientLog: $msg")
-    ctx.complete(StatusCodes.OK)
-  }
+def logging = Action(parse.anyContent) {
+  implicit request =>
+    request.body.asJson.foreach { msg =>
+      println(s"CLIENT - $msg")
+    }
+    Ok("")
 }
 ```
 
 To enable server side logging, call `log.enableServerLogging("/logging")`. In the server logs the client log messages will be shown as below:
 
 ```
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500652089,"level":"INFO","url":"http://localhost:8080/#todo","message":"This message goes to server as well"}]
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500652089,"level":"INFO","url":"http://localhost:8080/#todo","message":"This message goes to server as well"}]
 sharedProjectJVM Sending 4 Todo items
 sharedProjectJVM Sending 4 Todo items
 sharedProjectJVM Todo item was updated: TodoItem(3,Walk away slowly from an explosion without looking back.,TodoHigh,false)
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500661456,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500664865,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"Todo editing cancelled"}]
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500668485,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500671017,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500671751,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
-sharedProjectJVM ClientLog: [{"logger":"Log","timestamp":1425500672101,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"Todo edited:
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500661456,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500664865,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"Todo editing cancelled"}]
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500668485,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500671017,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500671751,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"User is editing a todo"}]
+sharedProjectJVM CLIENT - [{"logger":"Log","timestamp":1425500672101,"level":"DEBUG","url":"http://localhost:8080/#todo","message":"Todo edited:
   TodoItem(3,Walk away slowly from an explosion without looking back.,TodoNormal,false)"}]
 ```
 

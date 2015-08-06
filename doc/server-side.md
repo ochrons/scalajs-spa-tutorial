@@ -1,36 +1,43 @@
 # Server side
 
-The tutorial server is very simplistic and does not represent a typical Spray application, but it's enough to provide some basic support
-for the client side. Routing logic on the server side is defined using Spray DSL
+The tutorial server is very simplistic and does not represent a typical Play application, but it's enough to provide some basic support
+for the client side. Routing logic on the server side is defined using a Play controller 
 
 ```scala
-startServer("0.0.0.0", port = port) {
-  get {
-    pathSingleSlash {
-      // serve the main page
-      if(Config.productionMode)
-        getFromResource("web/index-full.html")
-      else
-        getFromResource("web/index.html")
-    } ~
-      // serve other requests directly from the resource directory
-      getFromResourceDirectory("web")
-  } ~ post {
-    path("api" / Segments) { s =>
-      extract(_.request.entity.data) { requestData =>
-        ctx =>
-          // handle API requests via autowire
-          val result = Router.route[Api](apiService)(
-            autowire.Core.Request(s, Unpickle[Map[String, ByteBuffer]].fromBytes(requestData.toByteString.asByteBuffer))
-          )
-          result.map(responseData => ctx.complete(HttpEntity(HttpData(ByteString(responseData)))))
+object Application extends Controller {
+  val apiService = new ApiService()
+
+  def index = Action {
+    Ok(views.html.index("SPA tutorial"))
+  }
+
+  def autowireApi(path: String) = Action.async(parse.raw) {
+    implicit request =>
+      println(s"Request path: $path")
+      // get the request body as Array[Byte]
+      val b = request.body.asBytes(parse.UNLIMITED).get
+
+      // call Autowire route
+      Router.route[Api](apiService)(
+        autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(ByteBuffer.wrap(b)))
+      ).map(buffer => {
+        val data = Array.ofDim[Byte](buffer.remaining())
+        buffer.get(data)
+        Ok(data)
+      })
+  }
+
+  def logging = Action(parse.anyContent) {
+    implicit request =>
+      request.body.asJson.foreach { msg =>
+        println(s"CLIENT - $msg")
       }
-    }
+      Ok("")
   }
 }
 ```
 
-The main HTML page and related resources are provided directly from the project resources directory (coming from the `shared` sub-project, actually).
+The main HTML page and related resources are provided by Play's template engine from the `twirl` directory.
 The interesting part is handling `api` requests using Autowire router. Like on the client side, Autowire takes care of the complicated stuff
 so you just need to plug it in and let it do its magic. Boopickle takes care of deserializing the request and serializing the response into binary. 
 
@@ -50,22 +57,26 @@ class ApiService extends Api {
 
   override def getTodos(): Seq[TodoItem] = {
     // provide some fake Todos
+    println(s"Sending ${todos.size} Todo items")
     todos
   }
 
   // update a Todo
-  override def updateTodo(item: TodoItem): Unit = {
+  override def updateTodo(item: TodoItem): Seq[TodoItem] = {
     // TODO, update database etc :)
-    println(s"Todo item was updated: $item")
     if(todos.exists(_.id == item.id)) {
       todos = todos.collect {
         case i if i.id == item.id => item
         case i => i
       }
+      println(s"Todo item was updated: $item")
     } else {
       // add a new item
-      todos :+= item.copy(id = UUID.randomUUID().toString)
+      val newItem = item.copy(id = UUID.randomUUID().toString)
+      todos :+= newItem
+      println(s"Todo item was added: $newItem")
     }
+    todos
   }
 }
 ```

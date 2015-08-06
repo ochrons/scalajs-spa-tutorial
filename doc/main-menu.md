@@ -5,39 +5,45 @@ statically within the class itself, because the referred locations are anyway al
 a dynamic system, but static is just fine here.
 
 ```scala
-case class MenuItem(label: (Props) => ReactNode, icon: Icon, location: MainRouter.Loc)
+case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, todos: Rx[Seq[TodoItem]])
 
-private val menuItems = Seq(
-  MenuItem(_ => "Dashboard", Icon.dashboard, MainRouter.dashboardLoc),
-  MenuItem(buildTodoMenu, Icon.check, MainRouter.todoLoc)
-)
+case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
-private def buildTodoMenu(props: MenuProps): ReactNode = {
+// build the Todo menu item, showing the number of open todos
+private def buildTodoMenu(props: Props): ReactNode = {
   val todoCount = props.todos().count(!_.completed)
   Seq(
     <.span("Todo "),
     if (todoCount > 0) <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount) else <.span()
   )
 }
+
+private val menuItems = Seq(
+  MenuItem(1, _ => "Dashboard", Icon.dashboard, DashboardLoc),
+  MenuItem(2, buildTodoMenu, Icon.check, TodoLoc)
+)
 ```
 
-For each menu item we define a function to generate the label, an icon and the location that was registered in the `MainRouter`. For Dashboard
+For each menu item we define a function to generate the label, an icon and the location that was registered in the `routerConfig`. For Dashboard
 the label is simple text, but for Todo we also render the number of open todos.
 
-To render the menu we just loop over the items and create appropriate tags. For links we need to use the `router` provided in the properties.
+To render the menu we just loop over the items and create appropriate tags. For links we need to use the `RouterCtl` provided in the properties.
 
 ```scala
-val MainMenu = ReactComponentB[MenuProps]("MainMenu")
-  .render(P => {
+private val MainMenu = ReactComponentB[Props]("MainMenu")
+  .stateless
+  .backend(new Backend(_))
+  .render((P, _, B) => {
   <.ul(bss.navbar)(
     // build a list of menu items
     for (item <- menuItems) yield {
-      <.li((P.activeLocation == item.location) ?= (^.className := "active"),
-        MainRouter.routerLink(item.location)(item.icon, " ", item.label(P))
+      <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (^.className := "active"),
+        P.ctl.link(item.location)(item.icon, " ", item.label(P))
       )
     }
   )
 })
+  .componentDidMount(_.backend.mounted())
   .build
 ```
 

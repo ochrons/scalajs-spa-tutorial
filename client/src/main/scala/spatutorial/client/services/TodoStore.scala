@@ -16,7 +16,7 @@ case class UpdateTodo(item: TodoItem)
 trait TodoStore extends Actor {
   override val name = "TodoStore"
 
-  // refine a reactive variable
+  // define a reactive variable
   private val items = Var(Seq.empty[TodoItem])
 
   private def updateItems(newItems: Seq[TodoItem]): Unit = {

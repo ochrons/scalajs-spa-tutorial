@@ -56,13 +56,22 @@ lazy val server = (project in file("server")).settings(
   scalaVersion := Settings.versions.scala,
   libraryDependencies ++= Settings.jvmDependencies.value,
   scalaJSProjects := clients,
+  // make server depend on changes in the client
+  compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(client, Compile)),
+  dist <<= dist dependsOn (fullOptJS in(client, Compile)),
+  stage <<= stage dependsOn (fullOptJS in(client, Compile)),
   pipelineStages := Seq(scalaJSProd),
+  LessKeys.compress in Assets  := true,
   scalacOptions ++= Settings.scalacOptions,
   // set environment variables in the execute scripts
   NativePackagerKeys.batScriptExtraDefines += "set PRODUCTION_MODE=true",
   NativePackagerKeys.bashScriptExtraDefines += "export PRODUCTION_MODE=true"
-)
-  .enablePlugins(SbtWeb, PlayScala).disablePlugins(PlayLayoutPlugin)
+).settings(
+    // ask scalajs project to put its outputs in to the public web dir
+    Seq(fastOptJS, fullOptJS, packageJSDependencies) map { packageJSKey =>
+      crossTarget in(client, Compile, packageJSKey) := (WebKeys.public in Assets).value
+    }
+  ).enablePlugins(SbtWeb, PlayScala).disablePlugins(PlayLayoutPlugin)
   .aggregate(clients.map(projectToRef): _*)
   .dependsOn(sharedJVM)
 

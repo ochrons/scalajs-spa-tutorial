@@ -18,7 +18,7 @@ object Application extends Controller {
   val apiService = new ApiService()
 
   def index = Action {
-    Ok(views.html.index())
+    Ok(views.html.index("SPA tutorial"))
   }
 
   def autowireApi(path: String) = Action.async(parse.raw) {

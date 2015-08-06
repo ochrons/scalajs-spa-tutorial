@@ -52,7 +52,7 @@ The update happens indirectly by sending an `UpdateAllTodos` message to the `Mai
 actors, which in this case means only the `TodoStore`.
 
 ```scala
-// refine a reactive variable
+// define a reactive variable
 private val items = Var(Seq.empty[TodoItem])
 
 private def updateItems(newItems: Seq[TodoItem]): Unit = {

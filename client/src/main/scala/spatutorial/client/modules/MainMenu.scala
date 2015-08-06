@@ -19,7 +19,7 @@ object MainMenu {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(ctl: RouterCtl[Loc], currentLoc:Loc, todos: Rx[Seq[TodoItem]])
+  case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, todos: Rx[Seq[TodoItem]])
 
   case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 

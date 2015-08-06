@@ -36,7 +36,7 @@ For more extensive examples, please refer to [ScalaCSS documentation](https://ja
 Each call to `style` registers a new style in the internal registry. To actually generate the CSS we need in the HTML page, we have to call
 
 ```scala
-  GlobalStyles.addToDocument()
+GlobalStyles.addToDocument()
 ```
 
 in our application initialization code. Note that this is [specific initialization to scalajs-react](https://japgolly.github.io/scalacss/book/ext/react.html)
@@ -74,7 +74,7 @@ The values `default`, `primary` etc. come from an enumeration defined in the `Bo
 [functional styles](http://japgolly.github.io/scalacss/book/features/stylef.html) and is a way of listing all possible values for a style that are generated
 before being used.
 
-`commonStyle` is such a functional style, which takes as an input one value from the defined domain and returns the appropriate style. We can define all
+`commonStyle` is a *functional style*, which takes as an input one value from the defined domain and returns the appropriate style. We can define all
 possible Bootstrap `button` styles with simply
 
 ```scala

@@ -25,7 +25,7 @@ to define it through child component(s).
 
 ```scala
 object Button {
-  case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default)
+  case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
   val component = ReactComponentB[Props]("Button")
     .render { (P, C) =>

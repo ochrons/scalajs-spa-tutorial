@@ -1,4 +1,18 @@
-@main("SPA tutorial") {
-    <div id="root">
-    </div>
-}
+@(title: String)
+@import play.api.Play
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>@title</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/public","stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("/public","images/favicon.png")">
+    </head>
+    <body>
+        <div id="root">
+        </div>
+        @playscalajs.html.scripts("client")
+    </body>
+</html>

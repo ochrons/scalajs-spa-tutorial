@@ -3,6 +3,7 @@ package controllers
 import java.nio.ByteBuffer
 
 import boopickle.Default._
+import com.typesafe.config.ConfigFactory
 import play.api.mvc._
 import services.ApiService
 import spatutorial.shared.Api
@@ -14,6 +15,12 @@ object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
   def write[R: Pickler](r: R) = Pickle.intoBytes(r)
 }
 
+object Config {
+  val c = ConfigFactory.load().getConfig("spatutorial")
+
+  val productionMode = c.getBoolean("productionMode")
+}
+
 object Application extends Controller {
   val apiService = new ApiService()
 
@@ -23,7 +30,9 @@ object Application extends Controller {
 
   def autowireApi(path: String) = Action.async(parse.raw) {
     implicit request =>
-      println(s"Request path: $path")
+      if(!Config.productionMode)
+        println(s"Request path: $path")
+
       // get the request body as Array[Byte]
       val b = request.body.asBytes(parse.UNLIMITED).get
 

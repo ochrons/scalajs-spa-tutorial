@@ -9,9 +9,8 @@ we are lucky to have developers like @japgolly who go through all the pain and s
 [`scalajs-react` router](https://github.com/japgolly/scalajs-react/blob/master/extra/ROUTER2.md) which nicely integrates with `scalajs-react` and provides a
 seamless way to manage routes and navigate between them.
 
-The way it works is that you basically create route components, register them with the router and off it goes binding your components as the URL changes. The
-provided examples build all routes within a single class, but in real life we want more modularity. In this tutorial we have a total of *two* modules/routes/views
-just to demonstrate how to use the router.
+The way it works is that you basically create route definitions, register them with the router and off it goes binding your components as the URL changes. In 
+this tutorial we have a total of *two* modules/routes/views just to demonstrate how to use the router.
 
 As this is a Single Page Application, all routes are defined under one router configuration, `routerConfig`.
 

@@ -78,6 +78,13 @@ class ApiService extends Api {
     }
     todos
   }
+
+  // delete a Todo
+  override def deleteTodo(itemId: String): Seq[TodoItem] = {
+    println(s"Deleting item with id = $itemId")
+    todos = todos.filterNot(_.id == itemId)
+    todos
+  }
 }
 ```
 

@@ -32,20 +32,20 @@ lazy val client: Project = (project in file("client"))
     jsDependencies ++= Settings.jsDependencies.value,
     // RuntimeDOM is needed for tests
     jsDependencies += RuntimeDOM % "test",
+    // yes, we want to package JS dependencies
+    skip in packageJSDependencies := false,
     // use Scala.js provided launcher code to start the client app
     persistLauncher := true,
     persistLauncher in Test := false,
     // must specify source maps location because we use pure CrossProject
     sourceMapsDirectories += sharedJS.base / "..",
-    // yes, we want to package JS dependencies
-    skip in packageJSDependencies := false,
     // use uTest framework for tests
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
   .dependsOn(sharedJS)
 
-// Client projects (just one)
+// Client projects (just one in this case)
 lazy val clients = Seq(client)
 
 // instantiate the JVM project for SBT with some additional settings
@@ -61,10 +61,7 @@ lazy val server = (project in file("server"))
     scalaJSProjects := clients,
     pipelineStages := Seq(scalaJSProd),
     // compress CSS
-    LessKeys.compress in Assets := true,
-    // set environment variables in the execute scripts
-    NativePackagerKeys.batScriptExtraDefines += "set PRODUCTION_MODE=true",
-    NativePackagerKeys.bashScriptExtraDefines += "export PRODUCTION_MODE=true"
+    LessKeys.compress in Assets := true
   )
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLayoutPlugin) // use the standard directory layout instead of Play's custom

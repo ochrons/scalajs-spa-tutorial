@@ -3,7 +3,7 @@
 [Dashboard module](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/modules/Dashboard.scala) is really simple 
 in terms of React components as it contains no internal state nor backend functionality. It's basically just a placeholder for two other components 
 `Motd` and `Chart`. The only method is the `render` method which is responsible for rendering the component when it's mounted by React. It also provides 
-fake data for the Chart component, to keep simple.
+fake data for the Chart component, to keep things simple.
 
 ```scala
 // create the React component for Dashboard

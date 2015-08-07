@@ -20,6 +20,6 @@ object AjaxClient extends autowire.Client[ByteBuffer, Pickler, Pickler] {
     ).map(r => TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))
   }
 
-  def read[Result: Pickler](p: ByteBuffer) = Unpickle[Result].fromBytes(p)
-  def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
+  override def read[Result: Pickler](p: ByteBuffer) = Unpickle[Result].fromBytes(p)
+  override def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
 }

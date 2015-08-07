@@ -33,18 +33,14 @@ processing as a bonus. First we'll need to add the [sbt-less](https://github.com
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.6")
 ```
 
-The server project also need to enable the `sbt-web` plugin for this to work.
-
-```scala
-server.enablePlugins(SbtWeb)
-```
+The server project automatically enables the `sbt-web` and `sbt-less` plugins because it uses the `PlayScala` plugin.
 
 We'll be storing LESS files under `src/main/assets/stylesheets` to keep them separated from directly copied resources.
 
 ```scala
 LessKeys.compress in Assets  := true,
 ```
-The last line tells the LESS compiler to minify the produced CSS.
+This tells the LESS compiler to minify the produced CSS.
 
 Next step is to create a `main.less` (yes, it has to be named exactly that) with references to CSS/LESS files inside the WebJars.
 

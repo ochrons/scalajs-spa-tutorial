@@ -31,8 +31,8 @@ object AjaxClient extends autowire.Client[ByteBuffer, Pickler, Pickler] {
     ).map(r => TypedArrayBuffer.wrap(r.response.asInstanceOf[ArrayBuffer]))
   }
 
-  def read[Result: Pickler](p: ByteBuffer) = Unpickle[Result].fromBytes(p)
-  def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
+  override def read[Result: Pickler](p: ByteBuffer) = Unpickle[Result].fromBytes(p)
+  override def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
 }
 ```
 
@@ -45,8 +45,8 @@ import boopickle.Default._
 
 // server side
 object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
-  def read[R: Pickler](p: ByteBuffer) = Unpickle[R].fromBytes(p)
-  def write[R: Pickler](r: R) = Pickle.intoBytes(r)
+  override def read[R: Pickler](p: ByteBuffer) = Unpickle[R].fromBytes(p)
+  override def write[R: Pickler](r: R) = Pickle.intoBytes(r)
 }
 ```
 
@@ -54,6 +54,7 @@ Now that you have the `AjaxClient` set up, calling server is as simple as
 
 ```scala
 import scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import boopickle.Default._
 import autowire._
 
 AjaxClient[Api].getTodos().call().foreach { todos =>
@@ -61,7 +62,7 @@ AjaxClient[Api].getTodos().call().foreach { todos =>
 }
 ```
 
-Note that you need those two imports to access the Autowire magic and to provide an execution context for the futures.
+Note that you need those three imports to access the Autowire/BooPickle magic and to provide an execution context for the futures.
 
 The `Api` is just a simple trait shared between the client and server.
 
@@ -74,7 +75,10 @@ trait Api {
   def getTodos() : Seq[TodoItem]
 
   // update a Todo
-  def updateTodo(item:TodoItem)
+  def updateTodo(item: TodoItem): Seq[TodoItem]
+
+  // delete a Todo
+  def deleteTodo(itemId: String): Seq[TodoItem]
 }
 ```
 

@@ -1,5 +1,11 @@
 # Change history
 
+## 1.0.0
+
+* Server side is now on top of Play instead of Spray
+* Simplified build file a lot
+* Update to latest versions of libraries
+
 ## 0.1.10
 
 * Switched from uPickle to [BooPickle](https://github.com/ochrons/boopickle)

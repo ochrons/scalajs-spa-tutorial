@@ -1,5 +1,9 @@
 # Change history
 
+## 1.0.1
+
+* Updated to 0.2.7 of `sbt-play-scalajs` to fix issue #20
+
 ## 1.0.0
 
 * Server side is now on top of Play instead of Spray

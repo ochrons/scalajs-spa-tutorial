@@ -11,9 +11,9 @@ lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
   .jsConfigure(_ enablePlugins ScalaJSPlay)
   .jsSettings(sourceMapsBase := baseDirectory.value / "..")
 
-lazy val sharedJVM = shared.jvm
+lazy val sharedJVM = shared.jvm.settings(name := "sharedJVM")
 
-lazy val sharedJS = shared.js
+lazy val sharedJS = shared.js.settings(name := "sharedJS")
 
 // use eliding to drop some debug code in the production build
 lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable functions")
@@ -79,6 +79,8 @@ lazy val ReleaseCmd = Command.command("release") {
     "set elideOptions in client := Seq()" ::
     state
 }
+
+// lazy val root = (project in file(".")).aggregate(client, server)
 
 // loads the Play server project at sbt startup
 onLoad in Global := (Command.process("project server", _: State)) compose (onLoad in Global).value

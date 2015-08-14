@@ -20,3 +20,12 @@ Tutorial [documentation](https://ochrons.github.io/scalajs-spa-tutorial) is now 
 
 あなたは日本語を話せますか？Scala.js is Big in Japan, so I'm looking for help to translate the tutorial documentation into Japanese. Contact me on twitter 
 (@ochrons) or via email (otto@chrons.me) if you're interested!
+
+# Scala IDE users
+
+If you are using Scala IDE, you need to set additional settings to get your Eclipse project exported from SBT.
+
+```
+set EclipseKeys.skipParents in ThisBuild := false
+eclipse
+```

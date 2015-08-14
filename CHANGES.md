@@ -1,5 +1,9 @@
 # Change history
 
+## 1.0.2
+
+* Updated build file to support Scala IDE better
+
 ## 1.0.1
 
 * Updated to 0.2.7 of `sbt-play-scalajs` to fix issue #20

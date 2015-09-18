@@ -9,7 +9,6 @@ lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
   )
   // set up settings specific to the JS project
   .jsConfigure(_ enablePlugins ScalaJSPlay)
-  .jsSettings(sourceMapsBase := baseDirectory.value / "..")
 
 lazy val sharedJVM = shared.jvm.settings(name := "sharedJVM")
 
@@ -37,8 +36,6 @@ lazy val client: Project = (project in file("client"))
     // use Scala.js provided launcher code to start the client app
     persistLauncher := true,
     persistLauncher in Test := false,
-    // must specify source maps location because we use pure CrossProject
-    sourceMapsDirectories += sharedJS.base / "..",
     // use uTest framework for tests
     testFrameworks += new TestFramework("utest.runner.Framework")
   )

@@ -18,7 +18,7 @@ trait Dispatcher {
   }
 
   def unregister(actor: Actor): Unit = {
-    assert(actors.contains(actor), s"Actor ${actor.name} not registered")
+    assert(actors.contains(actor), s"Actor ${actor.name} is not registered")
     actors -= actor
   }
 

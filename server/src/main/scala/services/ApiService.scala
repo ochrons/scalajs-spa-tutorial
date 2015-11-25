@@ -12,7 +12,7 @@ class ApiService extends Api {
     TodoItem("4", 0x61626364, "Sneeze in front of the pope. Get blessed.", TodoNormal, true)
   )
 
-  override def motd(name: String): String = s"Welcome to SPA, $name! Time is now ${new Date}"
+  override def welcome(name: String): String = s"Welcome to SPA, $name! Time is now ${new Date}"
 
   override def getTodos(): Seq[TodoItem] = {
     // provide some fake Todos

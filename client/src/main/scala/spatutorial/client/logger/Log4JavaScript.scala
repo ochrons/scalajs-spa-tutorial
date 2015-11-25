@@ -7,12 +7,14 @@ import scala.scalajs.js.annotation.JSName
 /**
  * Facade for functions in log4javascript that we need
  */
+@js.native
 private[logger] trait Log4JavaScript extends js.Object {
   def getLogger(name:js.UndefOr[String]):JSLogger = js.native
   def setEnabled(enabled:Boolean):Unit = js.native
   def isEnabled:Boolean = js.native
 }
 
+@js.native
 @JSName("log4javascript.Level")
 private[logger] trait Level extends js.Object {
   val ALL:Level = js.native
@@ -24,6 +26,7 @@ private[logger] trait Level extends js.Object {
   val FATAL:Level = js.native
 }
 
+@js.native
 @JSName("log4javascript.Logger")
 private[logger] trait JSLogger extends js.Object {
   def addAppender(appender:Appender):Unit = js.native
@@ -45,29 +48,36 @@ private[logger] trait JSLogger extends js.Object {
   def fatal(msg:String):Unit = js.native
 }
 
+@js.native
 @JSName("log4javascript.Layout")
 private[logger] trait Layout extends js.Object
 
+@js.native
 @JSName("log4javascript.JsonLayout")
 private[logger] class JsonLayout extends Layout
 
+@js.native
 @JSName("log4javascript.Appender")
 private[logger] trait Appender extends js.Object {
   def setLayout(layout:Layout):Unit = js.native
   def setThreshold(level:Level):Unit = js.native
 }
 
+@js.native
 @JSName("log4javascript.BrowserConsoleAppender")
 private[logger] class BrowserConsoleAppender extends Appender
 
+@js.native
 @JSName("log4javascript.PopUpAppender")
 private[logger] class PopUpAppender extends Appender
 
+@js.native
 @JSName("log4javascript.AjaxAppender")
 private[logger] class AjaxAppender(url:String) extends Appender {
   def addHeader(header:String, value:String):Unit = js.native
 }
 
+@js.native
 private[logger] object Log4JavaScript extends js.GlobalScope {
   val log4javascript:Log4JavaScript = js.native
 }

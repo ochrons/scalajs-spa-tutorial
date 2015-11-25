@@ -1,7 +1,7 @@
 package spatutorial.client
 
-import japgolly.scalajs.react.React
-import japgolly.scalajs.react.extra.router2._
+import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import spatutorial.client.components.GlobalStyles
@@ -62,6 +62,6 @@ object SPAMain extends js.JSApp {
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
     // tell React to render the router in the document body
-    React.render(router(), dom.document.getElementById("root"))
+    ReactDOM.render(router(), dom.document.getElementById("root"))
   }
 }

@@ -1,6 +1,6 @@
 package spatutorial.client.modules
 
-import japgolly.scalajs.react.extra.router2.RouterCtl
+import japgolly.scalajs.react.extra.router.RouterCtl
 import spatutorial.client.SPAMain.{TodoLoc, DashboardLoc, Loc}
 
 import scalacss.ScalaCssReact._
@@ -24,21 +24,21 @@ object MainMenu {
   case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
   class Backend(t: BackendScope[Props, _]) extends OnUnmount {
-    def mounted(): Unit = {
+    def mounted(props: Props) = Callback {
       // hook up to Todo changes
-      val obsItems = t.props.todos.foreach { _ => t.forceUpdate() }
-      onUnmount {
+      val obsItems = props.todos.foreach { _ => t.forceUpdate.runNow() }
+      onUnmount(Callback {
         // stop observing when unmounted (= never in this SPA)
         obsItems.kill()
-      }
+      })
       MainDispatcher.dispatch(RefreshTodos)
     }
   }
 
   // build the Todo menu item, showing the number of open todos
-  private def buildTodoMenu(props: Props): ReactNode = {
+  private def buildTodoMenu(props: Props): ReactElement = {
     val todoCount = props.todos().count(!_.completed)
-    Seq(
+    <.span(
       <.span("Todo "),
       if (todoCount > 0) <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount) else <.span()
     )
@@ -52,7 +52,7 @@ object MainMenu {
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .stateless
     .backend(new Backend(_))
-    .render((P, _, B) => {
+    .render_P((P) => {
     <.ul(bss.navbar)(
       // build a list of menu items
       for (item <- menuItems) yield {
@@ -62,7 +62,7 @@ object MainMenu {
       }
     )
   })
-    .componentDidMount(_.backend.mounted())
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = MainMenu(props)

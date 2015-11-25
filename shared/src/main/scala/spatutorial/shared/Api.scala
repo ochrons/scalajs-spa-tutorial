@@ -2,7 +2,7 @@ package spatutorial.shared
 
 trait Api {
   // message of the day
-  def motd(name: String): String
+  def welcome(name: String): String
 
   // get Todo items
   def getTodos(): Seq[TodoItem]

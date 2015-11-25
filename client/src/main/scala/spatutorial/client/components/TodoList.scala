@@ -10,10 +10,10 @@ object TodoList {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class TodoListProps(items: Seq[TodoItem], stateChange: (TodoItem) => Unit, editItem: (TodoItem) => Unit, deleteItem: (TodoItem) => Unit)
+  case class TodoListProps(items: Seq[TodoItem], stateChange: (TodoItem) => Callback, editItem: (TodoItem) => Callback, deleteItem: (TodoItem) => Callback)
 
   val TodoList = ReactComponentB[TodoListProps]("TodoList")
-    .render(P => {
+    .render_P(P => {
     val style = bss.listGroup
     def renderItem(item: TodoItem) = {
       // convert priority into Bootstrap style
@@ -26,8 +26,8 @@ object TodoList {
         <.input(^.tpe := "checkbox", ^.checked := item.completed, ^.onChange --> P.stateChange(item.copy(completed = !item.completed))),
         <.span(" "),
         if (item.completed) <.s(item.content) else <.span(item.content),
-        Button(Button.Props(() => P.editItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Edit"),
-        Button(Button.Props(() => P.deleteItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Delete")
+        Button(Button.Props(P.editItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Edit"),
+        Button(Button.Props(P.deleteItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Delete")
       )
     }
     <.ul(style.listGroup)(P.items map renderItem)

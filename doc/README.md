@@ -5,6 +5,8 @@
 Tutorial for creating a simple (but potentially complex!) Single Page Application with [Scala.js](http://www.scala-js.org/) and 
 [Play](https://www.playframework.com/).
 
+**NOTE! Documentation is not exactly up-to-date with the latest source code.**
+
 ## Purpose
 
 This project demonstrates typical design patterns and practices for developing SPAs with Scala.js with special focus on building a complete application.

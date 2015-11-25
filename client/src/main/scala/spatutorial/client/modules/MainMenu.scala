@@ -1,43 +1,36 @@
 package spatutorial.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
-import spatutorial.client.SPAMain.{TodoLoc, DashboardLoc, Loc}
-
-import scalacss.ScalaCssReact._
+import diode.react.ComponentModel
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import rx._
-import rx.ops._
+import spatutorial.client.SPAMain.{DashboardLoc, Loc, TodoLoc}
 import spatutorial.client.components.Bootstrap.CommonStyle
 import spatutorial.client.components.Icon._
 import spatutorial.client.components._
 import spatutorial.client.services._
-import spatutorial.shared.TodoItem
+
+import scalacss.ScalaCssReact._
 
 object MainMenu {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, todos: Rx[Seq[TodoItem]])
+  case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Todos]])
 
   case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
-  class Backend(t: BackendScope[Props, _]) extends OnUnmount {
+  class Backend(t: BackendScope[Props, _]) {
     def mounted(props: Props) = Callback {
-      // hook up to Todo changes
-      val obsItems = props.todos.foreach { _ => t.forceUpdate.runNow() }
-      onUnmount(Callback {
-        // stop observing when unmounted (= never in this SPA)
-        obsItems.kill()
-      })
-      MainDispatcher.dispatch(RefreshTodos)
+      // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
+      if(props.cm.value.isEmpty)
+        props.cm.dispatch(RefreshTodos)
     }
   }
 
   // build the Todo menu item, showing the number of open todos
   private def buildTodoMenu(props: Props): ReactElement = {
-    val todoCount = props.todos().count(!_.completed)
+    val todoCount = props.cm().map(_.items.count(!_.completed)).getOrElse(0)
     <.span(
       <.span("Todo "),
       if (todoCount > 0) <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount) else <.span()
@@ -65,5 +58,5 @@ object MainMenu {
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(props: Props) = MainMenu(props)
+  def apply(ctl: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Todos]]) = MainMenu(Props(ctl, currentLoc, cm))
 }

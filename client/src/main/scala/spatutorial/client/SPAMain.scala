@@ -7,7 +7,7 @@ import org.scalajs.dom
 import spatutorial.client.components.GlobalStyles
 import spatutorial.client.logger._
 import spatutorial.client.modules._
-import spatutorial.client.services.TodoStore
+import spatutorial.client.services.{SPACircuit}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
@@ -28,9 +28,9 @@ object SPAMain extends js.JSApp {
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
 
-    (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-      | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
-      ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
+    (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(m => m)(cm => Dashboard.component(Dashboard.Props(ctl, cm))))
+      | staticRoute("#todo", TodoLoc) ~> renderR(ctl => SPACircuit.connect(_.todos)(Todo(_)))
+    ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
   // base layout for all pages
@@ -41,7 +41,7 @@ object SPAMain extends js.JSApp {
         <.div(^.className := "container")(
           <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
           <.div(^.className := "collapse navbar-collapse")(
-            MainMenu(MainMenu.Props(c, r.page, TodoStore.todos))
+            SPACircuit.connect(_.todos.toOption)(cm => MainMenu(c, r.page, cm))
           )
         )
       ),

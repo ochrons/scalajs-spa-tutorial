@@ -16,6 +16,7 @@ class ApiService extends Api {
 
   override def getTodos(): Seq[TodoItem] = {
     // provide some fake Todos
+    Thread.sleep(300)
     println(s"Sending ${todos.size} Todo items")
     todos
   }
@@ -35,12 +36,14 @@ class ApiService extends Api {
       todos :+= newItem
       println(s"Todo item was added: $newItem")
     }
+    Thread.sleep(300)
     todos
   }
 
   // delete a Todo
   override def deleteTodo(itemId: String): Seq[TodoItem] = {
     println(s"Deleting item with id = $itemId")
+    Thread.sleep(300)
     todos = todos.filterNot(_.id == itemId)
     todos
   }

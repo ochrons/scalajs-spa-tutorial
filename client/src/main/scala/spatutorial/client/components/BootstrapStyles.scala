@@ -36,8 +36,8 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
 
   val panelBody = styleWrap("panel-body")
 
-  // wrap styles in a namespace, cannot use "object modal" because it initializes lazily
-  val modal = new Object {
+  // wrap styles in a namespace, assign to val to prevent lazy initialization
+  object modal {
     val modal = styleWrap("modal")
     val fade = styleWrap("fade")
     val dialog = styleWrap("modal-dialog")
@@ -47,12 +47,15 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
     val footer = styleWrap("modal-footer")
   }
 
-  val listGroup = new Object {
+  val _modal = modal
+
+  object listGroup {
     val listGroup = styleWrap("list-group")
     val item = styleWrap("list-group-item")
     val itemOpt = commonStyle(contextDomain, "list-group-item")
   }
 
+  val _listGroup = listGroup
   val pullRight = styleWrap("pull-right")
   val buttonXS = styleWrap("btn-xs")
   val close = styleWrap("close")

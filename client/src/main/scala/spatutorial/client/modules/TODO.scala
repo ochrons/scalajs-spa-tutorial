@@ -1,14 +1,10 @@
 package spatutorial.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
-import spatutorial.client.SPAMain.Loc
-
-import scalacss.ScalaCssReact._
+import diode.react.ReactPot._
+import diode.react._
+import diode.util.Pot
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import rx._
-import rx.ops._
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.components.TodoList.TodoListProps
 import spatutorial.client.components._
@@ -16,72 +12,60 @@ import spatutorial.client.logger._
 import spatutorial.client.services._
 import spatutorial.shared._
 
+import scalacss.ScalaCssReact._
+
 object Todo {
 
-  case class Props(todos: Rx[Seq[TodoItem]], router: RouterCtl[Loc])
+  case class Props(cm: ComponentModel[Pot[Todos]])
 
   case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-    protected def observe[T](rx: Rx[T]): Unit = {
-      val obs = rx.foreach(_ => scope.forceUpdate.runNow())
-      // stop observing when unmounted
-      onUnmount(Callback(obs.kill()))
-    }
-  }
-
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback = Callback {
-      // hook up to TodoStore changes
-      observe(props.todos)
+  class Backend(t: BackendScope[Props, State]) {
+    def mounted(props: Props) = {
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      MainDispatcher.dispatch(RefreshTodos)
+      Callback.ifTrue(props.cm().isEmpty, props.cm.dispatch(RefreshTodos))
     }
 
-    def editTodo(item: Option[TodoItem]): Callback = {
-      // activate the todo dialog
+    def editTodo(item: Option[TodoItem]) = {
+      // activate the edit dialog
       t.modState(s => s.copy(selectedItem = item, showTodoForm = true))
     }
 
-    def deleteTodo(item: TodoItem): Callback = {
-      Callback(TodoActions.deleteTodo(item))
-    }
-
-    def todoEdited(item: TodoItem, cancelled: Boolean): Callback = {
-      if (cancelled) {
+    def todoEdited(item: TodoItem, cancelled: Boolean) = {
+      val cb = if (cancelled) {
         // nothing to do here
-        log.debug("Todo editing cancelled")
+        Callback.log("Todo editing cancelled")
       } else {
-        log.debug(s"Todo edited: $item")
-        TodoActions.updateTodo(item)
+        Callback.log(s"Todo edited: $item") >>
+          t.props >>= (_.cm.dispatch(UpdateTodo(item)))
       }
-      // hide the todo dialog
-      t.modState(s => s.copy(showTodoForm = false))
+      // hide the edit dialog, chain callbacks
+      cb >> t.modState(s => s.copy(showTodoForm = false))
     }
   }
 
-  // create the React component for ToDo management
+  // create the React component for To Do management
   val component = ReactComponentB[Props]("TODO")
     .initialState(State()) // initial state from TodoStore
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      Panel(Panel.Props("What needs to be done"), TodoList(TodoListProps(P.todos(),
-        item => Callback(TodoActions.updateTodo(item)), item => B.editTodo(Some(item)), B.deleteTodo)),
-        Button(Button.Props(B.editTodo(None)), Icon.plusSquare, " New"),
+      Panel(Panel.Props("What needs to be done"), <.div(
+        P.cm().renderFailed(ex => "Error loading"),
+        P.cm().renderPending(t => t > 500 ?= "Loading..."),
+        P.cm().render(todos => TodoList(TodoListProps(todos.items, item => P.cm.dispatch(UpdateTodo(item)),
+          item => B.editTodo(Some(item)), item => P.cm.dispatch(DeleteTodo(item))))),
+        Button(Button.Props(B.editTodo(None)), Icon.plusSquare, " New")),
         // if the dialog is open, add it to the panel
         if (S.showTodoForm) TodoForm(TodoForm.Props(S.selectedItem, B.todoEdited))
         else // otherwise add an empty placeholder
           Seq.empty[ReactElement])
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .configure(OnUnmount.install)
     .build
 
   /** Returns a function compatible with router location system while using our own props */
-  def apply(store: TodoStore) = (router: RouterCtl[Loc]) => {
-    component(Props(store.todos, router))
-  }
+  def apply(cm: ComponentModel[Pot[Todos]]) = component(Props(cm))
 }
 
 object TodoForm {

@@ -10,7 +10,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "1.0.2"
+  val version = "1.1.0"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -31,10 +31,10 @@ object Settings {
     val scalaDom = "0.8.2"
     val scalajsReact = "0.10.0"
     val scalaCSS = "0.3.1"
-    val scalaRx = "0.2.8"
     val log4js = "1.4.10"
     val autowire = "0.2.5"
     val booPickle = "1.1.0"
+    val diode = "0.1.0-SNAPSHOT"
     val uTest = "0.3.1"
 
     val react = "0.14.0"
@@ -67,8 +67,9 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "core" % versions.scalajsReact,
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
-    "org.scala-js" %%% "scalajs-dom" % versions.scalaDom,
-    "com.lihaoyi" %%% "scalarx" % versions.scalaRx
+    "me.chrons" %%% "diode" % versions.diode,
+    "me.chrons" %%% "diode-react" % versions.diode,
+    "org.scala-js" %%% "scalajs-dom" % versions.scalaDom
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */

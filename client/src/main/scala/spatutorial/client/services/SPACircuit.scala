@@ -39,14 +39,18 @@ case class Todos(items: Seq[TodoItem]) {
   def remove(item: TodoItem) = Todos(items.filterNot(_ == item))
 }
 
+/**
+  * Handles actions related to todos
+  * @param modelRW Reader/Writer to access the model
+  * @tparam M
+  */
 class TodoHandler[M](modelRW: ModelRW[M, Pot[Todos]]) extends ActionHandler(modelRW) {
   override def handle = {
     case RefreshTodos =>
       val updateServer = () => AjaxClient[Api].getTodos().call().map(UpdateAllTodos)
-
-      // make a local update and inform server
       effectOnly(updateServer)
     case UpdateAllTodos(todos) =>
+      // got new todos, update model
       update(Ready(Todos(todos)))
     case UpdateTodo(item) =>
       val updateServer = () => AjaxClient[Api].updateTodo(item).call().map(UpdateAllTodos)
@@ -59,6 +63,11 @@ class TodoHandler[M](modelRW: ModelRW[M, Pot[Todos]]) extends ActionHandler(mode
   }
 }
 
+/**
+  * Handles actions related to the Motd
+  * @param modelRW Reader/Writer to access the model
+  * @tparam M
+  */
 class MotdHandler[M](modelRW: ModelRW[M, Pot[String]]) extends ActionHandler(modelRW) {
   implicit val runner = new RunAfterJS
 
@@ -71,8 +80,11 @@ class MotdHandler[M](modelRW: ModelRW[M, Pot[String]]) extends ActionHandler(mod
 
 // Application circuit
 object SPACircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
+  // initial application model
   override protected var model = RootModel(Empty, Empty)
-  override protected val actionHandler =
-    combineHandlers(new TodoHandler(zoomRW(_.todos)((m, v) => m.copy(todos = v))),
-      new MotdHandler(zoomRW(_.motd)((m, v) => m.copy(motd = v))))
+  // combine all handlers into one
+  override protected val actionHandler = combineHandlers(
+    new TodoHandler(zoomRW(_.todos)((m, v) => m.copy(todos = v))),
+    new MotdHandler(zoomRW(_.motd)((m, v) => m.copy(motd = v)))
+  )
 }

@@ -28,9 +28,10 @@ object SPAMain extends js.JSApp {
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
 
-    (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(m => m)(cm => Dashboard.component(Dashboard.Props(ctl, cm))))
+    // wrap/connect components to the circuit
+    (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(_.motd)(cm => Dashboard(ctl, cm)))
       | staticRoute("#todo", TodoLoc) ~> renderR(ctl => SPACircuit.connect(_.todos)(Todo(_)))
-    ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
+      ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
   // base layout for all pages
@@ -41,7 +42,8 @@ object SPAMain extends js.JSApp {
         <.div(^.className := "container")(
           <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
           <.div(^.className := "collapse navbar-collapse")(
-            SPACircuit.connect(_.todos.toOption)(cm => MainMenu(c, r.page, cm))
+            // connect menu to model, because it needs to update when the number of open todos changes
+            SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(cm => MainMenu(c, r.page, cm))
           )
         )
       ),

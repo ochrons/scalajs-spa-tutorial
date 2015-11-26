@@ -22,7 +22,6 @@ import boopickle.Default._
 // client side
 object AjaxClient extends autowire.Client[ByteBuffer, Pickler, Pickler] {
   override def doCall(req: Request): Future[ByteBuffer] = {
-    // Scala.js DOM 0.8.1 supports binary data, earlier versions don't
     dom.ext.Ajax.post(
       url = "/api/" + req.path.mkString("/"),
       data = Pickle.intoBytes(req.args),
@@ -53,7 +52,7 @@ object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
 Now that you have the `AjaxClient` set up, calling server is as simple as
 
 ```scala
-import scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.concurrent.ExecutionContext.Implicits.global
 import boopickle.Default._
 import autowire._
 

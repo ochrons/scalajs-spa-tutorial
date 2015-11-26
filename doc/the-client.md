@@ -20,7 +20,7 @@ to a [chart component](http://www.chartjs.org/), the build system combines all t
 [here](using-resources-from-webjars.md#webjar-javascript) for details. The last JavaScript reference is the compiled application code.
 
 Once the browser has loaded all the resources, it will call the `SPAMain().main()` method defined in the
-[`SPAMain.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/SPAMain.scala) singleton class. This is the 
+[`SPAMain.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/SPAMain.scala) singleton class. This is the 
 entry point of the application. The class itself is very simple,
 
 ```scala

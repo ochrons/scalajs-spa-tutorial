@@ -5,9 +5,9 @@ but from the user point of view it looks like that. A typical example of a SPA i
 
 Since we are not loading new pages from the server, we cannot use the regular browser navigation but need to provide one ourselves. This is called *routing* and
 is provided by many JS frameworks like AngularJS. Scala.js itself is not an application framework so there is no ready made router component provided by it. But
-we are lucky to have developers like @japgolly who go through all the pain and suffering to deliver great libraries for the rest of us. In the tutorial I'm using
-[`scalajs-react` router](https://github.com/japgolly/scalajs-react/blob/master/extra/ROUTER2.md) which nicely integrates with `scalajs-react` and provides a
-seamless way to manage routes and navigate between them.
+we are lucky to have developers like @japgolly who go through all the pain and suffering to deliver great libraries for the rest of us. In the tutorial I'm
+using [`scalajs-react` router](https://github.com/japgolly/scalajs-react/blob/master/extra/ROUTER2.md) which nicely integrates with `scalajs-react` and provides
+a seamless way to manage routes and navigate between them.
 
 The way it works is that you basically create route definitions, register them with the router and off it goes binding your components as the URL changes. In 
 this tutorial we have a total of *two* modules/routes/views just to demonstrate how to use the router.
@@ -18,8 +18,8 @@ As this is a Single Page Application, all routes are defined under one router co
 val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
   import dsl._
 
-  (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-    | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
+  (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(m => m)(cm => Dashboard(ctl, cm)))
+    | staticRoute("#todo", TodoLoc) ~> renderR(ctl => SPACircuit.connect(_.todos)(Todo(_)))
     ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
 }.renderWith(layout)
 ```
@@ -40,7 +40,7 @@ def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
       <.div(^.className := "container")(
         <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
         <.div(^.className := "collapse navbar-collapse")(
-          MainMenu(MainMenu.Props(c, r.page, TodoStore.todos))
+          SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(cm => MainMenu(c, r.page, cm))
         )
       )
     ),

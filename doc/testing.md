@@ -9,16 +9,17 @@ another option you can use.
 To define tests, you just need to extend from `TestSuite` and override the `tests` method.
 
 ```scala
-object DispatcherTests extends TestSuite {
+object SPACircuitTests extends TestSuite {
   override def tests = TestSuite {
     'test { ... }
   }
 }
 ```
 
-Take a look at [`DispatcherTests.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/test/scala/spatutorial/client/ukko/DispatcherTests.scala) for some examples of test cases.
+Take a look at
+[`SPACircuitTests.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/test/scala/spatutorial/client/services/SPACircuitTests.scala)
+for some examples of test cases.
 
-To run tests in SBT, you'll need to add a dependency for `"com.lihaoyi" %%% "utest" % "0.3.1"` and configure the test framework with
-`testFrameworks += new TestFramework("utest.runner.Framework")`. Now you can run the tests using regular `test` and `testOnly` commands
-in the SBT prompt.
+To run tests in SBT, you'll need to add a dependency for `"com.lihaoyi" %%% "utest" % "0.3.1"` and configure the test framework with `testFrameworks += new
+TestFramework("utest.runner.Framework")`. Now you can run the tests using regular `test` and `testOnly` commands in the SBT prompt.
 

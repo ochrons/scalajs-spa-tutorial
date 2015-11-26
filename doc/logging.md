@@ -6,7 +6,7 @@ through thin facades.
 
 To emulate log4j style API, we'll define a `LoggerFactory` providing `Logger` instances. These will hook up to the underlying
 [Javascript library](http://log4javascript.org/) to provide the real functionality. See
-[`Log4JavaScript.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/logger/Log4JavaScript.scala) for details.
+[`Log4JavaScript.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/logger/Log4JavaScript.scala) for details.
 
 The `package object logger` provides a default logger called `log` for easy access to logging functionality. If you want to create separate loggers,
 you may do so through `LoggerFactory.getLogger(name)` method. To create an entry in the log, all you need to do is call the appropriate log-level function

@@ -9,7 +9,7 @@ thousands of JavaScript developers fumbling in the shadows :)
 of styled HTML/CSS components that are easy to use and integrate into your application. Lot of Bootstrap actually doesn't even use JavaScript, all
 the magic happens in CSS.
 
-This tutorial wraps couple of simple Bootstrap [components](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/components/Bootstrap.scala)
+This tutorial wraps couple of simple Bootstrap [components](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Bootstrap.scala)
 (button and panel) into React components. Bootstrap uses contextual styles in many components to convey additional meaning. These can be
 easily represented by a Scala enumeration.
 
@@ -25,14 +25,14 @@ to define it through child component(s).
 
 ```scala
 object Button {
-  case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
+  case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
   val component = ReactComponentB[Props]("Button")
-    .render { (P, C) =>
-    <.button(bss.buttonOpt(P.style), P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick())(C)
-  }.build
+    .renderPC { ($, P, C) =>
+      <.button(bss.buttonOpt(P.style), P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
+    }.build
 
-  def apply(props: Props, children: ReactNode*) = component(props, children)
+  def apply(props: Props, children: ReactNode*) = component(props, children: _*)
   def apply() = component
 }
 ```
@@ -48,14 +48,14 @@ object Panel {
   case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
   val component = ReactComponentB[Props]("Panel")
-    .render { (P, C) =>
+    .renderPC { ($, P, C) =>
       <.div(bss.panelOpt(P.style))(
         <.div(bss.panelHeading)(P.heading),
         <.div(bss.panelBody)(C)
       )
   }.build
 
-  def apply(props: Props, children: ReactNode*) = component(props, children)
+  def apply(props: Props, children: ReactNode*) = component(props, children: _*)
   def apply() = component
 }
 ```
@@ -97,9 +97,10 @@ var ctx = document.getElementById("myChart").getContext("2d");
 var myNewChart = new Chart(ctx).Line(data);
 ```
 
-To do the same in Scala.js we define a simple *facade* trait as follows
+To do the same in Scala.js we define a simple *facade* as follows
 
 ```scala
+@js.native
 @JSName("Chart")
 class JSChart(ctx: js.Dynamic) extends js.Object {
   def Line(data: ChartData): js.Dynamic = js.native
@@ -117,11 +118,13 @@ and calling the appropriate chart function.
 
 ```scala
 val Chart = ReactComponentB[ChartProps]("Chart")
-  .render((P) => {
+  .render_P((P) => {
     <.canvas(^.width := P.width, ^.height := P.height)
-  }).componentDidMount(scope => {
+  })    
+  .domType[HTMLCanvasElement]
+  .componentDidMount(scope => Callback {
     // access context of the canvas
-    val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")
+    val ctx = scope.getDOMNode().getContext("2d")
     // create the actual chart using the 3rd party component
     scope.props.style match {
       case LineChart => new JSChart(ctx).Line(scope.props.data)
@@ -157,6 +160,7 @@ To build the same in Scala.js we could directly use `js.Dynamic.literal` but tha
 a builder function to create it and a facade to access it.
 
 ```scala
+@js.native
 trait ChartData extends js.Object {
   def labels: js.Array[String] = js.native
   def datasets: js.Array[ChartDataset] = js.native
@@ -192,11 +196,11 @@ With React, however, it's easy (and recommended) to create the HTML for the moda
 the contents of the dialog box.
 
 Before diving into the integration of the Bootstrap Modal, let's first examine how jQuery components can be integrated in general. We've provided a truly
-[skeleton jQuery integration](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/components/JQuery.scala),
+[skeleton jQuery integration](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/JQuery.scala),
 just enough for the modal to work, so you'll want to use something [more complete](https://github.com/jducoeur/jquery-facade) for
 most purposes. The jQuery integration is also briefly explained in [Scala.js documentation](http://www.scala-js.org/doc/calling-javascript.html) so we won't go
 into the details too much. Basically you need to define a global `jQuery` variable, through which you can then access the jQuery functionality. This is done
-in the [`package.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/js/src/main/scala/spatutorial/client/components/package.scala) for the
+in the [`package.scala`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/package.scala) for the
 components package.
 
 jQuery works by "calling" it with a selector or an element. In this tutorial we are always using a direct DOM element, so the facade only includes that option.
@@ -210,6 +214,7 @@ jQuery has an extension mechanism where plugins can add new functions to the jQu
 an extension in Scala.js we create a trait for it and an implicit conversion (just a type cast, really) for it.
 
 ```scala
+@js.native
 trait BootstrapJQuery extends JQuery {
   def modal(action: String): BootstrapJQuery = js.native
   def modal(options: js.Any): BootstrapJQuery = js.native
@@ -228,7 +233,7 @@ In the `Backend` of the `Modal` we define a `hide()` function to do just that.
 
 ```scala
 class Backend(t: BackendScope[Props, Unit]) {
-  def hide(): Unit = {
+  def hide = Callback {
     // instruct Bootstrap to hide the modal
     jQuery(t.getDOMNode()).modal("hide")
   }
@@ -239,7 +244,7 @@ component via properties.
 
 ```scala
 // header and footer are functions, so that they can get access to the the hide() function for their buttons
-case class Props(header: (Backend) => ReactNode, footer: (Backend) => ReactNode, closed: () => Unit, backdrop: Boolean = true,
+case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: Boolean = true,
                  keyboard: Boolean = true)
 ```
 
@@ -249,7 +254,7 @@ it needs to wait for the fade-out to complete. This is accomplished by listening
 // jQuery event handler to be fired when the modal has been hidden
 def hidden(e: JQueryEventObject): js.Any = {
   // inform the owner of the component that the modal was closed/hidden
-  t.props.closed()
+  t.props.flatMap(_.closed).runNow()
 }
 ...
 // register event listener to be notified when the modal is closed
@@ -258,7 +263,7 @@ jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidde
 
 To show the dialog box after it has been created, we again call `modal()` via jQuery in `componentDidMount`.
 ```scala
-.componentDidMount(scope => {
+.componentDidMount(scope => Callback {
   val P = scope.props
   // instruct Bootstrap to show the modal
   jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))

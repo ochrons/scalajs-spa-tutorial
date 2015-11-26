@@ -5,10 +5,7 @@ and inspect local variables etc. just like in a real IDE debugger. See the docum
 
 ## Setting source maps
 
-We will need a few configuration settings in our build file to make sure source maps are correctly found.
-
-`sourceMapsBase := baseDirectory.value / ".."` in the `shared` project
-`sourceMapsDirectories += sharedJS.base / ".."` in the `client` project
+Play Scala.js plugin will automatically copy the source maps into correct location.
 
 ## Actual debugging
 

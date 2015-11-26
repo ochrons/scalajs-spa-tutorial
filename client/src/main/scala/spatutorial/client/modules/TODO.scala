@@ -6,7 +6,6 @@ import diode.util.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.client.components.Bootstrap._
-import spatutorial.client.components.TodoList.TodoListProps
 import spatutorial.client.components._
 import spatutorial.client.logger._
 import spatutorial.client.services._
@@ -52,9 +51,9 @@ object Todo {
       val B = $.backend
       Panel(Panel.Props("What needs to be done"), <.div(
         P.cm().renderFailed(ex => "Error loading"),
-        P.cm().renderPending(t => t > 500 ?= "Loading..."),
-        P.cm().render(todos => TodoList(TodoListProps(todos.items, item => P.cm.dispatch(UpdateTodo(item)),
-          item => B.editTodo(Some(item)), item => P.cm.dispatch(DeleteTodo(item))))),
+        P.cm().renderPending(_ > 500, _ => "Loading..."),
+        P.cm().render(todos => TodoList(todos.items, item => P.cm.dispatch(UpdateTodo(item)),
+          item => B.editTodo(Some(item)), item => P.cm.dispatch(DeleteTodo(item)))),
         Button(Button.Props(B.editTodo(None)), Icon.plusSquare, " New")),
         // if the dialog is open, add it to the panel
         if (S.showTodoForm) TodoForm(TodoForm.Props(S.selectedItem, B.todoEdited))
@@ -102,7 +101,7 @@ object TodoForm {
       t.modState(s => s.copy(item = s.item.copy(priority = newPri)))
     }
 
-    def render(s: State, p: Props) = {
+    def render(p: Props, s: State) = {
       log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = if (s.item.id == "") "Add new todo" else "Edit todo"
       Modal(Modal.Props(

@@ -16,24 +16,16 @@ object MainMenu {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Todos]])
+  case class Props(router: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Int]])
 
-  case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
-
-  class Backend(t: BackendScope[Props, _]) {
-    def mounted(props: Props) = Callback {
-      // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      if(props.cm.value.isEmpty)
-        props.cm.dispatch(RefreshTodos)
-    }
-  }
+  private case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
   // build the Todo menu item, showing the number of open todos
   private def buildTodoMenu(props: Props): ReactElement = {
-    val todoCount = props.cm().map(_.items.count(!_.completed)).getOrElse(0)
+    val todoCount = props.cm().getOrElse(0)
     <.span(
       <.span("Todo "),
-      if (todoCount > 0) <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount) else <.span()
+      todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
     )
   }
 
@@ -42,21 +34,30 @@ object MainMenu {
     MenuItem(2, buildTodoMenu, Icon.check, TodoLoc)
   )
 
-  private val MainMenu = ReactComponentB[Props]("MainMenu")
+  private class Backend(t: BackendScope[Props, _]) {
+    def mounted(props: Props) = {
+      // dispatch a message to refresh the todos
+      Callback.ifTrue(props.cm.value.isEmpty, props.cm.dispatch(RefreshTodos))
+    }
+
+    def render(props: Props) = {
+      <.ul(bss.navbar)(
+        // build a list of menu items
+        for (item <- menuItems) yield {
+          <.li(^.key := item.idx, (props.currentLoc == item.location) ?= (^.className := "active"),
+            props.router.link(item.location)(item.icon, " ", item.label(props))
+          )
+        }
+      )
+    }
+  }
+
+  private val component = ReactComponentB[Props]("MainMenu")
     .stateless
-    .backend(new Backend(_))
-    .render_P((P) => {
-    <.ul(bss.navbar)(
-      // build a list of menu items
-      for (item <- menuItems) yield {
-        <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (^.className := "active"),
-          P.ctl.link(item.location)(item.icon, " ", item.label(P))
-        )
-      }
-    )
-  })
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(ctl: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Todos]]) = MainMenu(Props(ctl, currentLoc, cm))
+  def apply(ctl: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Int]]): ReactElement =
+    component(Props(ctl, currentLoc, cm))
 }

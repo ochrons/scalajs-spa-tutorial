@@ -73,7 +73,7 @@ object Bootstrap {
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
-        t.props.runNow().closed().runNow()
+        t.props.flatMap(_.closed()).runNow()
       }
 
       def render(P: Props, C: PropsChildren) = {

@@ -8,6 +8,7 @@ import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSName
 
+@js.native
 trait ChartDataset extends js.Object {
   def label: String = js.native
   def fillColor: String = js.native
@@ -26,6 +27,7 @@ object ChartDataset {
   }
 }
 
+@js.native
 trait ChartData extends js.Object {
   def labels: js.Array[String] = js.native
   def datasets: js.Array[ChartDataset] = js.native
@@ -41,6 +43,7 @@ object ChartData {
 }
 
 // define a class to access the Chart.js component
+@js.native
 @JSName("Chart")
 class JSChart(ctx: js.Dynamic) extends js.Object {
   // create different kinds of charts
@@ -50,7 +53,7 @@ class JSChart(ctx: js.Dynamic) extends js.Object {
 
 object Chart {
 
-  // avaiable chart styles
+  // available chart styles
   sealed trait ChartStyle
 
   case object LineChart extends ChartStyle
@@ -63,17 +66,19 @@ object Chart {
 
   val Chart = ReactComponentB[ChartProps]("Chart")
     .render_P((P) => {
-    <.canvas(^.width := P.width, ^.height := P.height)
-  }).componentDidMount(scope => Callback {
-    // access context of the canvas
-    val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")
-    // create the actual chart using the 3rd party component
-    scope.props.style match {
-      case LineChart => new JSChart(ctx).Line(scope.props.data)
-      case BarChart => new JSChart(ctx).Bar(scope.props.data)
-      case _ => throw new IllegalArgumentException
-    }
-  }).build
+      <.canvas(^.width := P.width, ^.height := P.height)
+    })
+    .domType[HTMLCanvasElement]
+    .componentDidMount(scope => Callback {
+      // access context of the canvas
+      val ctx = scope.getDOMNode().getContext("2d")
+      // create the actual chart using the 3rd party component
+      scope.props.style match {
+        case LineChart => new JSChart(ctx).Line(scope.props.data)
+        case BarChart => new JSChart(ctx).Bar(scope.props.data)
+        case _ => throw new IllegalArgumentException
+      }
+    }).build
 
   def apply(props: ChartProps) = Chart(props)
 }

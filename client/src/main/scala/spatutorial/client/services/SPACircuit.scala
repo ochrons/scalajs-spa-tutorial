@@ -2,7 +2,7 @@ package spatutorial.client.services
 
 import autowire._
 import diode._
-import diode.js.RunAfterJS
+import diode.util.RunAfterJS
 import diode.react.ReactConnector
 import diode.util._
 import spatutorial.shared.{TodoItem, Api}
@@ -74,7 +74,7 @@ class MotdHandler[M](modelRW: ModelRW[M, Pot[String]]) extends ActionHandler(mod
   override def handle = {
     case action: UpdateMotd =>
       val updateF = action.effect(AjaxClient[Api].welcome("User X").call())(identity)
-      action.handleWith(this, updateF)(PotAction.handler(3))
+      action.handleWith(this, updateF)(PotAction.handler(Retry(3)))
   }
 }
 

@@ -48,5 +48,5 @@ library for building user interfaces, developed by Facebook. You might ask "why 
 it might make sense to do a similar library in Scala.js but since it's already there, why not use it. And to sweeten the deal there is a very nice
 wrapper for React called [scalajs-react](https://github.com/japgolly/scalajs-react) by [David Barri (@japgolly)](https://github.com/japgolly).
 
-There are also other Scals.js libraries available for building SPAs but I wanted to go with React, so that's what we'll use in this tutorial :)
+There are also other Scala.js libraries available for building SPAs but I wanted to go with React, so that's what we'll use in this tutorial :)
 

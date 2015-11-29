@@ -8,12 +8,12 @@ fake data for the Chart component, to keep things simple.
 ```scala
 // create the React component for Dashboard
 private val component = ReactComponentB[Props]("Dashboard")
-  .render_P { case Props(router, cm) =>
+  .render_P { case Props(router, proxy) =>
     <.div(
       // header, MessageOfTheDay and chart components
       <.h2("Dashboard"),
-      // use connect from ComponentModel to give Motd only partial view to the model
-      cm.connect(_.motd)(Motd(_)),
+      // use connect from ModelProxy to give Motd only partial view to the model
+      proxy.connect(_.motd)(Motd(_)),
       Chart(cp),
       // create a link to the To Do view
       <.div(router.link(TodoLoc)("Check your todos!"))
@@ -25,17 +25,17 @@ private val component = ReactComponentB[Props]("Dashboard")
 
 [Motd component](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Motd.scala) is a simple React
 component that shows a *Message of the day* from the server in a panel. The `Motd` is given the message in properties (wrapped in a `Pot` and a
-`ComponentModel`).
+`ModelProxy`).
 
 ```scala
-val Motd = ReactComponentB[ComponentModel[Pot[String]]]("Motd")
-  .render_P { cm =>
+val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
+  .render_P { proxy =>
     Panel(Panel.Props("Message of the day"),
       // render messages depending on the state of the Pot
-      cm().renderPending(_ > 500, _ => <.p("Loading...")),
-      cm().renderFailed(ex => <.p("Failed to load")),
-      cm().render(m => <.p(m)),
-      Button(Button.Props(cm.dispatch(UpdateMotd()), CommonStyle.danger), Icon.refresh, " Update")
+      proxy().renderPending(_ > 500, _ => <.p("Loading...")),
+      proxy().renderFailed(ex => <.p("Failed to load")),
+      proxy().render(m => <.p(m)),
+      Button(Button.Props(proxy.dispatch(UpdateMotd()), CommonStyle.danger), Icon.refresh, " Update")
     )
   }
   .componentDidMount(scope =>
@@ -50,7 +50,7 @@ A React component is defined through a series of function calls. Each of these c
 Of course to actually get the message, we need to request it from the server. To do this automatically when the component is mounted, we hook a call to
 `dispatch` in the `componentDidMount` method, but only if there is no value already for the message.
 
-The use of `ComponentModel` and `Pot` will be covered in detail [later](todo-module-and-data-flow.md).
+The use of `ModelProxy` and `Pot` will be covered in detail [later](todo-module-and-data-flow.md).
 
 ## Links to other routes
 

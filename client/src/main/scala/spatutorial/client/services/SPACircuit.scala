@@ -51,15 +51,15 @@ class TodoHandler[M](modelRW: ModelRW[M, Pot[Todos]]) extends ActionHandler(mode
       effectOnly(updateServer)
     case UpdateAllTodos(todos) =>
       // got new todos, update model
-      update(Ready(Todos(todos)))
+      updated(Ready(Todos(todos)))
     case UpdateTodo(item) =>
       val updateServer = () => AjaxClient[Api].updateTodo(item).call().map(UpdateAllTodos)
       // make a local update and inform server
-      update(value.map(_.updated(item)), updateServer)
+      updated(value.map(_.updated(item)), updateServer)
     case DeleteTodo(item) =>
       val updateServer = () => AjaxClient[Api].deleteTodo(item.id).call().map(UpdateAllTodos)
       // make a local update and inform server
-      update(value.map(_.remove(item)), updateServer)
+      updated(value.map(_.remove(item)), updateServer)
   }
 }
 

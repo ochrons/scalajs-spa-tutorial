@@ -5,13 +5,13 @@ statically within the class itself, because the referred locations are anyway al
 a dynamic system, but static is just fine here.
 
 ```scala
-case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, cm: ComponentModel[Option[Int]])
+case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[Option[Int]])
 
 case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
 // build the Todo menu item, showing the number of open todos
 private def buildTodoMenu(props: Props): ReactNode = {
-  val todoCount = props.cm().getOrElse(0)
+  val todoCount = props.proxy().getOrElse(0)
   Seq(
     <.span("Todo "),
     todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
@@ -25,7 +25,7 @@ private val menuItems = Seq(
 ```
 
 For each menu item we define a function to generate the label, an icon and the location that was registered in the `routerConfig`. For Dashboard
-the label is simple text, but for Todo we also render the number of open todos, which we get through the `ComponentModel` property.
+the label is simple text, but for Todo we also render the number of open todos, which we get through the `ModelProxy` property.
 
 To render the menu we just loop over the items and create appropriate tags. For links we need to use the `RouterCtl` provided in the properties.
 
@@ -33,7 +33,7 @@ To render the menu we just loop over the items and create appropriate tags. For 
 private class Backend(t: BackendScope[Props, _]) {
   def mounted(props: Props) = {
     // dispatch a message to refresh the todos
-    Callback.ifTrue(props.cm.value.isEmpty, props.cm.dispatch(RefreshTodos))
+    Callback.ifTrue(props.proxy.value.isEmpty, props.proxy.dispatch(RefreshTodos))
   }
 
   def render(props: Props) = {

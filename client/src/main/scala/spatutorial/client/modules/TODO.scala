@@ -15,14 +15,14 @@ import scalacss.ScalaCssReact._
 
 object Todo {
 
-  case class Props(cm: ComponentModel[Pot[Todos]])
+  case class Props(proxy: ModelProxy[Pot[Todos]])
 
   case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = {
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      Callback.ifTrue(props.cm().isEmpty, props.cm.dispatch(RefreshTodos))
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshTodos))
     }
 
     def editTodo(item: Option[TodoItem]) = {
@@ -36,7 +36,7 @@ object Todo {
         Callback.log("Todo editing cancelled")
       } else {
         Callback.log(s"Todo edited: $item") >>
-          t.props >>= (_.cm.dispatch(UpdateTodo(item)))
+          t.props >>= (_.proxy.dispatch(UpdateTodo(item)))
       }
       // hide the edit dialog, chain callbacks
       cb >> t.modState(s => s.copy(showTodoForm = false))
@@ -50,10 +50,10 @@ object Todo {
     .renderPS(($, P, S) => {
       val B = $.backend
       Panel(Panel.Props("What needs to be done"), <.div(
-        P.cm().renderFailed(ex => "Error loading"),
-        P.cm().renderPending(_ > 500, _ => "Loading..."),
-        P.cm().render(todos => TodoList(todos.items, item => P.cm.dispatch(UpdateTodo(item)),
-          item => B.editTodo(Some(item)), item => P.cm.dispatch(DeleteTodo(item)))),
+        P.proxy().renderFailed(ex => "Error loading"),
+        P.proxy().renderPending(_ > 500, _ => "Loading..."),
+        P.proxy().render(todos => TodoList(todos.items, item => P.proxy.dispatch(UpdateTodo(item)),
+          item => B.editTodo(Some(item)), item => P.proxy.dispatch(DeleteTodo(item)))),
         Button(Button.Props(B.editTodo(None)), Icon.plusSquare, " New")),
         // if the dialog is open, add it to the panel
         if (S.showTodoForm) TodoForm(TodoForm.Props(S.selectedItem, B.todoEdited))
@@ -64,7 +64,7 @@ object Todo {
     .build
 
   /** Returns a function compatible with router location system while using our own props */
-  def apply(cm: ComponentModel[Pot[Todos]]) = component(Props(cm))
+  def apply(proxy: ModelProxy[Pot[Todos]]) = component(Props(proxy))
 }
 
 object TodoForm {

@@ -29,7 +29,7 @@ object SPAMain extends js.JSApp {
     import dsl._
 
     // wrap/connect components to the circuit
-    (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(_.motd)(cm => Dashboard(ctl, cm)))
+    (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(_.motd)(proxy => Dashboard(ctl, proxy)))
       | staticRoute("#todo", TodoLoc) ~> renderR(ctl => SPACircuit.connect(_.todos)(Todo(_)))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
@@ -43,7 +43,7 @@ object SPAMain extends js.JSApp {
           <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
           <.div(^.className := "collapse navbar-collapse")(
             // connect menu to model, because it needs to update when the number of open todos changes
-            SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(cm => MainMenu(c, r.page, cm))
+            SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(proxy => MainMenu(c, r.page, proxy))
           )
         )
       ),

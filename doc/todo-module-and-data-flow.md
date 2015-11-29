@@ -15,7 +15,7 @@ even in a simple tutorial application like this. Below you can see a diagram of 
 
 ![Diode architecture](https://github.com/ochrons/diode/raw/master/doc/images/architecture.png)
 
-It consists of a *Circuit* that takes in *Actions*, and dispatches them to action handlers, and then informs Views* to update themselves with the new data. See
+It consists of a *Circuit* that takes in *Actions*, and dispatches them to action handlers, and then informs *Views* to update themselves with the new data. See
 the [Diode documentation](https://ochrons.github.io/diode) for more information.
 
 ## Modifying a Todo state 
@@ -57,7 +57,7 @@ But as we mentioned before, there was another component interested in changes to
 Todos.
 
 ```scala
-val todoCount = props.cm().getOrElse(0)
+val todoCount = props.proxy().getOrElse(0)
 Seq(
   <.span("Todo "),
   todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
@@ -87,26 +87,26 @@ Next, let's look how to set up everything for data to flow.
 To give our React components access to the application model, we have to _connect_ them using `SPACircuit.connect` or `SPACircuit.wrap` methods.
 
 ```scala
-SPACircuit.wrap(_.motd)(cm => Dashboard(ctl, cm))
+SPACircuit.wrap(_.motd)(proxy => Dashboard(ctl, proxy))
 SPACircuit.connect(_.todos)(Todo(_))
 ```
 
 The difference between `wrap` and `connect` is that the former provides only passive read access to the model and the dispatcher, while the latter registers a
 listener with the circuit and actively updates the wrapped component when the state changes. Both methods take a _reader function_ that extracts the part of the
-model we are interested in. The second parameter is a function that builds the component with a `ComponentModel[A]`. The `ComponentModel` wraps the extracted
+model we are interested in. The second parameter is a function that builds the component with a `ModelProxy[A]`. The `ModelProxy` wraps the extracted
 model and provides access to the dispatcher.
 
 The reader function can be more complicated, if you need to transform model data before giving it out to the component. Because the menu is only interested
 in the number of open todos, we can calculate that in the reader function.
 
 ```scala
-SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(cm => MainMenu(c, r.page, cm))
+SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(proxy => MainMenu(c, r.page, proxy))
 ```
 
-Within `Dashboard` we further connect the `Motd` component to the model using the `connect` method of the `ComponentModel`.
+Within `Dashboard` we further connect the `Motd` component to the model using the `connect` method of the `ModelProxy`.
 
 ```scala
-cm.connect(m => m)(Motd(_))
+proxy.connect(m => m)(Motd(_))
 ```
 
 Because `Dashboard` received only the `motd` part of the model, we pass it as such to the Motd component.
@@ -122,9 +122,9 @@ Viewing potential data can be cumbersome, so Diode includes a handy implicit cla
 methods that only render when the `Pot` is in a specific state, making it easy to show a "Loading" or "Error" message to the user.
 
 ```scala
-cm().renderPending(_ > 500, _ => <.p("Loading...")),
-cm().renderFailed(ex => <.p("Failed to load")),
-cm().render(m => <.p(m)),
+proxy().renderPending(_ > 500, _ => <.p("Loading...")),
+proxy().renderFailed(ex => <.p("Failed to load")),
+proxy().render(m => <.p(m)),
 ```
 
 `renderPending` has two variants and we are using the filtered one here. The first parameter is a filter for duration value. Only if the request has been in

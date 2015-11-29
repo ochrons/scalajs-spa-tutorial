@@ -14,14 +14,14 @@ import spatutorial.client.services.UpdateMotd
 object Motd {
 
   // create the React component for holding the Message of the Day
-  val Motd = ReactComponentB[ComponentModel[Pot[String]]]("Motd")
-    .render_P { cm =>
+  val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
+    .render_P { proxy =>
       Panel(Panel.Props("Message of the day"),
         // render messages depending on the state of the Pot
-        cm().renderPending(_ > 500, _ => <.p("Loading...")),
-        cm().renderFailed(ex => <.p("Failed to load")),
-        cm().render(m => <.p(m)),
-        Button(Button.Props(cm.dispatch(UpdateMotd()), CommonStyle.danger), Icon.refresh, " Update")
+        proxy().renderPending(_ > 500, _ => <.p("Loading...")),
+        proxy().renderFailed(ex => <.p("Failed to load")),
+        proxy().render(m => <.p(m)),
+        Button(Button.Props(proxy.dispatch(UpdateMotd()), CommonStyle.danger), Icon.refresh, " Update")
       )
     }
     .componentDidMount(scope =>
@@ -30,5 +30,5 @@ object Motd {
     )
     .build
 
-  def apply(cm: ComponentModel[Pot[String]]) = Motd(cm)
+  def apply(proxy: ModelProxy[Pot[String]]) = Motd(proxy)
 }

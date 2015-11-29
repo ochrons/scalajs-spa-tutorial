@@ -18,7 +18,7 @@ As this is a Single Page Application, all routes are defined under one router co
 val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
   import dsl._
 
-  (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(m => m)(cm => Dashboard(ctl, cm)))
+  (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(m => m)(proxy => Dashboard(ctl, proxy)))
     | staticRoute("#todo", TodoLoc) ~> renderR(ctl => SPACircuit.connect(_.todos)(Todo(_)))
     ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
 }.renderWith(layout)
@@ -40,7 +40,7 @@ def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
       <.div(^.className := "container")(
         <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
         <.div(^.className := "collapse navbar-collapse")(
-          SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(cm => MainMenu(c, r.page, cm))
+          SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(proxy => MainMenu(c, r.page, proxy))
         )
       )
     ),

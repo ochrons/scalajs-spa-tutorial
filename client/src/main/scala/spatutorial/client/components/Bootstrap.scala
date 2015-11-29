@@ -34,9 +34,9 @@ object Bootstrap {
     case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
     val component = ReactComponentB[Props]("Button")
-      .renderPC { ($, P, C) =>
-        <.button(bss.buttonOpt(P.style), P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
-      }.build
+      .renderPC((_, p, c) =>
+        <.button(bss.buttonOpt(p.style), p.addStyles, ^.tpe := "button", ^.onClick --> p.onClick, c)
+      ).build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)
     def apply() = component
@@ -47,12 +47,12 @@ object Bootstrap {
     case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
     val component = ReactComponentB[Props]("Panel")
-      .renderPC { ($, P, C) =>
-        <.div(bss.panelOpt(P.style))(
-          <.div(bss.panelHeading)(P.heading),
-          <.div(bss.panelBody)(C)
+      .renderPC((_, p, c) =>
+        <.div(bss.panelOpt(p.style),
+          <.div(bss.panelHeading, p.heading),
+          <.div(bss.panelBody, c)
         )
-      }.build
+      ).build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)
     def apply() = component
@@ -61,7 +61,7 @@ object Bootstrap {
   object Modal {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
-    case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: Boolean = true,
+    case class Props(header: Callback => ReactNode, footer: Callback => ReactNode, closed: Callback, backdrop: Boolean = true,
                      keyboard: Boolean = true)
 
     class Backend(t: BackendScope[Props, Unit]) {
@@ -73,17 +73,17 @@ object Bootstrap {
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
-        t.props.flatMap(_.closed()).runNow()
+        t.props.flatMap(_.closed).runNow()
       }
 
-      def render(P: Props, C: PropsChildren) = {
+      def render(p: Props, c: PropsChildren) = {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
           <.div(modalStyle.dialog,
             <.div(modalStyle.content,
-              <.div(modalStyle.header, P.header(hide)),
-              <.div(modalStyle.body, C),
-              <.div(modalStyle.footer, P.footer(hide))
+              <.div(modalStyle.header, p.header(hide)),
+              <.div(modalStyle.body, c),
+              <.div(modalStyle.footer, p.footer(hide))
             )
           )
         )
@@ -91,12 +91,11 @@ object Bootstrap {
     }
 
     val component = ReactComponentB[Props]("Modal")
-      .stateless
       .renderBackend[Backend]
       .componentDidMount(scope => Callback {
-        val P = scope.props
+        val p = scope.props
         // instruct Bootstrap to show the modal
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
+        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> p.backdrop, "keyboard" -> p.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })

@@ -34,11 +34,10 @@ object MainMenu {
     MenuItem(2, buildTodoMenu, Icon.check, TodoLoc)
   )
 
-  private class Backend(t: BackendScope[Props, _]) {
-    def mounted(props: Props) = {
+  private class Backend($: BackendScope[Props, Unit]) {
+    def mounted(props: Props) =
       // dispatch a message to refresh the todos
       Callback.ifTrue(props.proxy.value.isEmpty, props.proxy.dispatch(RefreshTodos))
-    }
 
     def render(props: Props) = {
       <.ul(bss.navbar)(
@@ -53,7 +52,6 @@ object MainMenu {
   }
 
   private val component = ReactComponentB[Props]("MainMenu")
-    .stateless
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

@@ -38,17 +38,17 @@ object SPAMain extends js.JSApp {
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div(
       // here we use plain Bootstrap class names as these are specific to the top level layout defined here
-      <.nav(^.className := "navbar navbar-inverse navbar-fixed-top")(
-        <.div(^.className := "container")(
-          <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
-          <.div(^.className := "collapse navbar-collapse")(
+      <.nav(^.className := "navbar navbar-inverse navbar-fixed-top",
+        <.div(^.className := "container",
+          <.div(^.className := "navbar-header", <.span(^.className := "navbar-brand", "SPA Tutorial")),
+          <.div(^.className := "collapse navbar-collapse",
             // connect menu to model, because it needs to update when the number of open todos changes
             SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(proxy => MainMenu(c, r.page, proxy))
           )
         )
       ),
       // currently active module is shown in this container
-      <.div(^.className := "container")(r.render())
+      <.div(^.className := "container", r.render())
     )
   }
 
@@ -62,7 +62,7 @@ object SPAMain extends js.JSApp {
     // create stylesheet
     GlobalStyles.addToDocument()
     // create the router
-    val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
+    val router = Router(BaseUrl.until_#, routerConfig)
     // tell React to render the router in the document body
     ReactDOM.render(router(), dom.document.getElementById("root"))
   }

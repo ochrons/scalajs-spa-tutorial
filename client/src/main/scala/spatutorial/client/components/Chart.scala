@@ -1,7 +1,7 @@
 package spatutorial.client.components
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
+import japgolly.scalajs.react.{Callback, ReactComponentB}
 import org.scalajs.dom.raw.HTMLCanvasElement
 
 import scala.scalajs.js
@@ -62,12 +62,10 @@ object Chart {
 
   case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 400, height: Int = 200)
 
-  class Backend(t: BackendScope[ChartProps, _])
-
   val Chart = ReactComponentB[ChartProps]("Chart")
-    .render_P((P) => {
-      <.canvas(^.width := P.width, ^.height := P.height)
-    })
+    .render_P(p =>
+      <.canvas(^.width := p.width, ^.height := p.height)
+    )
     .domType[HTMLCanvasElement]
     .componentDidMount(scope => Callback {
       // access context of the canvas

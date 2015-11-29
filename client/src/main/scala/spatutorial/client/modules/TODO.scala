@@ -19,16 +19,14 @@ object Todo {
 
   case class State(selectedItem: Option[TodoItem] = None, showTodoForm: Boolean = false)
 
-  class Backend(t: BackendScope[Props, State]) {
-    def mounted(props: Props) = {
+  class Backend($: BackendScope[Props, State]) {
+    def mounted(props: Props) =
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
       Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshTodos))
-    }
 
-    def editTodo(item: Option[TodoItem]) = {
+    def editTodo(item: Option[TodoItem]) =
       // activate the edit dialog
-      t.modState(s => s.copy(selectedItem = item, showTodoForm = true))
-    }
+      $.modState(s => s.copy(selectedItem = item, showTodoForm = true))
 
     def todoEdited(item: TodoItem, cancelled: Boolean) = {
       val cb = if (cancelled) {
@@ -36,30 +34,29 @@ object Todo {
         Callback.log("Todo editing cancelled")
       } else {
         Callback.log(s"Todo edited: $item") >>
-          t.props >>= (_.proxy.dispatch(UpdateTodo(item)))
+          $.props >>= (_.cm.dispatch(UpdateTodo(item)))
       }
       // hide the edit dialog, chain callbacks
-      cb >> t.modState(s => s.copy(showTodoForm = false))
+      cb >> $.modState(s => s.copy(showTodoForm = false))
     }
+
+    def render(p: Props, s: State) =
+      Panel(Panel.Props("What needs to be done"), <.div(
+        p.cm().renderFailed(ex => "Error loading"),
+        p.cm().renderPending(_ > 500, _ => "Loading..."),
+        p.cm().render(todos => TodoList(todos.items, item => p.cm.dispatch(UpdateTodo(item)),
+          item => editTodo(Some(item)), item => p.cm.dispatch(DeleteTodo(item)))),
+        Button(Button.Props(editTodo(None)), Icon.plusSquare, " New")),
+        // if the dialog is open, add it to the panel
+        if (s.showTodoForm) TodoForm(TodoForm.Props(s.selectedItem, todoEdited))
+        else // otherwise add an empty placeholder
+          Seq.empty[ReactElement])
   }
 
   // create the React component for To Do management
   val component = ReactComponentB[Props]("TODO")
     .initialState(State()) // initial state from TodoStore
-    .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      val B = $.backend
-      Panel(Panel.Props("What needs to be done"), <.div(
-        P.proxy().renderFailed(ex => "Error loading"),
-        P.proxy().renderPending(_ > 500, _ => "Loading..."),
-        P.proxy().render(todos => TodoList(todos.items, item => P.proxy.dispatch(UpdateTodo(item)),
-          item => B.editTodo(Some(item)), item => P.proxy.dispatch(DeleteTodo(item)))),
-        Button(Button.Props(B.editTodo(None)), Icon.plusSquare, " New")),
-        // if the dialog is open, add it to the panel
-        if (S.showTodoForm) TodoForm(TodoForm.Props(S.selectedItem, B.todoEdited))
-        else // otherwise add an empty placeholder
-          Seq.empty[ReactElement])
-    })
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
@@ -81,15 +78,13 @@ object TodoForm {
       t.modState(s => s.copy(cancelled = false))
     }
 
-    def formClosed(state: State, props: Props): Callback = {
+    def formClosed(state: State, props: Props): Callback =
       // call parent handler with the new item and whether form was OK or cancelled
       props.submitHandler(state.item, state.cancelled)
-    }
 
-    def updateDescription(e: ReactEventI) = {
+    def updateDescription(e: ReactEventI) =
       // update TodoItem content
       t.modState(s => s.copy(item = s.item.copy(content = e.target.value)))
-    }
 
     def updatePriority(e: ReactEventI) = {
       // update TodoItem priority
@@ -110,10 +105,10 @@ object TodoForm {
         // footer has the OK button that submits the form before hiding it
         footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "OK")),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = formClosed(s, p)),
         <.div(bss.formGroup,
           <.label(^.`for` := "description", "Description"),
-          <.input(^.tpe := "text", bss.formControl, ^.id := "description", ^.value := s.item.content,
+          <.input.text(bss.formControl, ^.id := "description", ^.value := s.item.content,
             ^.placeholder := "write description", ^.onChange ==> updateDescription)),
         <.div(bss.formGroup,
           <.label(^.`for` := "priority", "Priority"),

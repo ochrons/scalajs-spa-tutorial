@@ -23,7 +23,7 @@ the [Diode documentation](https://ochrons.github.io/diode) for more information.
 The `TodoList` component renders a checkbox for each Todo, which can be used to mark the Todo as *completed*.
 
 ```scala
-<.input(^.tpe := "checkbox", ^.checked := item.completed, 
+<.input.checkbox(^.checked := item.completed, 
   ^.onChange --> P.stateChange(item.copy(completed = !item.completed))),
 ```
 
@@ -184,10 +184,10 @@ def render(p: Props, s: State) = {
     // footer has the OK button that submits the form before hiding it
     footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "OK")),
     // this is called after the modal has been hidden (animation is completed)
-    closed = () => formClosed(s, p)),
+    closed = formClosed(s, p)),
     <.div(bss.formGroup,
       <.label(^.`for` := "description", "Description"),
-      <.input(^.tpe := "text", bss.formControl, ^.id := "description", ^.value := s.item.content,
+      <.input.text(bss.formControl, ^.id := "description", ^.value := s.item.content,
         ^.placeholder := "write description", ^.onChange ==> updateDescription)),
     <.div(bss.formGroup,
       <.label(^.`for` := "priority", "Priority"),

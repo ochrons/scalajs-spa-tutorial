@@ -1,5 +1,10 @@
 # Change history
 
+## 1.1.0
+
+* Switched from custom Flux/Rx architecture to [Diode](https://github.com/ochrons/diode)
+* Updated to React 0.14 and scalajs-react 0.10.2
+
 ## 1.0.2
 
 * Updated build file to support Scala IDE better

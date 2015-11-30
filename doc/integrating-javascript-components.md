@@ -48,12 +48,12 @@ object Panel {
   case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
   val component = ReactComponentB[Props]("Panel")
-    .renderPC { ($, P, C) =>
-      <.div(bss.panelOpt(P.style))(
-        <.div(bss.panelHeading)(P.heading),
-        <.div(bss.panelBody)(C)
+    .renderPC((_, p, c) =>
+      <.div(bss.panelOpt(p.style),
+        <.div(bss.panelHeading, p.heading),
+        <.div(bss.panelBody, c)
       )
-  }.build
+    ).build
 
   def apply(props: Props, children: ReactNode*) = component(props, children: _*)
   def apply() = component
@@ -243,8 +243,10 @@ However, because the dialog box itself contains controls that need to actually c
 component via properties.
 
 ```scala
-// header and footer are functions, so that they can get access to the the hide() function for their buttons
-case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: Boolean = true,
+// header and footer are functions, so that they can get access to the 
+// hide() function for their buttons
+case class Props(header: Callback => ReactNode, footer: Callback => ReactNode, 
+                 closed: Callback, backdrop: Boolean = true,
                  keyboard: Boolean = true)
 ```
 

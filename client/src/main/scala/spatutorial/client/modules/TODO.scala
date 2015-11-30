@@ -34,7 +34,7 @@ object Todo {
         Callback.log("Todo editing cancelled")
       } else {
         Callback.log(s"Todo edited: $item") >>
-          $.props >>= (_.cm.dispatch(UpdateTodo(item)))
+          $.props >>= (_.proxy.dispatch(UpdateTodo(item)))
       }
       // hide the edit dialog, chain callbacks
       cb >> $.modState(s => s.copy(showTodoForm = false))
@@ -42,10 +42,10 @@ object Todo {
 
     def render(p: Props, s: State) =
       Panel(Panel.Props("What needs to be done"), <.div(
-        p.cm().renderFailed(ex => "Error loading"),
-        p.cm().renderPending(_ > 500, _ => "Loading..."),
-        p.cm().render(todos => TodoList(todos.items, item => p.cm.dispatch(UpdateTodo(item)),
-          item => editTodo(Some(item)), item => p.cm.dispatch(DeleteTodo(item)))),
+        p.proxy().renderFailed(ex => "Error loading"),
+        p.proxy().renderPending(_ > 500, _ => "Loading..."),
+        p.proxy().render(todos => TodoList(todos.items, item => p.proxy.dispatch(UpdateTodo(item)),
+          item => editTodo(Some(item)), item => p.proxy.dispatch(DeleteTodo(item)))),
         Button(Button.Props(editTodo(None)), Icon.plusSquare, " New")),
         // if the dialog is open, add it to the panel
         if (s.showTodoForm) TodoForm(TodoForm.Props(s.selectedItem, todoEdited))

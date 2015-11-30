@@ -18,8 +18,6 @@ by [Li Haoyi (@lihaoyi)](https://github.com/lihaoyi).
 
 Tutorial [documentation](https://ochrons.github.io/scalajs-spa-tutorial) is now presented as a GitBook.
 
-**NOTE! Documentation is currently not up-to-date with the latest source code.**
-
 あなたは日本語を話せますか？Scala.js is Big in Japan, so I'm looking for help to translate the tutorial documentation into Japanese. Contact me on twitter 
 (@ochrons) or via email (otto@chrons.me) if you're interested!
 

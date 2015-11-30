@@ -31,7 +31,7 @@ object SPAMain extends JSApp {
     // create stylesheet
     GlobalStyles.addToDocument()
     // create the router
-    val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
+    val router = Router(BaseUrl.until_#, routerConfig)
     // tell React to render the router in the document body
     React.render(router(), dom.document.getElementById("root"))
   }

@@ -25,8 +25,7 @@ object SPACircuitTests extends TestSuite {
         val h = build
         val result = h.handle(RefreshTodos)
         result match {
-          case ModelUpdateEffect(newValue, effects) =>
-            assert(newValue eq h.value)
+          case EffectOnly(effects) =>
             assert(effects.size == 1)
           case _ =>
             assert(false)

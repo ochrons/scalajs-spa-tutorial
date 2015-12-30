@@ -133,8 +133,9 @@ pending state for more than 500ms will the "Loading..." message be displayed. Th
 You can also call the various `isEmpty`, `isPending`, `isFailed` etc. methods to query the state of the `Pot`, or use the monadic functions like `map` and 
 `flatMap` to operate on them.
 
-Within action handlers you can manage the `Pot` state yourself, depending on the results you receive from async functions like autowire calls. For the common case,
-however, you can utilize ready-made handlers that take care of all that, providing you with automatic retries and notifications while the request is pending.
+Within action handlers you can manage the `Pot` state yourself, depending on the results you receive from async functions like autowire calls. For the common
+case, however, you can utilize ready-made handlers that take care of all that, providing you with automatic retries and notifications while the request is
+pending.
 
 ```scala
 override def handle = {

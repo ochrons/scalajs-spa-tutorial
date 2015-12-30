@@ -1,7 +1,7 @@
 package spatutorial.client.modules
 
 import diode.react._
-import diode.util.Pot
+import diode.data.Pot
 import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._

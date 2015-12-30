@@ -2,7 +2,7 @@ package spatutorial.client.components
 
 import diode.react.ReactPot._
 import diode.react._
-import diode.util.Pot
+import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.client.components.Bootstrap._

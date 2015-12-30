@@ -2,9 +2,9 @@ package spatutorial.client.services
 
 import autowire._
 import diode._
-import diode.util.RunAfterJS
-import diode.react.ReactConnector
+import diode.data._
 import diode.util._
+import diode.react.ReactConnector
 import spatutorial.shared.{TodoItem, Api}
 import boopickle.Default._
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
@@ -41,32 +41,29 @@ case class Todos(items: Seq[TodoItem]) {
 
 /**
   * Handles actions related to todos
+  *
   * @param modelRW Reader/Writer to access the model
-  * @tparam M
   */
 class TodoHandler[M](modelRW: ModelRW[M, Pot[Todos]]) extends ActionHandler(modelRW) {
   override def handle = {
     case RefreshTodos =>
-      val updateServer = () => AjaxClient[Api].getTodos().call().map(UpdateAllTodos)
-      effectOnly(updateServer)
+      effectOnly(Effect(AjaxClient[Api].getTodos().call().map(UpdateAllTodos)))
     case UpdateAllTodos(todos) =>
       // got new todos, update model
       updated(Ready(Todos(todos)))
     case UpdateTodo(item) =>
-      val updateServer = () => AjaxClient[Api].updateTodo(item).call().map(UpdateAllTodos)
       // make a local update and inform server
-      updated(value.map(_.updated(item)), updateServer)
+      updated(value.map(_.updated(item)), Effect(AjaxClient[Api].updateTodo(item).call().map(UpdateAllTodos)))
     case DeleteTodo(item) =>
-      val updateServer = () => AjaxClient[Api].deleteTodo(item.id).call().map(UpdateAllTodos)
       // make a local update and inform server
-      updated(value.map(_.remove(item)), updateServer)
+      updated(value.map(_.remove(item)), Effect(AjaxClient[Api].deleteTodo(item.id).call().map(UpdateAllTodos)))
   }
 }
 
 /**
   * Handles actions related to the Motd
+  *
   * @param modelRW Reader/Writer to access the model
-  * @tparam M
   */
 class MotdHandler[M](modelRW: ModelRW[M, Pot[String]]) extends ActionHandler(modelRW) {
   implicit val runner = new RunAfterJS

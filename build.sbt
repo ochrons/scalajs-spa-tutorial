@@ -56,7 +56,7 @@ lazy val server = (project in file("server"))
     commands += ReleaseCmd,
     // connect to the client project
     scalaJSProjects := clients,
-    pipelineStages := Seq(scalaJSProd),
+    pipelineStages := Seq(scalaJSProd, digest, gzip),
     // compress CSS
     LessKeys.compress in Assets := true
   )

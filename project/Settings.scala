@@ -37,7 +37,7 @@ object Settings {
     val bootstrap = "3.3.2"
     val chartjs = "1.0.1"
 
-    val playScripts = "0.3.0"
+    val playScripts = "0.4.0"
   }
 
   /**

@@ -7,7 +7,7 @@ import diode.util._
 import diode.react.ReactConnector
 import spatutorial.shared.{TodoItem, Api}
 import boopickle.Default._
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 // Actions
 case object RefreshTodos
@@ -18,7 +18,7 @@ case class UpdateTodo(item: TodoItem)
 
 case class DeleteTodo(item: TodoItem)
 
-case class UpdateMotd(value: Pot[String] = Empty) extends PotAction[String, UpdateMotd] {
+case class UpdateMotd(potResult: Pot[String] = Empty) extends PotAction[String, UpdateMotd] {
   override def next(value: Pot[String]) = UpdateMotd(value)
 }
 
@@ -71,14 +71,14 @@ class MotdHandler[M](modelRW: ModelRW[M, Pot[String]]) extends ActionHandler(mod
   override def handle = {
     case action: UpdateMotd =>
       val updateF = action.effect(AjaxClient[Api].welcome("User X").call())(identity)
-      action.handleWith(this, updateF)(PotAction.handler(Retry(3)))
+      action.handleWith(this, updateF)(PotAction.handler())
   }
 }
 
 // Application circuit
 object SPACircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
-  override protected var model = RootModel(Empty, Empty)
+  override protected def initialModel = RootModel(Empty, Empty)
   // combine all handlers into one
   override protected val actionHandler = combineHandlers(
     new TodoHandler(zoomRW(_.todos)((m, v) => m.copy(todos = v))),

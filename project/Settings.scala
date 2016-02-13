@@ -10,7 +10,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "1.1.1"
+  val version = "1.1.2"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -23,16 +23,16 @@ object Settings {
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
     val scala = "2.11.7"
-    val scalaDom = "0.8.2"
-    val scalajsReact = "0.10.2"
+    val scalaDom = "0.9.0"
+    val scalajsReact = "0.10.4"
     val scalaCSS = "0.3.1"
     val log4js = "1.4.10"
     val autowire = "0.2.5"
-    val booPickle = "1.1.0"
-    val diode = "0.3.0"
+    val booPickle = "1.1.2"
+    val diode = "0.5.0"
     val uTest = "0.3.1"
 
-    val react = "0.14.3"
+    val react = "0.14.6"
     val jQuery = "1.11.1"
     val bootstrap = "3.3.2"
     val chartjs = "1.0.1"
@@ -55,6 +55,7 @@ object Settings {
     "com.vmunier" %% "play-scalajs-scripts" % versions.playScripts,
     "org.webjars" % "font-awesome" % "4.3.0-1" % Provided,
     "org.webjars" % "bootstrap" % versions.bootstrap % Provided
+    //,"org.webjars.npm" % "react" % versions.react
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */

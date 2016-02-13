@@ -1,5 +1,9 @@
 # Change history
 
+## 1.1.2
+
+* Updated to Diode 0.5.0, boopickle 1.1.2, scalajs-react 0.10.4 and scalajs-dom 0.9.0
+
 ## 1.1.0
 
 * Switched from custom Flux/Rx architecture to [Diode](https://github.com/ochrons/diode)

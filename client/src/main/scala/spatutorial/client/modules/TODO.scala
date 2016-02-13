@@ -97,7 +97,7 @@ object TodoForm {
     }
 
     def render(p: Props, s: State) = {
-      log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
+      log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo or two")
       val headerText = if (s.item.id == "") "Add new todo" else "Edit todo"
       Modal(Modal.Props(
         // header contains a cancel button (X)

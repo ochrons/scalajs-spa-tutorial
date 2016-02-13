@@ -1,13 +1,13 @@
 package spatutorial.client
 
-import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import spatutorial.client.components.GlobalStyles
 import spatutorial.client.logger._
 import spatutorial.client.modules._
-import spatutorial.client.services.{SPACircuit}
+import spatutorial.client.services.SPACircuit
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport

@@ -82,9 +82,11 @@ object TodoForm {
       // call parent handler with the new item and whether form was OK or cancelled
       props.submitHandler(state.item, state.cancelled)
 
-    def updateDescription(e: ReactEventI) =
+    def updateDescription(e: ReactEventI) = {
+      val text = e.target.value
       // update TodoItem content
-      t.modState(s => s.copy(item = s.item.copy(content = e.target.value)))
+      t.modState(s => s.copy(item = s.item.copy(content = text)))
+    }
 
     def updatePriority(e: ReactEventI) = {
       // update TodoItem priority

@@ -32,7 +32,7 @@ object Settings {
     val diode = "0.5.0"
     val uTest = "0.3.1"
 
-    val react = "0.14.6"
+    val react = "0.14.7"
     val jQuery = "1.11.1"
     val bootstrap = "3.3.2"
     val chartjs = "1.0.1"

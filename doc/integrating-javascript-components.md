@@ -6,10 +6,10 @@ thousands of JavaScript developers fumbling in the shadows :)
 ## Bootstrap CSS components
 
 [Bootstrap](http://getbootstrap.com/) is a popular HTML/CSS/JS framework by Twitter for developing responsive applications. It comes with a lot
-of styled HTML/CSS components that are easy to use and integrate into your application. Lot of Bootstrap actually doesn't even use JavaScript, all
+of styled HTML/CSS components that are easy to use and integrate into your application. Many parts of Bootstrap actually don't even use JavaScript, all
 the magic happens in CSS.
 
-This tutorial wraps couple of simple Bootstrap [components](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Bootstrap.scala)
+This tutorial wraps a couple of simple Bootstrap [components](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Bootstrap.scala)
 (button and panel) into React components. Bootstrap uses contextual styles in many components to convey additional meaning. These can be
 easily represented by a Scala enumeration.
 
@@ -19,26 +19,27 @@ object CommonStyle extends Enumeration {
 }
 ```
 
-To define an interactive button, it has to know what to do when it's clicked. In this example we simply give a function in the properties
-alongside the contextual style. Note that the actual button contents doesn't need to be provided in the properties as it's more convenient
+To define an interactive button, it has to know what to do when it's clicked. In this example we simply pass a function to the properties
+alongside the contextual style. Note that the actual button contents don't need to be provided in the properties as it's more convenient
 to define it through child component(s).
 
 ```scala
 object Button {
+
   case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
   val component = ReactComponentB[Props]("Button")
-    .renderPC { ($, P, C) =>
-      <.button(bss.buttonOpt(P.style), P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
-    }.build
+    .renderPC((_, props, children) =>
+      <.button(bss.buttonOpt(props.style), props.addStyles, ^.tpe := "button", ^.onClick --> props.onClick, children)
+    ).build
 
   def apply(props: Props, children: ReactNode*) = component(props, children: _*)
   def apply() = component
 }
 ```
 
-This time the render method gets two parameters, the properties and the children given to this component. It simply renders a normal
-button using Bootstrap CSS and binding `onClick` to the handler we defined in the properties. Finally the children are rendered within
+This time the render method gets two parameters: The properties and the children given to this component. It simply renders a normal
+button using Bootstrap CSS and binds `onClick` to the handler we defined in the properties. Finally the children are rendered within
 the button tag.
 
 Defining a Bootstrap Panel is about as simple.
@@ -191,7 +192,7 @@ If you need to build/access very complex JavaScript objects, consider an option 
 
 Bootstrap is not only a CSS library but also comes with JavaScript to add functionality to components like Dropdown and Modal. The
 [Modal](http://getbootstrap.com/javascript/#modals) is an especially problematic system as it involves a hidden dialog box that is shown when the modal is
-activated and hidden afterwards. In a normal Bootstrap application you would define the dialog box HTML as part of your application and just kept it hidden.
+activated and hidden afterwards. In a normal Bootstrap application you would define the dialog box HTML as part of your application and just keep it hidden.
 With React, however, it's easy (and recommended) to create the HTML for the modal just before it's displayed, so that your application can easily control
 the contents of the dialog box.
 
@@ -226,7 +227,7 @@ implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[Bootstr
 Now whenever we want to call `jQuery(e).modal()` the compiler will automatically cast the `JQuery` type into `BootstrapJQuery`.
 
 Armed with the jQuery integration we can now tackle the Modal itself. One of the problems the Modal poses is that it's dynamically shown and hidden by
-the Bootstrap code and we need somehow control that. In this tutorial we've chosen a design where the modal doesn't even exist before it's needed and
+the Bootstrap code and we need to somehow control that. In this tutorial we've chosen a design where the modal doesn't even exist before it's needed and
 it's shown right after it has been created. This leaves only the hiding part for us to handle.
 
 In the `Backend` of the `Modal` we define a `hide()` function to do just that.

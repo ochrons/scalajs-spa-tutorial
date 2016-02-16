@@ -45,7 +45,7 @@ val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
   .build
 ```
 A React component is defined through a series of function calls. Each of these calls, modifies the type of the component, meaning you cannot call
-`componentDidMount` unless you have gone though `render` first.
+`componentDidMount` unless you have gone through `render` first.
 
 Of course to actually get the message, we need to request it from the server. To do this automatically when the component is mounted, we hook a call to
 `dispatch` in the `componentDidMount` method, but only if there is no value already for the message.
@@ -54,7 +54,7 @@ The use of `ModelProxy` and `Pot` will be covered in detail [later](todo-module-
 
 ## Links to other routes
 
-Sometimes you need to create a link that takes the user to an another module behind a route. To create these links in a type-safe manner,
+Sometimes you need to create a link that takes the user to another module behind a route. To create these links in a type-safe manner,
 the tutorial passes an instance of `RouterCtl` to components.
 
 ```scala

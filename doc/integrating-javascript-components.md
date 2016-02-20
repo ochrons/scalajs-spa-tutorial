@@ -185,7 +185,7 @@ val cp = ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), 
 ```
 
 If you need to build/access very complex JavaScript objects, consider an option builder approach like the one in
-[Querki](https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/jsext/JSOptionBuilder.scala) by
+[Querki](https://github.com/jducoeur/jsext/blob/master/src/main/scala/org/querki/jsext/JSOptionBuilder.scala) by
 [jducoeur](https://github.com/jducoeur) (for example [JQueryUIDialog](https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/facades/jqueryui/JQueryUIDialog.scala)).
 
 ## Bootstrap jQuery components

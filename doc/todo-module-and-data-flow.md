@@ -205,7 +205,7 @@ def render(p: Props, s: State) = {
 
 State is first initialized with the provided item or with a new empty item. Within the `render` method (inside `Backend`) a new `Modal` is created and in the
 properties we assign couple of button controls. Note how both `header` and `footer` are actually functions that are given to the `Modal`'s `Backend` so that they
-can call the `hide` function. In the OK button the form is first submitted before the dialog is hidden_.
+can call the `hide` function. In the OK button the form is first submitted before the dialog is hidden.
 
 The form itself is quite straightforward, with handlers to update internal state as fields change. Note that with React the `select` element works a bit
 differently from regular HTML5 and you must use `value` property to select the option instead of the typical `selected` attribute.

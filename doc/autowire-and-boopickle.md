@@ -5,10 +5,10 @@ JavaScript libraries like JQuery provide higher level access to the low level pr
 Ajax wrapper in `dom.extensions.Ajax` (or `dom.ext.Ajax` in scalajs-dom 0.8+) but it's still quite tedious to serialize/deserialize objects
 and take care of all the dirty little details.
 
-But fear not, there is no need to do all that yourself as our friend [Li Haoyi (lihaoyi)](https://github.com/lihaoyi) has created and
+But fear not, there is no need to do all that yourself since our friend [Li Haoyi (lihaoyi)](https://github.com/lihaoyi) has created and
 published a great library called [Autowire](https://github.com/lihaoyi/autowire). Combined with my very own 
 [BooPickle](https://github.com/ochrons/boopickle) library you can easily handle client-server communication. Note that BooPickle uses
-binary serialization format, so if you'd prefer a JSON format, consider using [uPickle](https://github.com/lihaoyi/upickle). As SPA tutorial
+binary serialization format, so if you'd prefer a JSON format, consider using [uPickle](https://github.com/lihaoyi/upickle). As the SPA tutorial
 used to use uPickle for serialization, you can browse the repository history to see the relevant code 
 [here](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/js/src/main/scala/spatutorial/client/services/AjaxClient.scala)
 and [here](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/jvm/src/main/scala/spatutorial/server/MainApp.scala).
@@ -49,7 +49,7 @@ object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
 }
 ```
 
-Now that you have the `AjaxClient` set up, calling server is as simple as
+Now that you have the `AjaxClient` set up, calling the server is as simple as
 
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global

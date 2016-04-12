@@ -18,6 +18,6 @@ changing for example the chart data in `Dashboard.scala` and reloading the web p
 
 ## Requirements
 
-SPA Tutorial uses Play 2.4 which depends on Java 8, so make sure you are using JVM 8 or later.
+SPA Tutorial uses Play 2.5 which depends on Java 8, so make sure you are using JVM 8 or later.
 
 Running client tests requires [PhantomJS](http://phantomjs.org/) to be installed.

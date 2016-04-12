@@ -96,13 +96,6 @@ listener with the circuit and actively updates the wrapped component when the st
 model we are interested in. The second parameter is a function that builds the component with a `ModelProxy[A]`. The `ModelProxy` wraps the extracted
 model and provides access to the dispatcher.
 
-The reader function can be more complicated, if you need to transform model data before giving it out to the component. Because the menu is only interested
-in the number of open todos, we can calculate that in the reader function.
-
-```scala
-SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)(proxy => MainMenu(c, r.page, proxy))
-```
-
 Within `Dashboard` we further connect the `Motd` component to the model using the `connect` method of the `ModelProxy`.
 
 ```scala

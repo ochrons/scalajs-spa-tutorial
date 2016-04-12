@@ -14,7 +14,7 @@ object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
   override def write[R: Pickler](r: R) = Pickle.intoBytes(r)
 }
 
-object Application extends Controller {
+class Application extends Controller {
   val apiService = new ApiService()
 
   def index = Action {
@@ -25,12 +25,12 @@ object Application extends Controller {
     implicit request =>
       println(s"Request path: $path")
 
-      // get the request body as Array[Byte]
+      // get the request body as ByteString
       val b = request.body.asBytes(parse.UNLIMITED).get
 
       // call Autowire route
       Router.route[Api](apiService)(
-        autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(ByteBuffer.wrap(b)))
+        autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(b.asByteBuffer))
       ).map(buffer => {
         val data = Array.ofDim[Byte](buffer.remaining())
         buffer.get(data)

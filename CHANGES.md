@@ -1,5 +1,10 @@
 # Change history
 
+## 1.1.3
+
+* Major updates to dependencies:
+  * Scala 2.11.8, Scala.js 0.6.8, SBT 0.13.11, scalajs-react 0.11.0, React 15.0.1, Play 2.5.1, ScalaCSS 0.4.1, Diode 0.5.1
+
 ## 1.1.2
 
 * Updated to Diode 0.5.0, boopickle 1.1.2, scalajs-react 0.10.4 and scalajs-dom 0.9.0

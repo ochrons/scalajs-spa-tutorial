@@ -33,8 +33,7 @@ The shared dependencies include libraries used by both client and server such as
 ```scala
 val sharedDependencies = Def.setting(Seq(
   "com.lihaoyi" %%% "autowire" % versions.autowire,
-  "me.chrons" %%% "boopickle" % versions.booPickle,
-  "com.lihaoyi" %%% "utest" % versions.uTest
+  "me.chrons" %%% "boopickle" % versions.booPickle
 ))
 ```
 

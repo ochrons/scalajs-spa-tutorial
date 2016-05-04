@@ -1,4 +1,4 @@
-# AutowireBooPickle
+# AutowireとBooPickle
 
 Webクライアントとサーバ間での通信では、*Ajax*が広く用いられています。*Ajax*は非常にゆるく定義された技術の集合体です。
 

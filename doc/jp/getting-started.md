@@ -1,23 +1,28 @@
-# Getting started
+# はじめに
 
-Fork a copy of the repository and clone it to your computer using Git. Run `sbt` in the project folder and after SBT has completed loading the project,
-start the Play server with `run`. You can now navigate to `localhost:9000` on your web browser to open the Dashboard view. At this point Play
-will  compile both the client and server side Scala application, package it and run the server. This may take awhile, so monitor progress on your
-SBT console. Dashboard should look something like this
+このリポジトリをforkして、Gitを用いて、あなたのコンピュータにcloneしましょう。
+プロジェクトフォルダでsbtを実行します。SBTがプロジェクトのロードを終えた後、Playサーバを`run`して起動します。
+次いで、Webブラウザーで、`localhost:9000`にアクセスすることで、ダッシュボード・ビューを開くことができます。
+この時点で、Playは、クライアント側とサーバ側双方のScalaアプリケーションをコンパイルし、パッケージ化し、サーバ上で実行できるようになっています。
+
+この過程は少し時間がかかり、その進捗はSBTのコンソールに表示されます。
+(立ち上がった)ダッシュボードは以下のように見えます。
 
 ![dashboard](images/dashboard.png?raw=true)
 
-The application is really simple, containing only two views (Dashboard and Todo) and you can access these by clicking the appropriate item on the menu. The Todo
-view looks like this
+このアプリケーションは非常にシンプルです、二つのビュー(Dashboard とTodo)のみを含みます。
+メニュー上の該当するアイテムをクリックすることで、これらのビューにアクセスできます。
+Todoビューは、以下のように見えます。
 
 ![todos](images/todos.png?raw=true)
 
-Now that you have everything up and running, it's time to dive into the details of what makes this application tick. Or if you want to experiment a little
-yourself, use the `~run` command on SBT prompt and Play will automatically re-compile the application when you modify the source code. Try
-changing for example the chart data in `Dashboard.scala` and reloading the web page.
+これで、起動及び実行の準備がすべて整いました。いよいよ、このアプリケーション動作の詳細を知るために、実装の詳細に飛び込むべき時です。
 
-## Requirements
+ここで、ちょっとだけコードを書き換えてみる実験をするために、BSTの``~run`コマンドを使ってみるのも良いでしょう。
+このコマンドにより、Playはあなたが書き換えたソースコードを自動的にリコンパイルします。
+例えば、`Dashboard.scala` 内のチャートデータを変更してみて、webページをリロードしてみましょう。
 
-SPA Tutorial uses Play 2.5 which depends on Java 8, so make sure you are using JVM 8 or later.
+## 環境条件
 
-Running client tests requires [PhantomJS](http://phantomjs.org/) to be installed.
+SPAチュートリアルは、Java 8に依存しているPlay 2.5を用います。そのため、JVM 8もしくはそれ以降のバージョンJava環境を整えてください。
+クライアント環境のテストにおいては、[PhantomJS](http://phantomjs.org/)のインストールが必要となります。

@@ -1,7 +1,7 @@
-# Server side
+# サーバ側
 
-The tutorial server is very simplistic and does not represent a typical Play application, but it's enough to provide some basic support
-for the client side. Routing logic on the server side is defined using a Play controller 
+チュートリアル用のサーバは非常にシンプルであり、典型的なPlayアプリケーションではありませんが、クライアント側のコードの基本的なサポートには十分です。
+サーバ側のルーティングロビックはPlayのコントローラーを用いて定義されます。
 
 ```scala
 object Application extends Controller {
@@ -19,7 +19,7 @@ object Application extends Controller {
 
       // call Autowire route
       Router.route[Api](apiService)(
-        autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(b.asByteBuffer))
+        autowire.Core.Request(path.split("/"), Unpicクライアント側と同様に、kle[Map[がtring, ByteBuffer]].fromBytes(b.asByteBuffer))そのため、単に、
       ).map(buffer => {
         val data = Array.ofDim[Byte](buffer.remaining())
         buffer.get(data)
@@ -37,12 +37,13 @@ object Application extends Controller {
 }
 ```
 
-The main HTML page and related resources are provided by Play's template engine from the `twirl` directory.
-The interesting part is handling `api` requests using Autowire router. Like on the client side, Autowire takes care of the complicated stuff
-so you just need to plug it in and let it do its magic. Boopickle takes care of deserializing the request and serializing the response into binary. 
-
-The `ApiService` is just a normal class and it doesn't need to concern itself with
-serialization or URL request path mappings. It just implements the same `Api` as it used on the client side. Simple, eh!
+mainのHTMLページ及び関連するリソースは、`twirl`ディレクトリからPlayのテンプレートエンジンにより提供されます。
+興味深いのは、Autowireルーターを用いての`api`リクエストの扱い方です。
+クライアント側と同様に、Autowireが、複雑な事柄を取り扱います。すなわち、単にAutowireをプラグするだけで、そのマジックは発揮されます。
+Boopickleが、リクエストのデシリアライズと、レスポンスのバイナリへのシリアライズを行います。
+`ApiService`は、単なる通常のクラスであり、それ自体はシリアライズやURlリクエストのマッピングに関与しません。
+このサービスは、クライアント側で用いられたのと同一の`Api` を実装します。
+シンプルだね！
 
 ```scala
 class ApiService extends Api {
@@ -87,4 +88,3 @@ class ApiService extends Api {
   }
 }
 ```
-

@@ -1,10 +1,9 @@
-# Application structure
+# アプリケーションの構造
 
-The application is divided into three folders: `client`, `server` and `shared`. As the names imply, `client` contains the client code for the SPA, `server` is the server and
-`shared` contains code and resources used by both. If you take a quick look at [`build.sbt`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/build.sbt) 
-you will notice the use of `crossProject` to define this Scala.js specific [cross-building](http://www.scala-js.org/doc/sbt/cross-building.html) project structure.
+本アプリケーションは、`client`、`server` そして`shared`、という３つのフォルダに分けられています。
+それぞれの名前の通り、`client`にはSPAのクライアントの、`server` にはサーバーの、そして、`shared`には両者に共通に用いられる、コードとリソースがそれぞれ含まれます。
+[`build.sbt`](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/build.sbt) を見てみると、`crossProject`において、
+Scala.js固有の [cross-building](http://www.scala-js.org/doc/sbt/cross-building.html)プロジェクト構造が定義されていることがわかります。
 
-Within each sub-project the usual SBT/Scala directory structure convention is followed.
-
-We'll get to the details of the project build file later on, but let's first take a look at actual client code!
-
+これらの各サブプロジェクト内においては、SBT/Scalaの通常のディレクトリ構造からの変更が行われます。
+プロジェクトのビルドファイルの詳細については後に見ることとして、まずは実際のクライアントコードを見ていきましょう！

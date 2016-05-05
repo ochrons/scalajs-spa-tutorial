@@ -35,7 +35,6 @@ object AjaxClient extends autowire.Client[ByteBuffer, Pickler, Pickler] {
 ```
 アプリケーションにおいて指定する必要のある変数は、用いたいサーバのURLのみです。他のすべては、マクロの魔法を通じ、自動的に生成されます。
 
-Otherwise everything else it automatically generated for you through the magic of macros.
 サーバ側はさらにシンプルで、単にAutowireにBooPickleをシリアライズに用いることを知らせるだけです。
 
 ```scala

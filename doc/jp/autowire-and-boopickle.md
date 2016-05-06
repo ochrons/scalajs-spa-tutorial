@@ -1,25 +1,24 @@
-# Autowire and BooPickle
+# AutowireとBooPickle
 
-Web clients communicate with the server most commonly with *Ajax* which is a quite loosely defined collection of techniques. Most notable
-JavaScript libraries like JQuery provide higher level access to the low level protocols exposed by the browser. Scala.js provides a nice
-Ajax wrapper in `dom.extensions.Ajax` (or `dom.ext.Ajax` in scalajs-dom 0.8+) but it's still quite tedious to serialize/deserialize objects
-and take care of all the dirty little details.
+Webクライアントとサーバ間での通信では、*Ajax*が広く用いられています。*Ajax*は非常にゆるく定義された技術の集合体です。
 
-But fear not, there is no need to do all that yourself since our friend [Li Haoyi (lihaoyi)](https://github.com/lihaoyi) has created and
-published a great library called [Autowire](https://github.com/lihaoyi/autowire). Combined with my very own 
-[BooPickle](https://github.com/ochrons/boopickle) library you can easily handle client-server communication. Note that BooPickle uses
-binary serialization format, so if you'd prefer a JSON format, consider using [uPickle](https://github.com/lihaoyi/upickle). As the SPA tutorial
-used to use uPickle for serialization, you can browse the repository history to see the relevant code 
-[here](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/js/src/main/scala/spatutorial/client/services/AjaxClient.scala)
-and [here](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/jvm/src/main/scala/spatutorial/server/MainApp.scala).
+JQueryのように非常に有名なJavaScriptライブラリは、高レベルのアクセス手段から、ブラウザが開示している低レベルのプロトコルへのアクセス手段までを提供しています。
+Scala.jsは、 `dom.extensions.Ajax` (もしくは、scalajs-dom 0.8+においては、`dom.ext.Ajax`) において、良いAjaxラッパーを提供しています。今のところ、このラッパーは非常に冗長(tedious)なシリアライズ/デシリアライズ オブジェクトの集まりであり、いくつものつまらない些細な事柄(all the dirty little details)に注意しなければなりません。
 
-To build your own client-server communication pathway all you need to do is to define a single object on the client side and another on the
-server side.
+しかし、こうした委細の全てに一人で立ち向かう必要はありません。
+我らが[Li Haoyi (lihaoyi)](https://github.com/lihaoyi)が、  [Autowire](https://github.com/lihaoyi/autowire)という素晴らしいライブラリを作成し、公開してくれています。
+私が作った、[BooPickle](https://github.com/ochrons/boopickle)ライブラリと組み合わせると、クライアント-サーバ間の通信を容易に行うことができます。
+
+ただし、BooPickleではバイナリでのシリアライズ化フォーマットを用いられます。JSONフォーマットを使いたい場合には、[uPickle](https://github.com/lihaoyi/upickle)を選択肢としてみてください。
+SPAチュートリアルにおいては、当初、シリアライズにuPickleをを用いていたため、リポジトリのヒストリの[ここ](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/js/src/main/scala/spatutorial/client/services/AjaxClient.scala)
+と [ここ](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/jvm/src/main/scala/spatutorial/server/MainApp.scala)において、uPickleによる参照コードを見ることができます。
+
+クライアント-サーバ間通信の経路をビルドするにあたっては、クライアント側及びサーバ側にそれぞれ単一のオブジェクトを定義することだけが必要とされます。
 
 ```scala
 import boopickle.Default._
 
-// client side
+// クライアント側
 object AjaxClient extends autowire.Client[ByteBuffer, Pickler, Pickler] {
   override def doCall(req: Request): Future[ByteBuffer] = {
     dom.ext.Ajax.post(
@@ -34,22 +33,20 @@ object AjaxClient extends autowire.Client[ByteBuffer, Pickler, Pickler] {
   override def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
 }
 ```
+アプリケーションにおいて指定する必要のある変数は、用いたいサーバのURLのみです。他のすべては、マクロの魔法を通じ、自動的に生成されます。
 
-The only variable specific to your application is the URL you want to use to call the server. Otherwise everything else it automatically
-generated for you through the magic of macros. The server side is even simpler, just letting Autowire know that you want to use BooPickle
-for serialization.
+サーバ側はさらにシンプルで、単にAutowireにBooPickleをシリアライズに用いることを知らせるだけです。
 
 ```scala
 import boopickle.Default._
 
-// server side
+// サーバ側
 object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
   override def read[R: Pickler](p: ByteBuffer) = Unpickle[R].fromBytes(p)
   override def write[R: Pickler](r: R) = Pickle.intoBytes(r)
 }
 ```
-
-Now that you have the `AjaxClient` set up, calling the server is as simple as
+これで、`AjaxClient`のセットアップは終了です。 サーバの呼び出し方は以下のようにシンプルです。
 
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -61,9 +58,10 @@ AjaxClient[Api].getTodos().call().foreach { todos =>
 }
 ```
 
-Note that you need those three imports to access the Autowire/BooPickle magic and to provide an execution context for the futures.
+Autowire/BooPickleの魔法を用いて以後の実行環境を整えるためには、上3つのimport文が必要であることに留意してください。
 
-The `Api` is just a simple trait shared between the client and server.
+
+`Api` は、クライアント-サーバ間で共有されるシンプルなtraitです。
 
 ```scala
 trait Api {
@@ -81,7 +79,7 @@ trait Api {
 }
 ```
 
-Please check out [BooPickle documentation](https://github.com/ochrons/boopickle) on what it can and cannot serialize. You might need to use 
-something else if your data is complicated. Case classes, base collections and basic data types are a safe bet.
+BooPickleがシリアライズできるもの、シリアライズできないものは、[BooPickleドキュメント](https://github.com/ochrons/boopickle)で知ることができます。
+もし、用いるデータが複雑な場合、他のライブラリを用いる必要があるかもしれません。ケースクラス、基本的なコレクション、そしてベーシックなデータ型を用いるのが安全です。
 
-So how does this work on the server side?
+さて、サーバ側ではどのような動作がなされるのでしょうか？

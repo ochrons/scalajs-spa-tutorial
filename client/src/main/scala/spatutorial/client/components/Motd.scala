@@ -26,7 +26,7 @@ object Motd {
     }
     .componentDidMount(scope =>
       // update only if Motd is empty
-      Callback.ifTrue(scope.props.value.isEmpty, scope.props.dispatch(UpdateMotd()))
+      Callback.when(scope.props.value.isEmpty)(scope.props.dispatch(UpdateMotd()))
     )
     .build
 

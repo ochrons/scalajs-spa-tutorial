@@ -70,7 +70,7 @@ class MotdHandler[M](modelRW: ModelRW[M, Pot[String]]) extends ActionHandler(mod
 
   override def handle = {
     case action: UpdateMotd =>
-      val updateF = action.effect(AjaxClient[Api].welcomeMsg("User X").call())(identity)
+      val updateF = action.effect(AjaxClient[Api].welcomeMsg("User X").call())(identity _)
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }
@@ -80,7 +80,7 @@ object SPACircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(Empty, Empty)
   // combine all handlers into one
-  override protected val actionHandler = combineHandlers(
+  override protected val actionHandler = foldHandlers(
     new TodoHandler(zoomRW(_.todos)((m, v) => m.copy(todos = v))),
     new MotdHandler(zoomRW(_.motd)((m, v) => m.copy(motd = v)))
   )

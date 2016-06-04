@@ -8,12 +8,21 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.client.SPAMain.{Loc, TodoLoc}
 import spatutorial.client.components._
 
+import scala.util.Random
+
 object Dashboard {
 
   case class Props(router: RouterCtl[Loc], proxy: ModelProxy[Pot[String]])
 
   // create dummy data for the chart
-  val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
+  val cp = Chart.ChartProps(
+    "Test chart",
+    Chart.BarChart,
+    ChartData(
+      Random.alphanumeric.map(_.toUpper.toString).distinct.take(10),
+      Seq(ChartDataset(Iterator.continually(Random.nextDouble() * 10).take(10).toSeq, "Data1"))
+    )
+  )
 
   // create the React component for Dashboard
   private val component = ReactComponentB[Props]("Dashboard")

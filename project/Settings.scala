@@ -24,7 +24,7 @@ object Settings {
   object versions {
     val scala = "2.11.8"
     val scalaDom = "0.9.0"
-    val scalajsReact = "0.11.0"
+    val scalajsReact = "0.11.1"
     val scalaCSS = "0.4.1"
     val log4js = "1.4.10"
     val autowire = "0.2.5"
@@ -32,10 +32,10 @@ object Settings {
     val diode = "0.5.1"
     val uTest = "0.3.1"
 
-    val react = "15.0.1"
+    val react = "15.1.0"
     val jQuery = "1.11.1"
-    val bootstrap = "3.3.2"
-    val chartjs = "1.0.1"
+    val bootstrap = "3.3.6"
+    val chartjs = "2.1.3"
 
     val playScripts = "0.4.0"
   }

@@ -10,13 +10,13 @@ object SPACircuitTests extends TestSuite {
   def tests = TestSuite {
     'TodoHandler - {
       val model = Ready(Todos(Seq(
-        TodoItem("1", 0, "Test1", TodoLow, false),
-        TodoItem("2", 0, "Test2", TodoLow, false),
-        TodoItem("3", 0, "Test3", TodoHigh, true)
+        TodoItem("1", 0, "Test1", TodoLow, completed = false),
+        TodoItem("2", 0, "Test2", TodoLow, completed = false),
+        TodoItem("3", 0, "Test3", TodoHigh, completed = true)
       )))
 
       val newTodos = Seq(
-        TodoItem("3", 0, "Test3", TodoHigh, true)
+        TodoItem("3", 0, "Test3", TodoHigh, completed = true)
       )
 
       def build = new TodoHandler(new RootModelRW(model))
@@ -40,7 +40,7 @@ object SPACircuitTests extends TestSuite {
 
       'UpdateTodoAdd - {
         val h = build
-        val result = h.handle(UpdateTodo(TodoItem("4", 0, "Test4", TodoNormal, false)))
+        val result = h.handle(UpdateTodo(TodoItem("4", 0, "Test4", TodoNormal, completed = false)))
         result match {
           case ModelUpdateEffect(newValue, effects) =>
             assert(newValue.get.items.size == 4)
@@ -53,11 +53,11 @@ object SPACircuitTests extends TestSuite {
 
       'UpdateTodo - {
         val h = build
-        val result = h.handle(UpdateTodo(TodoItem("1", 0, "Test111", TodoNormal, false)))
+        val result = h.handle(UpdateTodo(TodoItem("1", 0, "Test111", TodoNormal, completed = false)))
         result match {
           case ModelUpdateEffect(newValue, effects) =>
             assert(newValue.get.items.size == 3)
-            assert(newValue.get.items(0).content == "Test111")
+            assert(newValue.get.items.head.content == "Test111")
             assert(effects.size == 1)
           case _ =>
             assert(false)
@@ -70,7 +70,7 @@ object SPACircuitTests extends TestSuite {
         result match {
           case ModelUpdateEffect(newValue, effects) =>
             assert(newValue.get.items.size == 2)
-            assert(newValue.get.items(0).content == "Test2")
+            assert(newValue.get.items.head.content == "Test2")
             assert(effects.size == 1)
           case _ =>
             assert(false)

@@ -22,7 +22,7 @@ object Todo {
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshTodos))
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshTodos))
 
     def editTodo(item: Option[TodoItem]) =
       // activate the edit dialog
@@ -126,7 +126,7 @@ object TodoForm {
   }
 
   val component = ReactComponentB[Props]("TodoForm")
-    .initialState_P(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
+    .initialState_P(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, completed = false))))
     .renderBackend[Backend]
     .build
 

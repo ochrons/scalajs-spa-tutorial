@@ -11,18 +11,19 @@ import scala.scalajs.js.annotation.JSName
 @js.native
 trait ChartDataset extends js.Object {
   def label: String = js.native
+  def data: js.Array[Double] = js.native
   def fillColor: String = js.native
   def strokeColor: String = js.native
-  def data: js.Array[Double] = js.native
 }
 
 object ChartDataset {
-  def apply(data: Seq[Double], label: String, fillColor: String = "#8080FF", strokeColor: String = "#404080"): ChartDataset = {
+  def apply(data: Seq[Double],
+            label: String, backgroundColor: String = "#8080FF", borderColor: String = "#404080"): ChartDataset = {
     js.Dynamic.literal(
-      data = data.toJSArray,
       label = label,
-      fillColor = fillColor,
-      strokeColor = strokeColor
+      data = data.toJSArray,
+      backgroundColor = backgroundColor,
+      borderColor = borderColor
     ).asInstanceOf[ChartDataset]
   }
 }
@@ -42,14 +43,40 @@ object ChartData {
   }
 }
 
+@js.native
+trait ChartOptions extends js.Object {
+  def responsive: Boolean = js.native
+}
+
+object ChartOptions {
+  def apply(responsive: Boolean = true): ChartOptions = {
+    js.Dynamic.literal(
+      responsive = responsive
+    ).asInstanceOf[ChartOptions]
+  }
+}
+
+@js.native
+trait ChartConfiguration extends js.Object {
+  def `type`: String = js.native
+  def data: ChartData = js.native
+  def options: ChartOptions = js.native
+}
+
+object ChartConfiguration {
+  def apply(`type`: String, data: ChartData, options: ChartOptions = ChartOptions(true)): ChartConfiguration = {
+    js.Dynamic.literal(
+      `type` = `type`,
+      data = data,
+      options = options
+    ).asInstanceOf[ChartConfiguration]
+  }
+}
+
 // define a class to access the Chart.js component
 @js.native
 @JSName("Chart")
-class JSChart(ctx: js.Dynamic) extends js.Object {
-  // create different kinds of charts
-  def Line(data: ChartData): js.Dynamic = js.native
-  def Bar(data: ChartData): js.Dynamic = js.native
-}
+class JSChart(ctx: js.Dynamic, config: ChartConfiguration) extends js.Object
 
 object Chart {
 
@@ -64,7 +91,7 @@ object Chart {
 
   val Chart = ReactComponentB[ChartProps]("Chart")
     .render_P(p =>
-      <.canvas(^.width := p.width, ^.height := p.height)
+      <.canvas(^.width := s"${p.width}px", ^.height := s"${p.height}px")
     )
     .domType[HTMLCanvasElement]
     .componentDidMount(scope => Callback {
@@ -72,8 +99,8 @@ object Chart {
       val ctx = scope.getDOMNode().getContext("2d")
       // create the actual chart using the 3rd party component
       scope.props.style match {
-        case LineChart => new JSChart(ctx).Line(scope.props.data)
-        case BarChart => new JSChart(ctx).Bar(scope.props.data)
+        case LineChart => new JSChart(ctx, ChartConfiguration("line", scope.props.data))
+        case BarChart => new JSChart(ctx, ChartConfiguration("bar", scope.props.data))
         case _ => throw new IllegalArgumentException
       }
     }).build

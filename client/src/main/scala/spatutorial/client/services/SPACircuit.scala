@@ -10,13 +10,13 @@ import boopickle.Default._
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 // Actions
-case object RefreshTodos
+case object RefreshTodos extends Action
 
-case class UpdateAllTodos(todos: Seq[TodoItem])
+case class UpdateAllTodos(todos: Seq[TodoItem]) extends Action
 
-case class UpdateTodo(item: TodoItem)
+case class UpdateTodo(item: TodoItem) extends Action
 
-case class DeleteTodo(item: TodoItem)
+case class DeleteTodo(item: TodoItem) extends Action
 
 case class UpdateMotd(potResult: Pot[String] = Empty) extends PotAction[String, UpdateMotd] {
   override def next(value: Pot[String]) = UpdateMotd(value)
@@ -47,7 +47,7 @@ case class Todos(items: Seq[TodoItem]) {
 class TodoHandler[M](modelRW: ModelRW[M, Pot[Todos]]) extends ActionHandler(modelRW) {
   override def handle = {
     case RefreshTodos =>
-      effectOnly(Effect(AjaxClient[Api].getTodos().call().map(UpdateAllTodos)))
+      effectOnly(Effect(AjaxClient[Api].getAllTodos().call().map(UpdateAllTodos)))
     case UpdateAllTodos(todos) =>
       // got new todos, update model
       updated(Ready(Todos(todos)))
@@ -80,7 +80,7 @@ object SPACircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(Empty, Empty)
   // combine all handlers into one
-  override protected val actionHandler = foldHandlers(
+  override protected val actionHandler = composeHandlers(
     new TodoHandler(zoomRW(_.todos)((m, v) => m.copy(todos = v))),
     new MotdHandler(zoomRW(_.motd)((m, v) => m.copy(motd = v)))
   )

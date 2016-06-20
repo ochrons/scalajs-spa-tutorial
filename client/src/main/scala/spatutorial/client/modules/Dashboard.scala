@@ -2,7 +2,7 @@ package spatutorial.client.modules
 
 import diode.data.Pot
 import diode.react._
-import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import spatutorial.client.SPAMain.{Loc, TodoLoc}
@@ -24,19 +24,31 @@ object Dashboard {
     )
   )
 
-  // create the React component for Dashboard
-  private val component = ReactComponentB[Props]("Dashboard")
-    .render_P { case Props(router, proxy) =>
+  class Backend($: BackendScope[Props, Unit]) {
+    var motdWrapper: ReactComponentC.ReqProps[(ModelProxy[Pot[String]]) => ReactElement, Pot[String], _, TopNode] = _
+
+    def render(props: Props) = {
       <.div(
         // header, MessageOfTheDay and chart components
         <.h2("Dashboard"),
-        // use connect from ModelProxy to give Motd only partial view to the model
-        proxy.connect(m => m)(Motd(_)),
+        motdWrapper(Motd(_)),
         Chart(cp),
         // create a link to the To Do view
-        <.div(router.link(TodoLoc)("Check your todos!"))
+        <.div(props.router.link(TodoLoc)("Check your todos!"))
       )
-    }.build
+    }
+
+    def willMount(props: Props) = Callback {
+      // use connect from ModelProxy to give Motd only partial view to the model
+      motdWrapper = props.proxy.connect(m => m)
+    }
+  }
+
+  // create the React component for Dashboard
+  private val component = ReactComponentB[Props]("Dashboard")
+    .renderBackend[Backend]
+    .componentWillMount(scope => scope.backend.willMount(scope.props))
+    .build
 
   def apply(router: RouterCtl[Loc], proxy: ModelProxy[Pot[String]]) = component(Props(router, proxy))
 }

@@ -18,8 +18,10 @@ As this is a Single Page Application, all routes are defined under one router co
 val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
   import dsl._
 
+  val todoWrapper = SPACircuit.connect(_.todos)
+  // wrap/connect components to the circuit
   (staticRoute(root, DashboardLoc) ~> renderR(ctl => SPACircuit.wrap(m => m)(proxy => Dashboard(ctl, proxy)))
-    | staticRoute("#todo", TodoLoc) ~> renderR(ctl => SPACircuit.connect(_.todos)(Todo(_)))
+    | staticRoute("#todo", TodoLoc) ~> renderR(ctl => todoWrapper(Todo(_)))
     ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
 }.renderWith(layout)
 ```

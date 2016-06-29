@@ -8,17 +8,19 @@ fake data for the Chart component, to keep things simple.
 ```scala
 // create the React component for Dashboard
 private val component = ReactComponentB[Props]("Dashboard")
-  .render_P { case Props(router, proxy) =>
+  // create and store the connect proxy in state for later use
+  .initialState_P(props => State(props.proxy.connect(m => m)))
+  .renderPS { (_, props, state) =>
     <.div(
       // header, MessageOfTheDay and chart components
       <.h2("Dashboard"),
-      // use connect from ModelProxy to give Motd only partial view to the model
-      proxy.connect(_.motd)(Motd(_)),
+      state.motdWrapper(Motd(_)),
       Chart(cp),
       // create a link to the To Do view
-      <.div(router.link(TodoLoc)("Check your todos!"))
+      <.div(props.router.link(TodoLoc)("Check your todos!"))
     )
-  }.build
+  }
+  .build
 ```
 
 ## Message of the day

@@ -40,7 +40,7 @@ object SPAMain extends js.JSApp {
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div(
       // here we use plain Bootstrap class names as these are specific to the top level layout defined here
-      <.nav(^.className := "navbar navbar-fixed-top",
+      <.nav(^.className := "navbar navbar-inverse navbar-fixed-top",
         <.div(^.className := "container",
           <.div(^.className := "navbar-header", <.span(^.className := "navbar-brand", "SPA Tutorial")),
           <.div(^.className := "collapse navbar-collapse",

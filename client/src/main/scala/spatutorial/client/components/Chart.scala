@@ -64,7 +64,7 @@ trait ChartConfiguration extends js.Object {
 }
 
 object ChartConfiguration {
-  def apply(`type`: String, data: ChartData, options: ChartOptions = ChartOptions(true)): ChartConfiguration = {
+  def apply(`type`: String, data: ChartData, options: ChartOptions = ChartOptions(false)): ChartConfiguration = {
     js.Dynamic.literal(
       `type` = `type`,
       data = data,
@@ -87,11 +87,11 @@ object Chart {
 
   case object BarChart extends ChartStyle
 
-  case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 400, height: Int = 200)
+  case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 500, height: Int = 300)
 
   val Chart = ReactComponentB[ChartProps]("Chart")
     .render_P(p =>
-      <.canvas(^.width := s"${p.width}px", ^.height := s"${p.height}px")
+      <.canvas("width".reactAttr := p.width, "height".reactAttr := p.height)
     )
     .domType[HTMLCanvasElement]
     .componentDidMount(scope => Callback {

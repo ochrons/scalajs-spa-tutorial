@@ -10,7 +10,7 @@ object Settings {
   val name = "scalajs-spa"
 
   /** The version of your application */
-  val version = "1.1.3"
+  val version = "1.1.4"
 
   /** Options for the scala compiler */
   val scalacOptions = Seq(
@@ -23,14 +23,14 @@ object Settings {
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
     val scala = "2.11.8"
-    val scalaDom = "0.9.0"
+    val scalaDom = "0.9.1"
     val scalajsReact = "0.11.1"
     val scalaCSS = "0.4.1"
     val log4js = "1.4.10"
     val autowire = "0.2.5"
-    val booPickle = "1.2.1-SNAPSHOT"
-    val diode = "1.0.0-SNAPSHOT"
-    val uTest = "0.3.1"
+    val booPickle = "1.2.4"
+    val diode = "1.0.0"
+    val uTest = "0.4.3"
 
     val react = "15.1.0"
     val jQuery = "1.11.1"

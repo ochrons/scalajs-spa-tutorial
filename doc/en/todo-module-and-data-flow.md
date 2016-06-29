@@ -88,18 +88,21 @@ To give our React components access to the application model, we have to _connec
 
 ```scala
 SPACircuit.wrap(_.motd)(proxy => Dashboard(ctl, proxy))
-SPACircuit.connect(_.todos)(Todo(_))
+val todoWrapper = SPACircuit.connect(_.todos)
+todoWrapper(Todo(_))
 ```
 
 The difference between `wrap` and `connect` is that the former provides only passive read access to the model and the dispatcher, while the latter registers a
 listener with the circuit and actively updates the wrapped component when the state changes. Both methods take a _reader function_ that extracts the part of the
-model we are interested in. The second parameter is a function that builds the component with a `ModelProxy[A]`. The `ModelProxy` wraps the extracted
-model and provides access to the dispatcher.
+model we are interested in. This component is built beforehand and then instantiated by providing a a function that builds the component with a `ModelProxy[A]`.
+The `ModelProxy` wraps the extracted model and provides access to the dispatcher.
 
 Within `Dashboard` we further connect the `Motd` component to the model using the `connect` method of the `ModelProxy`.
 
 ```scala
-proxy.connect(m => m)(Motd(_))
+.initialState_P(props => State(props.proxy.connect(m => m)))
+...
+state.motdWrapper(Motd(_))
 ```
 
 Because `Dashboard` received only the `motd` part of the model, we pass it as such to the Motd component.

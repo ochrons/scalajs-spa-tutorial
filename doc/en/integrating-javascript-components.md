@@ -95,7 +95,7 @@ The Chart.js draws the chart onto a HTML5 canvas and is instantiated by followin
 
 ```javascript
 var ctx = document.getElementById("myChart").getContext("2d");
-var myNewChart = new Chart(ctx).Line(data);
+var myNewChart = new JSChart(ctx, { type: "line", data: data })
 ```
 
 To do the same in Scala.js we define a simple *facade* as follows
@@ -103,13 +103,15 @@ To do the same in Scala.js we define a simple *facade* as follows
 ```scala
 @js.native
 @JSName("Chart")
-class JSChart(ctx: js.Dynamic) extends js.Object {
-  def Line(data: ChartData): js.Dynamic = js.native
-  def Bar(data: ChartData): js.Dynamic = js.native
+class JSChart(ctx: js.Dynamic, config: ChartConfiguration) extends js.Object
+
+@js.native
+trait ChartConfiguration extends js.Object {
+  def `type`: String = js.native
+  def data: ChartData = js.native
+  def options: ChartOptions = js.native
 }
 ```
-Note that this defines only couple of charts available in the Chart.js component, but it's trivial to add more if you need them. We are also
-skipping the `options` parameter for charts to keep things simple.
 
 To actually instantiate the chart, we need access to the canvas element and with React this is a bit problematic since it builds a virtual-DOM and
 updates the real DOM behind the scene. Therefore the canvas element does not exist at the time of `render` function call. To work around this problem
@@ -119,17 +121,17 @@ and calling the appropriate chart function.
 
 ```scala
 val Chart = ReactComponentB[ChartProps]("Chart")
-  .render_P((P) => {
-    <.canvas(^.width := P.width, ^.height := P.height)
-  })    
+  .render_P(p =>
+    <.canvas(^.width := s"${p.width}px", ^.height := s"${p.height}px")
+  )
   .domType[HTMLCanvasElement]
   .componentDidMount(scope => Callback {
     // access context of the canvas
     val ctx = scope.getDOMNode().getContext("2d")
     // create the actual chart using the 3rd party component
     scope.props.style match {
-      case LineChart => new JSChart(ctx).Line(scope.props.data)
-      case BarChart => new JSChart(ctx).Bar(scope.props.data)
+      case LineChart => new JSChart(ctx, ChartConfiguration("line", scope.props.data))
+      case BarChart => new JSChart(ctx, ChartConfiguration("bar", scope.props.data))
       case _ => throw new IllegalArgumentException
     }
   }).build

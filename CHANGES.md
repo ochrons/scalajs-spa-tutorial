@@ -1,5 +1,9 @@
 # Change history
 
+## 1.1.4
+* Updates to dependencies:
+  * Scala.js 0.6.13 (support for Scala 2.12), scalajs-react 0.11.3, React 15.3.1, Diode 1.1.0, BooPickle 1.2.5, ScalaCSS 0.5.0
+  
 ## 1.1.3
 
 * Major updates to dependencies:

@@ -8,7 +8,7 @@ lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
     libraryDependencies ++= Settings.sharedDependencies.value
   )
   // set up settings specific to the JS project
-  .jsConfigure(_ enablePlugins ScalaJSPlay)
+  .jsConfigure(_ enablePlugins ScalaJSWeb)
 
 lazy val sharedJVM = shared.jvm.settings(name := "sharedJVM")
 
@@ -39,7 +39,7 @@ lazy val client: Project = (project in file("client"))
     // use uTest framework for tests
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
-  .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
+  .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .dependsOn(sharedJS)
 
 // Client projects (just one in this case)

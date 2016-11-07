@@ -20,4 +20,11 @@ changing for example the chart data in `Dashboard.scala` and reloading the web p
 
 SPA Tutorial uses Play 2.5 which depends on Java 8, so make sure you are using JVM 8 or later.
 
-Running client tests requires [PhantomJS](http://phantomjs.org/) to be installed.
+Running client tests requires [Node.js](https://nodejs.org/) and `jsdom` to be installed. After installing `node` and its package manager `npm` you can
+install `jsdom` into your project folder with:
+
+```
+npm install jsdom
+```
+
+Make sure to add `node_modules` directory to your `.gitignore` file!

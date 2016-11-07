@@ -42,7 +42,7 @@ val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
   }
   .componentDidMount(scope =>
     // update only if Motd is empty
-    Callback.ifTrue(scope.props.value.isEmpty, scope.props.dispatch(UpdateMotd()))
+    Callback.ifTrue(scope.props.value.isEmpty, scope.props.dispatchCB(UpdateMotd()))
   )
   .build
 ```

@@ -37,7 +37,7 @@ object MainMenu {
   private class Backend($: BackendScope[Props, Unit]) {
     def mounted(props: Props) =
       // dispatch a message to refresh the todos
-      Callback.when(props.proxy.value.isEmpty)(props.proxy.dispatch(RefreshTodos))
+      Callback.when(props.proxy.value.isEmpty)(props.proxy.dispatchCB(RefreshTodos))
 
     def render(props: Props) = {
       <.ul(bss.navbar)(

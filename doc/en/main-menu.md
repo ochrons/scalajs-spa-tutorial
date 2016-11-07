@@ -33,7 +33,7 @@ To render the menu we just loop over the items and create appropriate tags. For 
 private class Backend(t: BackendScope[Props, _]) {
   def mounted(props: Props) = {
     // dispatch a message to refresh the todos
-    Callback.ifTrue(props.proxy.value.isEmpty, props.proxy.dispatch(RefreshTodos))
+    Callback.ifTrue(props.proxy.value.isEmpty, props.proxy.dispatchCB(RefreshTodos))
   }
 
   def render(props: Props) = {

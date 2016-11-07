@@ -22,7 +22,7 @@ object Todo {
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshTodos))
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatchCB(RefreshTodos))
 
     def editTodo(item: Option[TodoItem]) =
       // activate the edit dialog
@@ -34,7 +34,7 @@ object Todo {
         Callback.log("Todo editing cancelled")
       } else {
         Callback.log(s"Todo edited: $item") >>
-          $.props >>= (_.proxy.dispatch(UpdateTodo(item)))
+          $.props >>= (_.proxy.dispatchCB(UpdateTodo(item)))
       }
       // hide the edit dialog, chain callbacks
       cb >> $.modState(s => s.copy(showTodoForm = false))
@@ -44,8 +44,8 @@ object Todo {
       Panel(Panel.Props("What needs to be done"), <.div(
         p.proxy().renderFailed(ex => "Error loading"),
         p.proxy().renderPending(_ > 500, _ => "Loading..."),
-        p.proxy().render(todos => TodoList(todos.items, item => p.proxy.dispatch(UpdateTodo(item)),
-          item => editTodo(Some(item)), item => p.proxy.dispatch(DeleteTodo(item)))),
+        p.proxy().render(todos => TodoList(todos.items, item => p.proxy.dispatchCB(UpdateTodo(item)),
+          item => editTodo(Some(item)), item => p.proxy.dispatchCB(DeleteTodo(item)))),
         Button(Button.Props(editTodo(None)), Icon.plusSquare, " New")),
         // if the dialog is open, add it to the panel
         if (s.showTodoForm) TodoForm(TodoForm.Props(s.selectedItem, todoEdited))

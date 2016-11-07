@@ -90,6 +90,8 @@ from your own Scala code and some of them are more type-safe than others. A good
 for any data structures it may expose. This way you can be sure to use it in a type-safe manner.
 
 In the tutorial we are using [Chart.js](http://www.chartjs.org/) but the same principles apply to practically all JS components out there.
+In your application you might want to use an [existing facade](https://github.com/coreyauger/scalajs-chart) for Chart.js instead of writing
+your own.
 
 The Chart.js draws the chart onto a HTML5 canvas and is instantiated by following JavaScript code
 

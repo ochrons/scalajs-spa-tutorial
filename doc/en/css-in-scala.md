@@ -60,10 +60,12 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
 
   import dsl._
 
+  implicit val styleUnivEq: UnivEq[CommonStyle.Value] = new UnivEq[CommonStyle.Value] {}
+
   val csDomain = Domain.ofValues(default, primary, success, info, warning, danger)
   val contextDomain = Domain.ofValues(success, info, warning, danger)
 
-  def commonStyle[A](domain: Domain[A], base: String) = styleF(domain)(opt =>
+  def commonStyle[A: UnivEq](domain: Domain[A], base: String) = styleF(domain)(opt =>
     styleS(addClassNames(base, s"$base-$opt"))
   )
 

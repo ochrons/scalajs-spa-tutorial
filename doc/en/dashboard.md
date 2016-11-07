@@ -37,7 +37,7 @@ val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
       proxy().renderPending(_ > 500, _ => <.p("Loading...")),
       proxy().renderFailed(ex => <.p("Failed to load")),
       proxy().render(m => <.p(m)),
-      Button(Button.Props(proxy.dispatch(UpdateMotd()), CommonStyle.danger), Icon.refresh, " Update")
+      Button(Button.Props(proxy.dispatchCB(UpdateMotd()), CommonStyle.danger), Icon.refresh, " Update")
     )
   }
   .componentDidMount(scope =>

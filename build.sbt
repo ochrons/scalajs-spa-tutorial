@@ -54,9 +54,12 @@ lazy val server = (project in file("server"))
     scalacOptions ++= Settings.scalacOptions,
     libraryDependencies ++= Settings.jvmDependencies.value,
     commands += ReleaseCmd,
+    // triggers scalaJSPipeline when using compile or continuous compilation
+    compile in Compile <<= (compile in Compile) dependsOn scalaJSPipeline,
     // connect to the client project
     scalaJSProjects := clients,
-    pipelineStages := Seq(scalaJSProd, digest, gzip),
+    pipelineStages in Assets := Seq(scalaJSPipeline),
+    pipelineStages := Seq(digest, gzip),
     // compress CSS
     LessKeys.compress in Assets := true
   )

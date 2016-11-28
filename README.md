@@ -22,8 +22,8 @@ and the great e-book [Hands-on Scala.js](http://lihaoyi.github.io/hands-on-scala
 
 Tutorial [documentation](https://ochrons.github.io/scalajs-spa-tutorial) is now presented as a GitBook.
 
-あなたは日本語を話せますか？Scala.js is Big in Japan, so I'm looking for help to translate the tutorial documentation into Japanese.
-Contact me on twitter (@ochrons) or via email (otto@chrons.me) if you're interested!
+日本語を話せますか？Scala.js is Big in Japan, so I'm looking for help to translate the tutorial documentation into Japanese.
+Contact me on twitter (@ochrons) or via email (otto@chrons.me) if you're interested! お願いします!
 
 # Scala IDE users
 

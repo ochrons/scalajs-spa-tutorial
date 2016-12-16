@@ -10,9 +10,9 @@
 
 ![dashboard](images/dashboard.png?raw=true)
 
-このアプリケーションは非常にシンプルです、二つのビュー(Dashboard とTodo)のみを含みます。
+このアプリケーションは非常にシンプルで、二つのビュー(DashboardとTodo)のみで構成しています。
 メニュー上の該当するアイテムをクリックすることで、これらのビューにアクセスできます。
-Todoビューは、以下のように見えます。
+Todoビューは、以下のように表示されます。
 
 ![todos](images/todos.png?raw=true)
 

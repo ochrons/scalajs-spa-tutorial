@@ -1,0 +1,671 @@
+
+<!DOCTYPE HTML>
+<html lang="kr" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Integrating JavaScript components · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="todo-module-and-data-flow.html" />
+    
+    
+    <link rel="prev" href="css-in-scala.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Integrating JavaScript components</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="integrating-javascript-components">Integrating JavaScript components</h1>
+<p>Scala.js&#xB294; &#xC6F9; &#xD074;&#xB77C;&#xC774;&#xC5B8;&#xD2B8;&#xB97C; &#xAC1C;&#xBC1C;&#xD560; &#xC218;&#xC788;&#xB294; &#xC6B0;&#xC218;&#xD55C; &#xD658;&#xACBD;&#xC744; &#xC81C;&#xACF5;&#xD558;&#xC9C0;&#xB9CC; &#xB54C;&#xB85C;&#xB294; &#xC218;&#xCC9C; &#xBA85;&#xC758; JavaScript &#xAC1C;&#xBC1C;&#xC790;&#xAC00; &#xADF8;&#xB9BC;&#xC790; &#xC18D;&#xC5D0;&#xC11C; &#xC5B4;&#xC124;&#xD504;&#xAC8C; &#xB2E4;&#xB8F0; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4; :)</p>
+<h2 id="bootstrap-css-components">Bootstrap CSS components</h2>
+<p><a href="http://getbootstrap.com/" target="_blank">&#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9;</a>&#xC740; &#xBC18;&#xC751; &#xD615; &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8; &#xAC1C;&#xBC1C;&#xC744; &#xC704;&#xD574; Twitter&#xC5D0;&#xC11C; &#xB110;&#xB9AC; &#xC0AC;&#xC6A9;&#xB418;&#xB294; HTML / CSS / JS &#xD504;&#xB808;&#xC784; &#xC6CC;&#xD06C;&#xC785;&#xB2C8;&#xB2E4;. &#xC5EC;&#xAE30;&#xC5D0;&#xB294; &#xC0AC;&#xC6A9;&#xD558;&#xAE30; &#xC27D;&#xACE0; &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC5D0; &#xD1B5;&#xD569;&#xB418;&#xB294; &#xB9CE;&#xC740; &#xC2A4;&#xD0C0;&#xC77C;&#xC758; HTML / CSS &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xAC00; &#xD568;&#xAED8; &#xC81C;&#xACF5;&#xB429;&#xB2C8;&#xB2E4;. Bootstrap&#xC758; &#xB9CE;&#xC740; &#xBD80;&#xBD84;&#xC740; &#xC2E4;&#xC81C;&#xB85C; JavaScript&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC9C0; &#xC54A;&#xC73C;&#xBA70;, &#xBAA8;&#xB4E0; &#xB9C8;&#xBC95;&#xC740; CSS&#xC5D0;&#xC11C; &#xBC1C;&#xC0DD;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC774; &#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;&#xC740; &#xAC04;&#xB2E8;&#xD55C; &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; (Bootstrap) <a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Bootstrap.scala" target="_blank">&#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;</a> (&#xBC84;&#xD2BC; &#xBC0F; &#xD328;&#xB110;)&#xC744; React &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xCD94;&#xAC00;&#xD569;&#xB2C8;&#xB2E4;. &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9;&#xC740; &#xB9CE;&#xC740; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0;&#xC11C; &#xBB38;&#xB9E5; &#xC2A4;&#xD0C0;&#xC77C;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; &#xCD94;&#xAC00; &#xC758;&#xBBF8;&#xB97C; &#xC804;&#xB2EC;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xB4E4;&#xC740; &#xC2A4;&#xCE7C;&#xB77C; &#xC5F4;&#xAC70;&#xB85C; &#xC27D;&#xAC8C; &#xB098;&#xD0C0;&#xB0BC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">CommonStyle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Enumeration</span> </span>{
+  <span class="hljs-keyword">val</span> <span class="hljs-keyword">default</span>, primary, success, info, warning, danger = <span class="hljs-type">Value</span>
+}
+</code></pre>
+<p>&#xB300;&#xD654;&#xC2DD; &#xBC84;&#xD2BC;&#xC744; &#xC815;&#xC758;&#xD558;&#xB824;&#xBA74; &#xD074;&#xB9AD; &#xD560; &#xB54C; &#xC218;&#xD589; &#xD560; &#xC791;&#xC5C5;&#xC744; &#xC54C;&#xACE0; &#xC788;&#xC5B4;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;. &#xC774; &#xC608;&#xC81C;&#xC5D0;&#xC11C;&#xB294; &#xB2E8;&#xC21C;&#xD788; &#xCEE8;&#xD14D;&#xC2A4;&#xD2B8; &#xC2A4;&#xD0C0;&#xC77C;&#xACFC; &#xD568;&#xAED8; &#xC18D;&#xC131;&#xC5D0; &#xD568;&#xC218;&#xB97C; &#xC804;&#xB2EC;&#xD569;&#xB2C8;&#xB2E4;. &#xC790;&#xC2DD; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xB97C; &#xD1B5;&#xD574; &#xC815;&#xC758;&#xD558;&#xB294; &#xAC83;&#xC774; &#xB354; &#xD3B8;&#xB9AC;&#xD558;&#xBBC0;&#xB85C; &#xC2E4;&#xC81C; &#xBC84;&#xD2BC; &#xB0B4;&#xC6A9;&#xC744; &#xC18D;&#xC131;&#xC5D0; &#xC81C;&#xACF5; &#xD560; &#xD544;&#xC694;&#xAC00; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Button</span> </span>{
+
+  <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">onClick: <span class="hljs-type">Callback</span>, style: <span class="hljs-type">CommonStyle</span>.<span class="hljs-type">Value</span> = <span class="hljs-type">CommonStyle</span>.default, addStyles: <span class="hljs-type">Seq</span>[<span class="hljs-type">StyleA</span>] = <span class="hljs-type">Seq</span>(</span>))</span>
+
+  <span class="hljs-keyword">val</span> component = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">Props</span>](<span class="hljs-string">&quot;Button&quot;</span>)
+    .renderPC((_, props, children) =&gt;
+      &lt;.button(bss.buttonOpt(props.style), props.addStyles, ^.tpe := <span class="hljs-string">&quot;button&quot;</span>, ^.onClick --&gt; props.onClick, children)
+    ).build
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(props: <span class="hljs-type">Props</span>, children: <span class="hljs-type">ReactNode</span>*) = component(props, children: _*)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>() = component
+}
+</code></pre>
+<p>&#xC774;&#xBC88;&#xC5D0;&#xB294; render &#xBA54;&#xC18C;&#xB4DC;&#xAC00; &#xB450; &#xAC1C;&#xC758; &#xB9E4;&#xAC1C; &#xBCC0;&#xC218;&#xB97C; &#xC5BB;&#xB294;&#xB2E4; :&#xC774; &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xC5D0; &#xC8FC;&#xC5B4;&#xC9C4; &#xC18D;&#xC131;&#xACFC; &#xC790;&#xC2DD;. &#xB2E8;&#xC21C;&#xD788; &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; CSS&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; &#xC815;&#xC0C1;&#xC801;&#xC778; &#xBC84;&#xD2BC;&#xC744; &#xB80C;&#xB354;&#xB9C1;&#xD558;&#xACE0; &#xC18D;&#xC131;&#xC5D0;&#xC11C; &#xC815;&#xC758;&#xD55C; &#xD578;&#xB4E4;&#xB7EC;&#xC5D0; onClick&#xC744; &#xBC14;&#xC778;&#xB529;&#xD569;&#xB2C8;&#xB2E4;. &#xB9C8;&#xC9C0;&#xB9C9;&#xC73C;&#xB85C; &#xBC84;&#xD2BC; &#xD0DC;&#xADF8; &#xB0B4;&#xC5D0; &#xC790;&#xC2DD;&#xC774; &#xB80C;&#xB354;&#xB9C1;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p>&#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; &#xD328;&#xB110; &#xC815;&#xC758;&#xB294; &#xAC04;&#xB2E8;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Panel</span> </span>{
+  <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">heading: <span class="hljs-type">String</span>, style: <span class="hljs-type">CommonStyle</span>.<span class="hljs-type">Value</span> = <span class="hljs-type">CommonStyle</span>.default</span>)</span>
+
+  <span class="hljs-keyword">val</span> component = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">Props</span>](<span class="hljs-string">&quot;Panel&quot;</span>)
+    .renderPC((_, p, c) =&gt;
+      &lt;.div(bss.panelOpt(p.style),
+        &lt;.div(bss.panelHeading, p.heading),
+        &lt;.div(bss.panelBody, c)
+      )
+    ).build
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(props: <span class="hljs-type">Props</span>, children: <span class="hljs-type">ReactNode</span>*) = component(props, children: _*)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>() = component
+}
+</code></pre>
+<p>&#xC774; &#xD328;&#xB110;&#xC740; &#xB300;&#xD654; &#xD615; &#xAE30;&#xB2A5;&#xC744; &#xC81C;&#xACF5;&#xD558;&#xC9C0; &#xC54A;&#xC9C0;&#xB9CC; &#xC774;&#xBC88;&#xC5D0;&#xB294; children &#xC18D;&#xC131;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xB294; &#xAC83; &#xC678;&#xC5D0;&#xB3C4; &#xBCC4;&#xB3C4;&#xC758; &apos;&#xC81C;&#xBAA9;&apos;&#xC744; &#xC815;&#xC758;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<h2 id="icons">Icons</h2>
+<p>&#xB9DE;&#xCDA4; &#xAE00;&#xAF34;&#xC740; &#xBAA8;&#xB4E0; &#xB514;&#xC2A4;&#xD50C;&#xB808;&#xC774;&#xC5D0;&#xC11C;&#xBCF4;&#xAE30; &#xC88B;&#xAC8C; &#xBCF4;&#xC774;&#xB294; &#xD655;&#xC7A5; &#xAC00;&#xB2A5;&#xD55C; &#xC544;&#xC774;&#xCF58;&#xC744; &#xC0DD;&#xC131;&#xD558;&#xB294; &#xC88B;&#xC740; &#xBC29;&#xBC95;&#xC785;&#xB2C8;&#xB2E4;. &#xC774; &#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;&#xC5D0;&#xC11C;&#xB294; <a href="http://fortawesome.github.io/Font-Awesome/" target="_blank">Font Awesome</a> &#xC544;&#xC774;&#xCF58;&#xACFC; &#xC801;&#xC808;&#xD55C; HTML &#xD0DC;&#xADF8;&#xB97C; &#xC0DD;&#xC131;&#xD558;&#xC5EC; &#xC544;&#xC774;&#xCF58;&#xC744; &#xD45C;&#xC2DC;&#xD558;&#xB294; &#xAC04;&#xB2E8;&#xD55C; &#xB798;&#xD37C;&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Icon</span> </span>{
+  <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Icon</span> </span>= <span class="hljs-type">ReactTag</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(name: <span class="hljs-type">String</span>): <span class="hljs-type">Icon</span> = &lt;.i(^.className := <span class="hljs-string">s&quot;fa fa-<span class="hljs-subst">$name</span>&quot;</span>)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adjust</span> </span>= apply(<span class="hljs-string">&quot;adjust&quot;</span>)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adn</span> </span>= apply(<span class="hljs-string">&quot;adn&quot;</span>)
+  .
+  .
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">youtubePlay</span> </span>= apply(<span class="hljs-string">&quot;youtube-play&quot;</span>)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">youtubeSquare</span> </span>= apply(<span class="hljs-string">&quot;youtube-square&quot;</span>)
+}
+</code></pre>
+<h2 id="javascript-chart-component">JavaScript chart component</h2>
+<p>&#xC6F9; UI&#xC5D0;&#xC11C; &#xBA4B;&#xC9C4; &#xCC28;&#xD2B8; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xB97C; &#xC6D0;&#xD55C;&#xB2E4;&#xBA74; &#xB9CE;&#xC740; SVG &#xC0DD;&#xC131; &#xCF54;&#xB4DC;&#xB97C; &#xC791;&#xC131;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.&#xD558;&#xC9C0;&#xB9CC; &#xB9CE;&#xC740; &#xC774;&#xC810;&#xC744; &#xC81C;&#xACF5; &#xD560; &#xC218;&#xC788;&#xB294; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xAC00;&#xC788;&#xB294; &#xACBD;&#xC6B0; &#xC65C; &#xADF8;&#xB807;&#xAC8C;&#xD574;&#xC57C;&#xD560;&#xAE4C;&#xC694;? Scala.js&#xB294; &#xC2A4;&#xCE7C;&#xB77C; &#xCF54;&#xB4DC;&#xC5D0;&#xC11C; &#xC5EC;&#xB7EC; &#xAC00;&#xC9C0; &#xBC29;&#xBC95;&#xC73C;&#xB85C; [JavaScript &#xC0AC;&#xC6A9;] (<a href="http://www.scala-js.org/doc/calling-javascript.html)&#xC744;" target="_blank">http://www.scala-js.org/doc/calling-javascript.html)&#xC744;</a> &#xC81C;&#xACF5;&#xD558;&#xBA70; &#xADF8; &#xC911; &#xC77C;&#xBD80;&#xB294; &#xB2E4;&#xB978; &#xAC83;&#xBCF4;&#xB2E4; &#xB354; &#xC720;&#xD615;&#xC5D0; &#xC548;&#xC804;&#xD569;&#xB2C8;&#xB2E4;. &#xC88B;&#xC740; &#xBC29;&#xBC95;&#xC740; &#xD0C0;&#xC0AC; JS &#xBAA8;&#xB4C8;&#xACFC; &#xB178;&#xCD9C; &#xB420; &#xC218;&#xC788;&#xB294; &#xBAA8;&#xB4E0; &#xB370;&#xC774;&#xD130; &#xAD6C;&#xC870;&#xC5D0; &#xB300;&#xD574; <em> facade </em>&#xB97C; &#xC815;&#xC758;&#xD558;&#xB294; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;. &#xC774;&#xB807;&#xAC8C;&#xD558;&#xBA74; &#xD615;&#xC2DD;&#xC5D0; &#xC548;&#xC804;&#xD55C; &#xBC29;&#xC2DD;&#xC73C;&#xB85C; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC774; &#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;&#xC5D0;&#xC11C; &#xC6B0;&#xB9AC;&#xB294; [Chart.js] (<a href="http://www.chartjs.org/)&#xB97C;" target="_blank">http://www.chartjs.org/)&#xB97C;</a> &#xC0AC;&#xC6A9;&#xD558;&#xACE0; &#xC788;&#xC9C0;&#xB9CC; &#xC2E4;&#xC81C;&#xC801;&#xC73C;&#xB85C; &#xBAA8;&#xB4E0; JS &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xB3D9;&#xC77C;&#xD55C; &#xC6D0;&#xCE59;&#xC774; &#xC801;&#xC6A9;&#xB429;&#xB2C8;&#xB2E4;.&#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC5D0;&#xC11C; &#xB2F9;&#xC2E0; &#xC790;&#xC2E0;&#xC774; &#xC9C1;&#xC811; &#xC791;&#xC131;&#xD55C; &#xAC83; &#xB300;&#xC2E0; Chart.js [&#xAE30;&#xC874; facade] (<a href="https://github.com/coreyauger/scalajs-chart)&#xB97C;" target="_blank">https://github.com/coreyauger/scalajs-chart)&#xB97C;</a> &#xC0AC;&#xC6A9;&#xD558;&#xB294; &#xAC83;&#xC744; &#xC6D0;&#xD560; &#xC218;&#xB3C4; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>Chart.js&#xB294; HTML5 &#xCE94;&#xBC84;&#xC2A4;&#xC5D0; &#xCC28;&#xD2B8;&#xB97C; &#xADF8;&#xB9AC;&#xACE0; JavaScript &#xCF54;&#xB4DC;&#xB97C; &#xD1B5;&#xD574; &#xC778;&#xC2A4;&#xD134;&#xC2A4;&#xD654;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> ctx = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;myChart&quot;</span>).getContext(<span class="hljs-string">&quot;2d&quot;</span>);
+<span class="hljs-keyword">var</span> myNewChart = <span class="hljs-keyword">new</span> JSChart(ctx, { type: <span class="hljs-string">&quot;line&quot;</span>, data: data })
+</code></pre>
+<p>Scala.js&#xC5D0;&#xC11C; &#xB3D9;&#xC77C;&#xD55C; &#xC791;&#xC5C5;&#xC744; &#xC218;&#xD589;&#xD558;&#xAE30; &#xC704;&#xD574; &#xB2E4;&#xC74C;&#xACFC; &#xAC19;&#xC774; &#xAC04;&#xB2E8;&#xD55C; <em> facade </em>&#xB97C; &#xC815;&#xC758;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-meta">@js</span>.native
+<span class="hljs-meta">@JSName</span>(<span class="hljs-string">&quot;Chart&quot;</span>)
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JSChart</span>(<span class="hljs-params">ctx: js.<span class="hljs-type">Dynamic</span>, config: <span class="hljs-type">ChartConfiguration</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">js</span>.<span class="hljs-title">Object</span></span>
+
+<span class="hljs-meta">@js</span>.native
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">ChartConfiguration</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">js</span>.<span class="hljs-title">Object</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> `<span class="hljs-title">type</span>`</span>: <span class="hljs-type">String</span> = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">data</span></span>: <span class="hljs-type">ChartData</span> = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">options</span></span>: <span class="hljs-type">ChartOptions</span> = js.native
+}
+</code></pre>
+<p>&#xCC28;&#xD2B8;&#xB97C; &#xC2E4;&#xC81C;&#xB85C; &#xC778;&#xC2A4;&#xD134;&#xC2A4;&#xD654;&#xD558;&#xB824;&#xBA74; &#xCE94;&#xBC84;&#xC2A4; &#xC694;&#xC18C;&#xC5D0; &#xC561;&#xC138;&#xC2A4;&#xD574;&#xC57C;&#xD558;&#xACE0; React&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xAC00;&#xC0C1; DOM&#xC744; &#xC791;&#xC131;&#xD558;&#xACE0; &#xC7A5;&#xBA74; &#xB4A4;&#xC758; &#xC2E4;&#xC81C; DOM&#xC744; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD558;&#xBBC0;&#xB85C; &#xC870;&#xAE08; &#xBB38;&#xC81C;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xADF8;&#xB7EC;&#xBBC0;&#xB85C;<code>render</code> &#xD568;&#xC218; &#xD638;&#xCD9C;&#xC2DC; &#xCE94;&#xBC84;&#xC2A4; &#xC694;&#xC18C;&#xB294; &#xC874;&#xC7AC;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774; &#xBB38;&#xC81C;&#xB97C; &#xD574;&#xACB0;&#xD558;&#xB824;&#xBA74; &#xC2E4;&#xC81C; DOM&#xC774; &#xC5C5;&#xB370;&#xC774;&#xD2B8; &#xB41C; &#xD6C4;&#xC5D0; &#xD638;&#xCD9C;&#xB418;&#xB294; &apos;componentDidMount<code>&#xD568;&#xC218;&#xB85C; &#xCC28;&#xD2B8;&#xB97C; &#xB9CC;&#xB4E4;&#xC5B4;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;. &#xC774; &#xD568;&#xC218;&#xB294;</code>getDOMNode ()<code>&#xB97C; &#xD1B5;&#xD574; &#xC2E4;&#xC81C; DOM &#xB178;&#xB4DC;&#xC5D0; &#xC811;&#xADFC; &#xD560; &#xC218;&#xC788;&#xAC8C; &#xD574;&#xC8FC;&#xB294;</code>scope<code>&#xB9E4;&#xAC1C; &#xBCC0;&#xC218;&#xC640; &#xD568;&#xAED8; &#xD638;&#xCD9C;&#xB429;&#xB2C8;&#xB2E4;. &#xCC28;&#xD2B8;&#xB294;</code>Chart`&#xC758; &#xC0C8;&#xB85C;&#xC6B4; &#xC778;&#xC2A4;&#xD134;&#xC2A4;&#xB97C; &#xC0DD;&#xC131;&#xD558;&#xACE0; &#xC801;&#xC808;&#xD55C; &#xCC28;&#xD2B8; &#xD568;&#xC218;&#xB97C; &#xD638;&#xCD9C;&#xD568;&#xC73C;&#xB85C;&#xC368; &#xB9CC;&#xB4E4;&#xC5B4;&#xC9D1;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> <span class="hljs-type">Chart</span> = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">ChartProps</span>](<span class="hljs-string">&quot;Chart&quot;</span>)
+  .render_P(p =&gt;
+    &lt;.canvas(^.width := <span class="hljs-string">s&quot;<span class="hljs-subst">${p.width}</span>px&quot;</span>, ^.height := <span class="hljs-string">s&quot;<span class="hljs-subst">${p.height}</span>px&quot;</span>)
+  )
+  .domType[<span class="hljs-type">HTMLCanvasElement</span>]
+  .componentDidMount(scope =&gt; <span class="hljs-type">Callback</span> {
+    <span class="hljs-comment">// access context of the canvas</span>
+    <span class="hljs-keyword">val</span> ctx = scope.getDOMNode().getContext(<span class="hljs-string">&quot;2d&quot;</span>)
+    <span class="hljs-comment">// create the actual chart using the 3rd party component</span>
+    scope.props.style <span class="hljs-keyword">match</span> {
+      <span class="hljs-keyword">case</span> <span class="hljs-type">LineChart</span> =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">JSChart</span>(ctx, <span class="hljs-type">ChartConfiguration</span>(<span class="hljs-string">&quot;line&quot;</span>, scope.props.data))
+      <span class="hljs-keyword">case</span> <span class="hljs-type">BarChart</span> =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">JSChart</span>(ctx, <span class="hljs-type">ChartConfiguration</span>(<span class="hljs-string">&quot;bar&quot;</span>, scope.props.data))
+      <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">IllegalArgumentException</span>
+    }
+  }).build
+</code></pre>
+<p>Chart.js &#xC785;&#xB825; &#xB370;&#xC774;&#xD130;&#xB294; &#xC544;&#xB798;&#xC758; JavaScript &#xAC1D;&#xCCB4;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> data = {
+    labels: [<span class="hljs-string">&quot;January&quot;</span>, <span class="hljs-string">&quot;February&quot;</span>, <span class="hljs-string">&quot;March&quot;</span>, <span class="hljs-string">&quot;April&quot;</span>, <span class="hljs-string">&quot;May&quot;</span>, <span class="hljs-string">&quot;June&quot;</span>, <span class="hljs-string">&quot;July&quot;</span>],
+    datasets: [
+        {
+            label: <span class="hljs-string">&quot;My First dataset&quot;</span>,
+            fillColor: <span class="hljs-string">&quot;rgba(220,220,220,0.2)&quot;</span>,
+            strokeColor: <span class="hljs-string">&quot;rgba(220,220,220,1)&quot;</span>,
+            data: [<span class="hljs-number">65</span>, <span class="hljs-number">59</span>, <span class="hljs-number">80</span>, <span class="hljs-number">81</span>, <span class="hljs-number">56</span>, <span class="hljs-number">55</span>, <span class="hljs-number">40</span>]
+        },
+        {
+            label: <span class="hljs-string">&quot;My Second dataset&quot;</span>,
+            fillColor: <span class="hljs-string">&quot;rgba(151,187,205,0.2)&quot;</span>,
+            strokeColor: <span class="hljs-string">&quot;rgba(151,187,205,1)&quot;</span>,
+            data: [<span class="hljs-number">28</span>, <span class="hljs-number">48</span>, <span class="hljs-number">40</span>, <span class="hljs-number">19</span>, <span class="hljs-number">86</span>, <span class="hljs-number">27</span>, <span class="hljs-number">90</span>]
+        }
+    ]
+};
+</code></pre>
+<p>Scala.js&#xC5D0;&#xC11C; &#xAC19;&#xC740; &#xAC83;&#xC744; &#xBE4C;&#xB4DC;&#xD558;&#xAE30; &#xC704;&#xD574; &#xC6B0;&#xB9AC;&#xB294;<code>js.Dynamic.literal</code>&#xC744; &#xC9C1;&#xC811; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.&#xD558;&#xC9C0;&#xB9CC; &#xC774;&#xAC83;&#xC740; &#xB9E4;&#xC6B0; &#xC548;&#xC804;&#xD558;&#xC9C0; &#xC54A;&#xACE0; &#xBC88;&#xAC70;&#xB85C;&#xC6B8; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xB354; &#xB098;&#xC740; &#xB300;&#xC548;&#xC740; &#xBE4C;&#xB354; &#xD568;&#xC218;&#xB97C; &#xC815;&#xC758;&#xD558;&#xAE30; &#xC704;&#xD574; &#xBE4C;&#xB354; &#xD568;&#xC218;&#xB97C; &#xC815;&#xC758;&#xD558;&#xACE0; &#xBE4C;&#xB354; &#xD568;&#xC218;&#xC5D0; &#xC561;&#xC138;&#xC2A4;&#xD558;&#xAE30;&#xC704;&#xD55C; &#xC815;&#xBA74;&#xC744; &#xC815;&#xC758;&#xD558;&#xB294; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-meta">@js</span>.native
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">ChartData</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">js</span>.<span class="hljs-title">Object</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">labels</span></span>: js.<span class="hljs-type">Array</span>[<span class="hljs-type">String</span>] = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">datasets</span></span>: js.<span class="hljs-type">Array</span>[<span class="hljs-type">ChartDataset</span>] = js.native
+}
+
+<span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">ChartData</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(labels: <span class="hljs-type">Seq</span>[<span class="hljs-type">String</span>], datasets: <span class="hljs-type">Seq</span>[<span class="hljs-type">ChartDataset</span>]): <span class="hljs-type">ChartData</span> = {
+    js.<span class="hljs-type">Dynamic</span>.literal(
+      labels = labels.toJSArray,
+      datasets = datasets.toJSArray
+    ).asInstanceOf[<span class="hljs-type">ChartData</span>]
+  }
+}
+</code></pre>
+<p>&#xC774; &#xACBD;&#xC6B0;<code>ChartData</code> &#xD2B9;&#xC131;&#xC744; &#xC815;&#xC758;&#xD558;&#xB294; &#xAC83;&#xC740; &#xC0AC;&#xC2E4;&#xC0C1; &#xD544;&#xC694;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC720;&#xD615; &#xC548;&#xC804;&#xC131;&#xC744; &#xAC15;&#xD654;&#xD558;&#xB294; &#xAC83; &#xC774;&#xC678;&#xC5D0;&#xB294; &#xC2E4;&#xC81C;&#xB85C; &#xC0AC;&#xC6A9;&#xD558;&#xC9C0; &#xC54A;&#xAE30; &#xB54C;&#xBB38;&#xC785;&#xB2C8;&#xB2E4;. &#xADF8;&#xB7EC;&#xB098; &#xC2E4;&#xC81C;&#xB85C; &#xC560;&#xD50C;&#xB9AC;&#xCF00;&#xC774;&#xC158; &#xC678;&#xBD80;&#xC5D0;&#xC11C; &#xC815;&#xC758; &#xB41C; JavaScript &#xAC1D;&#xCCB4;&#xC5D0; &#xC561;&#xC138;&#xC2A4;&#xD574;&#xC57C;&#xD558;&#xB294; &#xACBD;&#xC6B0;&#xC774;&#xB97C; &#xC218;&#xD589;&#xD558;&#xB294; &#xBC29;&#xBC95;&#xC785;&#xB2C8;&#xB2E4;. &#xCC28;&#xD2B8; &#xB370;&#xC774;&#xD130; &#xC815;&#xC758;&#xB294; &#xB2E4;&#xC74C;&#xACFC; &#xAC19;&#xC774; &#xAC04;&#xB2E8;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> cp = <span class="hljs-type">ChartProps</span>(<span class="hljs-string">&quot;Test chart&quot;</span>, <span class="hljs-type">Chart</span>.<span class="hljs-type">BarChart</span>, <span class="hljs-type">ChartData</span>(<span class="hljs-type">Seq</span>(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>), <span class="hljs-type">Seq</span>(<span class="hljs-type">ChartDataset</span>(<span class="hljs-type">Seq</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>), <span class="hljs-string">&quot;Data1&quot;</span>))))
+</code></pre>
+<p>&#xB9E4;&#xC6B0; &#xBCF5;&#xC7A1;&#xD55C; JavaScript &#xAC1D;&#xCCB4;&#xB97C; &#xC791;&#xC131; / &#xC561;&#xC138;&#xC2A4;&#xD574;&#xC57C;&#xD558;&#xB294; &#xACBD;&#xC6B0; <a href="https://github.com/jducoeur" target="_blank">jducoeur</a> &#xC5D0; &#xC758;&#xD574; &#xB9CC;&#xB4E4;&#xC5B4;&#xC9C4; <a href="https://github.com/jducoeur/jsext/blob/master/src/main/scala/org/querki/jsext/JSOptionBuilder.scala" target="_blank">Querki</a>)&#xC640; &#xAC19;&#xC740; &#xC635;&#xC158; &#xC791;&#xC131;&#xAE30; &#xBC29;&#xC2DD;&#xC744; &#xACE0;&#xB824;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.(&#xC608; : <a href="https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/facades/jqueryui/JQueryUIDialog.scala" target="_blank">JQueryUIDialog</a>).</p>
+<h2 id="bootstrap-jquery-components">Bootstrap jQuery components</h2>
+<p>&#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9;&#xC740; CSS &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC; &#xC77C;&#xBFD0;&#xB9CC; &#xC544;&#xB2C8;&#xB77C; &#xB4DC;&#xB86D; &#xB2E4;&#xC6B4; &#xBC0F; &#xBAA8;&#xB2EC;&#xACFC; &#xAC19;&#xC740; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xAE30;&#xB2A5;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xB294; JavaScript&#xB3C4; &#xD568;&#xAED8; &#xC81C;&#xACF5;&#xB429;&#xB2C8;&#xB2E4;. <a href="http://getbootstrap.com/javascript/#modals" target="_blank">Modal</a>&#xC740; &#xBAA8;&#xB2EC;&#xC774; &#xD65C;&#xC131;&#xD654;&#xB418;&#xACE0; &#xC228;&#xACA8;&#xC9C4; &#xD6C4;&#xC5D0; &#xD45C;&#xC2DC;&#xB418;&#xB294; &#xC228;&#xACA8;&#xC9C4; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xB97C; &#xD3EC;&#xD568;&#xD558;&#xBBC0;&#xB85C; &#xD2B9;&#xD788; &#xBB38;&#xC81C;&#xAC00;&#xB418;&#xB294; &#xC2DC;&#xC2A4;&#xD15C;&#xC785;&#xB2C8;&#xB2E4;. &#xC77C;&#xBC18;&#xC801;&#xC778; &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC5D0;&#xC11C;&#xB294; &#xB300;&#xD654; &#xC0C1;&#xC790; HTML&#xC744; &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC758; &#xC77C;&#xBD80;&#xB85C; &#xC815;&#xC758;&#xD558;&#xACE0; &#xC228;&#xAE40; &#xC0C1;&#xD0DC;&#xB85C; &#xC720;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;. &#xADF8;&#xB7EC;&#xB098; React&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC774; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xC758; &#xB0B4;&#xC6A9;&#xC744; &#xC27D;&#xAC8C; &#xC81C;&#xC5B4; &#xD560; &#xC218; &#xC788;&#xB3C4;&#xB85D; &#xD45C;&#xC2DC;&#xB418;&#xAE30; &#xBC14;&#xB85C; &#xC804;&#xC5D0; &#xBAA8;&#xB2EC;&#xC5D0; &#xB300;&#xD55C; HTML&#xC744; &#xB9CC;&#xB4DC;&#xB294; &#xAC83;&#xC774; &#xC27D;&#xC2B5;&#xB2C8;&#xB2E4; (&#xAD8C;&#xC7A5;).</p>
+<p>Bootstrap Modal&#xC744; &#xD1B5;&#xD569;&#xD558;&#xAE30; &#xC804;&#xC5D0; &#xBA3C;&#xC800; jQuery &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xB97C; &#xD1B5;&#xD569;&#xD558;&#xB294; &#xBC29;&#xBC95;&#xC744; &#xC54C;&#xC544; &#xBCF4;&#xC790;. &#xC6B0;&#xB9AC;&#xB294; &#xC9C4;&#xC815;&#xC73C;&#xB85C; [&#xC2A4;&#xCF08;&#xB808;&#xD1A4; jQuery &#xD1B5;&#xD569;] (<a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/JQuery.scala)&#xC744;" target="_blank">https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/JQuery.scala)&#xC744;</a> &#xC81C;&#xACF5;&#xD588;&#xC2B5;&#xB2C8;&#xB2E4;. , &#xBAA8;&#xB2EC;&#xC774; &#xC791;&#xB3D9;&#xD558;&#xAE30;&#xC5D0; &#xCDA9;&#xBD84;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0;, &#xB300;&#xBD80;&#xBD84;&#xC758; &#xC6A9;&#xB3C4;&#xB85C; [&#xB354; &#xC644;&#xBCBD;&#xD55C;] (<a href="https://github.com/jducoeur/jquery-facade" target="_blank">https://github.com/jducoeur/jquery-facade</a>) &#xBB34;&#xC5B8;&#xAC00;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xACE0; &#xC2F6;&#xC744; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;. jQuery &#xD1B5;&#xD569;&#xC740; [Scala.js documentation] (<a href="http://www.scala-js.org/doc/calling-javascript.html)&#xC5D0;&#xC11C;&#xB3C4;" target="_blank">http://www.scala-js.org/doc/calling-javascript.html)&#xC5D0;&#xC11C;&#xB3C4;</a> &#xAC04;&#xB7B5;&#xD558;&#xAC8C; &#xC124;&#xBA85;&#xB418;&#xC5B4; &#xC788;&#xC73C;&#xBBC0;&#xB85C; &#xC790;&#xC138;&#xD55C; &#xB0B4;&#xC6A9;&#xC740; &#xB2E4;&#xB8E8;&#xC9C0; &#xC54A;&#xC744; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;. &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; &#xC804;&#xC5ED;<code>jQuery</code> &#xBCC0;&#xC218;&#xB97C; &#xC815;&#xC758;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.&#xC774; &#xBCC0;&#xC218;&#xB97C; &#xD1B5;&#xD574; jQuery &#xAE30;&#xB2A5;&#xC5D0; &#xC561;&#xC138;&#xC2A4; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xC740; [<code>package.scala</code>] (<a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/package.scala)&#xC5D0;&#xC11C;" target="_blank">https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/package.scala)&#xC5D0;&#xC11C;</a> &#xC774;&#xB8E8;&#xC5B4;&#xC9D1;&#xB2C8;&#xB2E4;. ).</p>
+<p>jQuery&#xB294; &#xC140;&#xB809;&#xD130; &#xB098; &#xC5D8;&#xB9AC;&#xBA3C;&#xD2B8;&#xB85C; &quot;&#xD638;&#xCD9C;&quot;&#xD568;&#xC73C;&#xB85C;&#xC368; &#xC791;&#xB3D9;&#xD55C;&#xB2E4;. &#xC774; &#xC790;&#xC2B5;&#xC11C;&#xC5D0;&#xC11C;&#xB294; &#xD56D;&#xC0C1; &#xC9C1;&#xC811; DOM &#xC694;&#xC18C;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBBC0;&#xB85C; Facade&#xC5D0;&#xB294; &#xD574;&#xB2F9; &#xC635;&#xC158; &#xB9CC; &#xD3EC;&#xD568;&#xB429;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xC5B4; &#xC774;&#xBCA4;&#xD2B8; &#xB9AC;&#xC2A4;&#xB108;&#xB97C; &#xC694;&#xC18C;&#xC5D0; &#xC5F0;&#xACB0;&#xD558;&#xB824;&#xBA74;, &#xB2F9;&#xC2E0;&#xC740; &#xB2E4;&#xC74C;&#xCC98;&#xB7FC; </p>
+<pre><code class="lang-scala">jQuery(scope.getDOMNode()).on(<span class="hljs-string">&quot;hidden.bs.modal&quot;</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, scope.backend.hidden _)
+</code></pre>
+<p>jQuery&#xC5D0;&#xB294; &#xD50C;&#xB7EC;&#xADF8;&#xC778;&#xC774; jQuery &#xAC1D;&#xCCB4;&#xC5D0; &#xC0C8;&#xB85C;&#xC6B4; &#xAE30;&#xB2A5;&#xC744; &#xCD94;&#xAC00; &#xD560; &#xC218;&#xC788;&#xB294; &#xD655;&#xC7A5; &#xBA54;&#xCEE4;&#xB2C8;&#xC998;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xC5B4; &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; &#xBAA8;&#xB2EC;&#xC740;<code>&#xBAA8;&#xB2EC;</code>&#xD568;&#xC218;&#xB97C; &#xCD94;&#xAC00;&#xD569;&#xB2C8;&#xB2E4;. Scala.js&#xC5D0;&#xC11C; &#xC774;&#xB7EC;&#xD55C; &#xD655;&#xC7A5;&#xC744; &#xC815;&#xC758;&#xD558;&#xAE30; &#xC704;&#xD574;&#xC774; &#xD655;&#xC7A5;&#xC744;&#xC704;&#xD55C; &#xD2B9;&#xC131;&#xACFC; &#xADF8;&#xAC83;&#xC744;&#xC704;&#xD55C; &#xC554;&#xC2DC; &#xC801; &#xBCC0;&#xD658; (&#xC2E4;&#xC81C;&#xB85C; &#xD0C0;&#xC785; &#xCE90;&#xC2A4;&#xD2B8; &#xB9CC;)&#xC744; &#xB9CC;&#xB4ED;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-meta">@js</span>.native
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">BootstrapJQuery</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">JQuery</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">modal</span></span>(action: <span class="hljs-type">String</span>): <span class="hljs-type">BootstrapJQuery</span> = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">modal</span></span>(options: js.<span class="hljs-type">Any</span>): <span class="hljs-type">BootstrapJQuery</span> = js.native
+}
+
+<span class="hljs-keyword">implicit</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">jq2bootstrap</span></span>(jq: <span class="hljs-type">JQuery</span>): <span class="hljs-type">BootstrapJQuery</span> = jq.asInstanceOf[<span class="hljs-type">BootstrapJQuery</span>]
+</code></pre>
+<p>&#xC774;&#xC81C; &#xC6B0;&#xB9AC;&#xAC00;<code>jQuery (e) .modal () &apos;&#xC744; &#xD638;&#xCD9C;&#xD558;&#xAE30;&#xB97C; &#xC6D0;&#xD560; &#xB54C;&#xB9C8;&#xB2E4; &#xCEF4;&#xD30C;&#xC77C;&#xB7EC;&#xB294;</code>JQuery<code>&#xD0C0;&#xC785;&#xC744;</code>BootstrapJQuery`&#xC5D0; &#xC790;&#xB3D9;&#xC73C;&#xB85C; &#xCE90;&#xC2A4;&#xD305;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>jQuery &#xD1B5;&#xD569;&#xC73C;&#xB85C; &#xBB34;&#xC7A5; &#xD55C; &#xC774;&#xC81C; Modal &#xC790;&#xCCB4;&#xB97C; &#xB2E4;&#xB8F0; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xBAA8;&#xB2EC;&#xC774; &#xC81C;&#xAE30;&#xD558;&#xB294; &#xBB38;&#xC81C; &#xC911; &#xD558;&#xB098;&#xB294; &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; &#xCF54;&#xB4DC;&#xC5D0; &#xC758;&#xD574; &#xB3D9;&#xC801;&#xC73C;&#xB85C; &#xD45C;&#xC2DC;&#xB418;&#xACE0; &#xC228;&#xACA8; &#xC9C0;&#xBBC0;&#xB85C; &#xC5B4;&#xB5BB;&#xAC8C; &#xB4E0; &#xC81C;&#xC5B4;&#xD574;&#xC57C;&#xD55C;&#xB2E4;&#xB294; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;. &#xC774; &#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;&#xC5D0;&#xC11C;&#xB294; &#xBAA8;&#xB2EC;&#xC774; &#xD544;&#xC694;&#xD558;&#xAE30; &#xC804;&#xC5D0; &#xC874;&#xC7AC;&#xD558;&#xC9C0; &#xC54A;&#xACE0; &#xBAA8;&#xB2EC;&#xC774; &#xC0DD;&#xC131; &#xB41C; &#xC9C1;&#xD6C4;&#xC5D0; &#xD45C;&#xC2DC;&#xB418;&#xB294; &#xB514;&#xC790;&#xC778;&#xC744; &#xC120;&#xD0DD;&#xD588;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xC740; &#xC6B0;&#xB9AC;&#xAC00; &#xCC98;&#xB9AC; &#xD560; &#xC218;&#xC788;&#xB294; &#xC228;&#xC5B4;&#xC788;&#xB294; &#xBD80;&#xBD84;&#xB9CC;&#xC744; &#xB0A8;&#xAE41;&#xB2C8;&#xB2E4;.</p>
+<p><code>Modal</code>&#xC758;<code>Backend</code>&#xC5D0;&#xC11C; &#xC6B0;&#xB9AC;&#xB294;<code>hide ()</code>&#xD568;&#xC218;&#xB97C; &#xC815;&#xC758;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Backend</span>(<span class="hljs-params">t: <span class="hljs-type">BackendScope</span>[<span class="hljs-type">Props</span>, <span class="hljs-type">Unit</span>]</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hide</span> </span>= <span class="hljs-type">Callback</span> {
+    <span class="hljs-comment">// instruct Bootstrap to hide the modal</span>
+    jQuery(t.getDOMNode()).modal(<span class="hljs-string">&quot;hide&quot;</span>)
+  }
+</code></pre>
+<p>&#xADF8;&#xB7EC;&#xB098; &#xB300;&#xD654; &#xC0C1;&#xC790; &#xC790;&#xCCB4;&#xC5D0;&#xB294; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xB97C; &#xC2E4;&#xC81C;&#xB85C; &#xB2EB;&#xC544;&#xC57C;&#xD558;&#xB294; &#xCEE8;&#xD2B8;&#xB864;&#xC774; &#xD3EC;&#xD568;&#xB418;&#xC5B4; &#xC788;&#xC73C;&#xBBC0;&#xB85C;&#xC774; &#xAE30;&#xB2A5;&#xC744; &#xC18D;&#xC131;&#xC744; &#xD1B5;&#xD574; &#xBD80;&#xBAA8; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xB178;&#xCD9C;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-comment">// header and footer are functions, so that they can get access to the </span>
+<span class="hljs-comment">// hide() function for their buttons</span>
+<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">header: <span class="hljs-type">Callback</span> =&gt; <span class="hljs-type">ReactNode</span>, footer: <span class="hljs-type">Callback</span> =&gt; <span class="hljs-type">ReactNode</span>, 
+                 closed: <span class="hljs-type">Callback</span>, backdrop: <span class="hljs-type">Boolean</span> = true,
+                 keyboard: <span class="hljs-type">Boolean</span> = true</span>)</span>
+</code></pre>
+<p>&#xB610;&#xD55C; &#xBD80;&#xD2B8; &#xC2A4;&#xD2B8;&#xB7A9; &#xBAA8;&#xB2EC;&#xC740; &#xD398;&#xC774;&#xB4DC; &#xC778; &#xBC0F; &#xD398;&#xC774;&#xB4DC; &#xC544;&#xC6C3;&#xB418;&#xC5B4; &#xC788;&#xC73C;&#xBBC0;&#xB85C; &#xBD80;&#xBAA8;&#xB294; DOM&#xC5D0;&#xC11C; &#xBAA8;&#xB2EC; HTML&#xC744; &#xC989;&#xC2DC; &#xC81C;&#xAC70; &#xD560; &#xC218; &#xC5C6;&#xC9C0;&#xB9CC; &#xD398;&#xC774;&#xB4DC; &#xC544;&#xC6C3;&#xC774; &#xC644;&#xB8CC; &#xB420; &#xB54C;&#xAE4C;&#xC9C0; &#xAE30;&#xB2E4;&#xB824;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xC740; &#xC774;&#xBCA4;&#xD2B8;&#xB97C; &#xB4E3;&#xACE0; &#xB098;&#xC911;&#xC5D0; &#xBD80;&#xBAA8;&#xC758; &apos;closed&apos;&#xD568;&#xC218;&#xB97C; &#xD638;&#xCD9C;&#xD558;&#xC5EC; &#xC218;&#xD589;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-comment">// jQuery event handler to be fired when the modal has been hidden</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hidden</span></span>(e: <span class="hljs-type">JQueryEventObject</span>): js.<span class="hljs-type">Any</span> = {
+  <span class="hljs-comment">// inform the owner of the component that the modal was closed/hidden</span>
+  t.props.flatMap(_.closed).runNow()
+}
+...
+<span class="hljs-comment">// register event listener to be notified when the modal is closed</span>
+jQuery(scope.getDOMNode()).on(<span class="hljs-string">&quot;hidden.bs.modal&quot;</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, scope.backend.hidden _)
+</code></pre>
+<p>&#xC0DD;&#xC131; &#xB41C; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xB97C; &#xBCF4;&#xC5EC;&#xC8FC;&#xAE30; &#xC704;&#xD574; &#xC6B0;&#xB9AC;&#xB294; &#xB2E4;&#xC2DC;<code>componentDidMount</code>&#xC758; jQuery&#xB97C; &#xD1B5;&#xD574;<code>modal ()</code>&#xC744; &#xD638;&#xCD9C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala">.componentDidMount(scope =&gt; <span class="hljs-type">Callback</span> {
+  <span class="hljs-keyword">val</span> <span class="hljs-type">P</span> = scope.props
+  <span class="hljs-comment">// instruct Bootstrap to show the modal</span>
+  jQuery(scope.getDOMNode()).modal(js.<span class="hljs-type">Dynamic</span>.literal(<span class="hljs-string">&quot;backdrop&quot;</span> -&gt; <span class="hljs-type">P</span>.backdrop, <span class="hljs-string">&quot;keyboard&quot;</span> -&gt; <span class="hljs-type">P</span>.keyboard, <span class="hljs-string">&quot;show&quot;</span> -&gt; <span class="hljs-literal">true</span>))
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="css-in-scala.html" class="navigation navigation-prev " aria-label="Previous page: CSS in Scala">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="todo-module-and-data-flow.html" class="navigation navigation-next " aria-label="Next page: Todo module and data flow">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Integrating JavaScript components","level":"1.3.1.5","depth":3,"next":{"title":"Todo module and data flow","level":"1.3.1.6","depth":3,"path":"todo-module-and-data-flow.md","ref":"todo-module-and-data-flow.md","articles":[]},"previous":{"title":"CSS in Scala","level":"1.3.1.4","depth":3,"path":"css-in-scala.md","ref":"css-in-scala.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"kr","gitbook":"*"},"file":{"path":"integrating-javascript-components.md","mtime":"2017-02-04T10:03:33.804Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"kr"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

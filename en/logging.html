@@ -1,0 +1,553 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Logging · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="sbt-build-definition.html" />
+    
+    
+    <link rel="prev" href="debugging.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Logging</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="logging">Logging</h1>
+<p>Most of us are used to the great logging infrastructure available on the server side and sometimes it helps in situations where direct debugging is difficult
+or plain impossible (for example a customer is using your app). Luckily there are nice logging libraries available also for Javascript that we can utilize
+through thin facades.</p>
+<p>To emulate log4j style API, we&apos;ll define a <code>LoggerFactory</code> providing <code>Logger</code> instances. These will hook up to the underlying
+<a href="http://log4javascript.org/" target="_blank">Javascript library</a> to provide the real functionality. See
+<a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/logger/Log4JavaScript.scala" target="_blank"><code>Log4JavaScript.scala</code></a> for details.</p>
+<p>The <code>package object logger</code> provides a default logger called <code>log</code> for easy access to logging functionality. If you want to create separate loggers,
+you may do so through <code>LoggerFactory.getLogger(name)</code> method. To create an entry in the log, all you need to do is call the appropriate log-level function
+with a message and an optional <code>Exception</code>.</p>
+<pre><code class="lang-scala">log.debug(<span class="hljs-string">s&quot;User selected <span class="hljs-subst">${items.size}</span> items&quot;</span>)
+
+log.error(<span class="hljs-string">&quot;Invalid response from server&quot;</span>, ex)
+</code></pre>
+<p>The default logger prints all messages to the browser console, but you can also use a more advanced popup window logger, to analyze log messages with
+better granularity and filtering. Use <code>getPopupLogger</code> to create such logger.</p>
+<h2 id="sending-client-logs-to-the-server">Sending client logs to the server</h2>
+<p>The logging library also provides functionality to send all your log messages to the server, for easier analysis in error situations. It packages each
+log message into a small JSON object and POSTs it to the specified URL. On the server side we define a path to receive and print those log messages.</p>
+<pre><code class="lang-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">logging</span> </span>= <span class="hljs-type">Action</span>(parse.anyContent) {
+  <span class="hljs-keyword">implicit</span> request =&gt;
+    request.body.asJson.foreach { msg =&gt;
+      println(<span class="hljs-string">s&quot;CLIENT - <span class="hljs-subst">$msg</span>&quot;</span>)
+    }
+    <span class="hljs-type">Ok</span>(<span class="hljs-string">&quot;&quot;</span>)
+}
+</code></pre>
+<p>To enable server side logging, call <code>log.enableServerLogging(&quot;/logging&quot;)</code>. In the server logs the client log messages will be shown as below:</p>
+<pre><code>sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500652089,&quot;level&quot;:&quot;INFO&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;This message goes to server as well&quot;}]
+sharedProjectJVM Sending 4 Todo items
+sharedProjectJVM Sending 4 Todo items
+sharedProjectJVM Todo item was updated: TodoItem(3,Walk away slowly from an explosion without looking back.,TodoHigh,false)
+sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500661456,&quot;level&quot;:&quot;DEBUG&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;User is editing a todo&quot;}]
+sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500664865,&quot;level&quot;:&quot;DEBUG&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;Todo editing cancelled&quot;}]
+sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500668485,&quot;level&quot;:&quot;DEBUG&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;User is editing a todo&quot;}]
+sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500671017,&quot;level&quot;:&quot;DEBUG&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;User is editing a todo&quot;}]
+sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500671751,&quot;level&quot;:&quot;DEBUG&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;User is editing a todo&quot;}]
+sharedProjectJVM CLIENT - [{&quot;logger&quot;:&quot;Log&quot;,&quot;timestamp&quot;:1425500672101,&quot;level&quot;:&quot;DEBUG&quot;,&quot;url&quot;:&quot;http://localhost:8080/#todo&quot;,&quot;message&quot;:&quot;Todo edited:
+  TodoItem(3,Walk away slowly from an explosion without looking back.,TodoNormal,false)&quot;}]
+</code></pre><p>Many of the advanced features of the underlying logging library are not exposed in this tutorial project, but you can look at the current implementation and
+continue from there if you find the missing features useful!</p>
+<h2 id="limiting-log-messages-in-production">Limiting log messages in production</h2>
+<p>While extensive debug messages are a life saver in development, you don&apos;t want to flood your customer&apos;s browser console with debug messages. To disable
+low level log messages in the production build we&apos;ll use a special Scala annotation called <a href="http://www.scala-lang.org/api/current/index.html#scala.annotation.elidable" target="_blank">@elidable</a>.
+It works much like <code>#ifdef</code> in C/C++ removing the function and all calls to the function in the final byte-code. Therefore there is no performance penalty
+whatsoever even if you litter your code with hundreds of <code>log.debug</code> calls, as they are all totally optimized away.</p>
+<pre><code class="lang-scala">  <span class="hljs-meta">@elidable</span>(<span class="hljs-type">FINEST</span>) <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">trace</span></span>(msg: <span class="hljs-type">String</span>, e: <span class="hljs-type">Exception</span>): <span class="hljs-type">Unit</span>
+  <span class="hljs-meta">@elidable</span>(<span class="hljs-type">FINEST</span>) <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">trace</span></span>(msg: <span class="hljs-type">String</span>): <span class="hljs-type">Unit</span>
+  <span class="hljs-meta">@elidable</span>(<span class="hljs-type">FINE</span>) <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">debug</span></span>(msg: <span class="hljs-type">String</span>, e: <span class="hljs-type">Exception</span>): <span class="hljs-type">Unit</span>
+  <span class="hljs-meta">@elidable</span>(<span class="hljs-type">FINE</span>) <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">debug</span></span>(msg: <span class="hljs-type">String</span>): <span class="hljs-type">Unit</span>
+  <span class="hljs-meta">@elidable</span>(<span class="hljs-type">INFO</span>) <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">info</span></span>(msg: <span class="hljs-type">String</span>, e: <span class="hljs-type">Exception</span>): <span class="hljs-type">Unit</span>
+  <span class="hljs-meta">@elidable</span>(<span class="hljs-type">INFO</span>) <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">info</span></span>(msg: <span class="hljs-type">String</span>): <span class="hljs-type">Unit</span>
+</code></pre>
+<p>To control what calls to eliminate and what to keep, use a <code>scalac</code> command line option <code>-Xelide-below &lt;level&gt;</code>. This is automatically set to <code>WARNING</code> in
+the release command.</p>
+<pre><code class="lang-scala"><span class="hljs-comment">// in settings we have scalacOptions ++= elideOptions.value,</span>
+set elideOptions in js := <span class="hljs-type">Seq</span>(<span class="hljs-string">&quot;-Xelide-below&quot;</span>, <span class="hljs-string">&quot;WARNING&quot;</span>)
+</code></pre>
+<p>In the production build all log calls below the <code>WARNING</code> level will be optimized away.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="debugging.html" class="navigation navigation-prev " aria-label="Previous page: Debugging">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="sbt-build-definition.html" class="navigation navigation-next " aria-label="Next page: SBT build definition">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Logging","level":"1.6","depth":1,"next":{"title":"SBT build definition","level":"1.7","depth":1,"path":"sbt-build-definition.md","ref":"sbt-build-definition.md","articles":[{"title":"Using resources from WebJars","level":"1.7.1","depth":2,"path":"using-resources-from-webjars.md","ref":"using-resources-from-webjars.md","articles":[]},{"title":"Production build","level":"1.7.2","depth":2,"path":"production-build.md","ref":"production-build.md","articles":[]}]},"previous":{"title":"Debugging","level":"1.5","depth":1,"path":"debugging.md","ref":"debugging.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"en","gitbook":"*"},"file":{"path":"logging.md","mtime":"2016-06-20T07:44:08.015Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"en"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

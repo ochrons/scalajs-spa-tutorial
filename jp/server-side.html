@@ -1,0 +1,578 @@
+
+<!DOCTYPE HTML>
+<html lang="jp" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Server side · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="testing.html" />
+    
+    
+    <link rel="prev" href="autowire-and-boopickle.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Server side</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x30B5;&#x30FC;&#x30D0;&#x5074;">&#x30B5;&#x30FC;&#x30D0;&#x5074;</h1>
+<p>&#x30C1;&#x30E5;&#x30FC;&#x30C8;&#x30EA;&#x30A2;&#x30EB;&#x7528;&#x306E;&#x30B5;&#x30FC;&#x30D0;&#x306F;&#x975E;&#x5E38;&#x306B;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x3067;&#x3042;&#x308A;&#x3001;&#x5178;&#x578B;&#x7684;&#x306A;Play&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x3067;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x304C;&#x3001;&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x5074;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x306E;&#x57FA;&#x672C;&#x7684;&#x306A;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x306B;&#x306F;&#x5341;&#x5206;&#x3067;&#x3059;&#x3002;
+&#x30B5;&#x30FC;&#x30D0;&#x5074;&#x306E;&#x30EB;&#x30FC;&#x30C6;&#x30A3;&#x30F3;&#x30B0;&#x30ED;&#x30D3;&#x30C3;&#x30AF;&#x306F;Play&#x306E;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3092;&#x7528;&#x3044;&#x3066;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Application</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span> </span>{
+  <span class="hljs-keyword">val</span> apiService = <span class="hljs-keyword">new</span> <span class="hljs-type">ApiService</span>()
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span> </span>= <span class="hljs-type">Action</span> {
+    <span class="hljs-type">Ok</span>(views.html.index(<span class="hljs-string">&quot;SPA tutorial&quot;</span>))
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">autowireApi</span></span>(path: <span class="hljs-type">String</span>) = <span class="hljs-type">Action</span>.async(parse.raw) {
+    <span class="hljs-keyword">implicit</span> request =&gt;
+      println(<span class="hljs-string">s&quot;Request path: <span class="hljs-subst">$path</span>&quot;</span>)
+      <span class="hljs-comment">// get the request body as ByteString</span>
+      <span class="hljs-keyword">val</span> b = request.body.asBytes(parse.<span class="hljs-type">UNLIMITED</span>).get
+
+      <span class="hljs-comment">// call Autowire route</span>
+      <span class="hljs-type">Router</span>.route[<span class="hljs-type">Api</span>](apiService)(
+        autowire.<span class="hljs-type">Core</span>.<span class="hljs-type">Request</span>(path.split(<span class="hljs-string">&quot;/&quot;</span>), <span class="hljs-type">Unpic</span>&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x5074;&#x3068;&#x540C;&#x69D8;&#x306B;&#x3001;kle[<span class="hljs-type">Map</span>[&#x304C;tring, <span class="hljs-type">ByteBuffer</span>]].fromBytes(b.asByteBuffer))&#x305D;&#x306E;&#x305F;&#x3081;&#x3001;&#x5358;&#x306B;&#x3001;
+      ).map(buffer =&gt; {
+        <span class="hljs-keyword">val</span> data = <span class="hljs-type">Array</span>.ofDim[<span class="hljs-type">Byte</span>](buffer.remaining())
+        buffer.get(data)
+        <span class="hljs-type">Ok</span>(data)
+      })
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">logging</span> </span>= <span class="hljs-type">Action</span>(parse.anyContent) {
+    <span class="hljs-keyword">implicit</span> request =&gt;
+      request.body.asJson.foreach { msg =&gt;
+        println(<span class="hljs-string">s&quot;CLIENT - <span class="hljs-subst">$msg</span>&quot;</span>)
+      }
+      <span class="hljs-type">Ok</span>(<span class="hljs-string">&quot;&quot;</span>)
+  }
+}
+</code></pre>
+<p>main&#x306E;HTML&#x30DA;&#x30FC;&#x30B8;&#x53CA;&#x3073;&#x95A2;&#x9023;&#x3059;&#x308B;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x306F;&#x3001;<code>twirl</code>&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x304B;&#x3089;Play&#x306E;&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;&#x30A8;&#x30F3;&#x30B8;&#x30F3;&#x306B;&#x3088;&#x308A;&#x63D0;&#x4F9B;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;
+&#x8208;&#x5473;&#x6DF1;&#x3044;&#x306E;&#x306F;&#x3001;Autowire&#x30EB;&#x30FC;&#x30BF;&#x30FC;&#x3092;&#x7528;&#x3044;&#x3066;&#x306E;<code>api</code>&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x6271;&#x3044;&#x65B9;&#x3067;&#x3059;&#x3002;
+&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x5074;&#x3068;&#x540C;&#x69D8;&#x306B;&#x3001;Autowire&#x304C;&#x3001;&#x8907;&#x96D1;&#x306A;&#x4E8B;&#x67C4;&#x3092;&#x53D6;&#x308A;&#x6271;&#x3044;&#x307E;&#x3059;&#x3002;&#x3059;&#x306A;&#x308F;&#x3061;&#x3001;&#x5358;&#x306B;Autowire&#x3092;&#x30D7;&#x30E9;&#x30B0;&#x3059;&#x308B;&#x3060;&#x3051;&#x3067;&#x3001;&#x305D;&#x306E;&#x30DE;&#x30B8;&#x30C3;&#x30AF;&#x306F;&#x767A;&#x63EE;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;
+Boopickle&#x304C;&#x3001;&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x30C7;&#x30B7;&#x30EA;&#x30A2;&#x30E9;&#x30A4;&#x30BA;&#x3068;&#x3001;&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9;&#x306E;&#x30D0;&#x30A4;&#x30CA;&#x30EA;&#x3078;&#x306E;&#x30B7;&#x30EA;&#x30A2;&#x30E9;&#x30A4;&#x30BA;&#x3092;&#x884C;&#x3044;&#x307E;&#x3059;&#x3002;
+<code>ApiService</code>&#x306F;&#x3001;&#x5358;&#x306A;&#x308B;&#x901A;&#x5E38;&#x306E;&#x30AF;&#x30E9;&#x30B9;&#x3067;&#x3042;&#x308A;&#x3001;&#x305D;&#x308C;&#x81EA;&#x4F53;&#x306F;&#x30B7;&#x30EA;&#x30A2;&#x30E9;&#x30A4;&#x30BA;&#x3084;URl&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x30DE;&#x30C3;&#x30D4;&#x30F3;&#x30B0;&#x306B;&#x95A2;&#x4E0E;&#x3057;&#x307E;&#x305B;&#x3093;&#x3002;
+&#x3053;&#x306E;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x306F;&#x3001;&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x5074;&#x3067;&#x7528;&#x3044;&#x3089;&#x308C;&#x305F;&#x306E;&#x3068;&#x540C;&#x4E00;&#x306E;<code>Api</code> &#x3092;&#x5B9F;&#x88C5;&#x3057;&#x307E;&#x3059;&#x3002;
+&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x3060;&#x306D;&#xFF01;</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApiService</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Api</span> </span>{
+  <span class="hljs-keyword">var</span> todos = <span class="hljs-type">Seq</span>(
+    <span class="hljs-type">TodoItem</span>(<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;Wear shirt that says &apos;Life&apos;. Hand out lemons on street corner.&quot;</span>, <span class="hljs-type">TodoLow</span>, <span class="hljs-literal">false</span>),
+    <span class="hljs-type">TodoItem</span>(<span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;Make vanilla pudding. Put in mayo jar. Eat in public.&quot;</span>, <span class="hljs-type">TodoNormal</span>, <span class="hljs-literal">false</span>),
+    <span class="hljs-type">TodoItem</span>(<span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;Walk away slowly from an explosion without looking back.&quot;</span>, <span class="hljs-type">TodoHigh</span>, <span class="hljs-literal">false</span>),
+    <span class="hljs-type">TodoItem</span>(<span class="hljs-string">&quot;4&quot;</span>, <span class="hljs-string">&quot;Sneeze in front of the pope. Get blessed.&quot;</span>, <span class="hljs-type">TodoNormal</span>, <span class="hljs-literal">true</span>)
+  )
+
+  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">motd</span></span>(name: <span class="hljs-type">String</span>): <span class="hljs-type">String</span> = <span class="hljs-string">s&quot;Welcome to SPA, <span class="hljs-subst">$name</span>! Time is now <span class="hljs-subst">${new Date}</span>&quot;</span>
+
+  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getTodos</span></span>(): <span class="hljs-type">Seq</span>[<span class="hljs-type">TodoItem</span>] = {
+    <span class="hljs-comment">// provide some fake Todos</span>
+    println(<span class="hljs-string">s&quot;Sending <span class="hljs-subst">${todos.size}</span> Todo items&quot;</span>)
+    todos
+  }
+
+  <span class="hljs-comment">// update a Todo</span>
+  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">updateTodo</span></span>(item: <span class="hljs-type">TodoItem</span>): <span class="hljs-type">Seq</span>[<span class="hljs-type">TodoItem</span>] = {
+    <span class="hljs-comment">// TODO, update database etc :)</span>
+    <span class="hljs-keyword">if</span>(todos.exists(_.id == item.id)) {
+      todos = todos.collect {
+        <span class="hljs-keyword">case</span> i <span class="hljs-keyword">if</span> i.id == item.id =&gt; item
+        <span class="hljs-keyword">case</span> i =&gt; i
+      }
+      println(<span class="hljs-string">s&quot;Todo item was updated: <span class="hljs-subst">$item</span>&quot;</span>)
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// add a new item</span>
+      <span class="hljs-keyword">val</span> newItem = item.copy(id = <span class="hljs-type">UUID</span>.randomUUID().toString)
+      todos :+= newItem
+      println(<span class="hljs-string">s&quot;Todo item was added: <span class="hljs-subst">$newItem</span>&quot;</span>)
+    }
+    todos
+  }
+
+  <span class="hljs-comment">// delete a Todo</span>
+  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">deleteTodo</span></span>(itemId: <span class="hljs-type">String</span>): <span class="hljs-type">Seq</span>[<span class="hljs-type">TodoItem</span>] = {
+    println(<span class="hljs-string">s&quot;Deleting item with id = <span class="hljs-subst">$itemId</span>&quot;</span>)
+    todos = todos.filterNot(_.id == itemId)
+    todos
+  }
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="autowire-and-boopickle.html" class="navigation navigation-prev " aria-label="Previous page: Autowire and BooPickle">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="testing.html" class="navigation navigation-next " aria-label="Next page: Testing">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Server side","level":"1.3.2","depth":2,"next":{"title":"Testing","level":"1.4","depth":1,"path":"testing.md","ref":"testing.md","articles":[]},"previous":{"title":"Autowire and BooPickle","level":"1.3.1.7","depth":3,"path":"autowire-and-boopickle.md","ref":"autowire-and-boopickle.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"jp","gitbook":"*"},"file":{"path":"server-side.md","mtime":"2016-06-20T07:44:22.288Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"jp"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

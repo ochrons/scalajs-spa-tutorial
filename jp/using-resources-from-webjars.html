@@ -1,0 +1,538 @@
+
+<!DOCTYPE HTML>
+<html lang="jp" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Using resources from WebJars · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="production-build.html" />
+    
+    
+    <link rel="prev" href="sbt-build-definition.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Using resources from WebJars</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="using-resources-from-webjars">Using resources from WebJars</h1>
+<p><a href="http://www.webjars.org" target="_blank">WebJars</a> are a wonderful way to simplify inclusion of external resources such as JavaScript libraries and CSS definitions into
+your own project. Instead of downloading JS/CSS packages like Bootstrap and extracting them within your project (or referring to external CDN
+served resources), you can just add a dependency to the appropriate WebJar and you&apos;re all set!</p>
+<h2 id="webjar-javascript">WebJar JavaScript</h2>
+<p>Scala.js SBT plugin offers a <a href="http://www.scala-js.org/doc/sbt/depending.html" target="_blank">nice and convenient way</a> for extracting JavaScript sources from various
+WebJars and concatenating them into a single JavaScript file that you can then refer to in your <code>index.html</code>. In the tutorial project this means following
+configuration in the <code>build.scala</code> file:</p>
+<pre><code class="lang-scala"><span class="hljs-comment">/** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */</span>
+<span class="hljs-keyword">val</span> jsDependencies = <span class="hljs-type">Def</span>.setting(<span class="hljs-type">Seq</span>(
+  <span class="hljs-string">&quot;org.webjars.bower&quot;</span> % <span class="hljs-string">&quot;react&quot;</span> % versions.react / <span class="hljs-string">&quot;react-with-addons.js&quot;</span> minified <span class="hljs-string">&quot;react-with-addons.min.js&quot;</span> commonJSName <span class="hljs-string">&quot;React&quot;</span>,
+  <span class="hljs-string">&quot;org.webjars.bower&quot;</span> % <span class="hljs-string">&quot;react&quot;</span> % versions.react / <span class="hljs-string">&quot;react-dom.js&quot;</span> minified <span class="hljs-string">&quot;react-dom.min.js&quot;</span> dependsOn <span class="hljs-string">&quot;react-with-addons.js&quot;</span> commonJSName <span class="hljs-string">&quot;ReactDOM&quot;</span>,
+  <span class="hljs-string">&quot;org.webjars&quot;</span> % <span class="hljs-string">&quot;jquery&quot;</span> % versions.jQuery / <span class="hljs-string">&quot;jquery.js&quot;</span> minified <span class="hljs-string">&quot;jquery.min.js&quot;</span>,
+  <span class="hljs-string">&quot;org.webjars&quot;</span> % <span class="hljs-string">&quot;bootstrap&quot;</span> % versions.bootstrap / <span class="hljs-string">&quot;bootstrap.js&quot;</span> minified <span class="hljs-string">&quot;bootstrap.min.js&quot;</span> dependsOn <span class="hljs-string">&quot;jquery.js&quot;</span>,
+  <span class="hljs-string">&quot;org.webjars&quot;</span> % <span class="hljs-string">&quot;chartjs&quot;</span> % versions.chartjs / <span class="hljs-string">&quot;Chart.js&quot;</span> minified <span class="hljs-string">&quot;Chart.min.js&quot;</span>,
+  <span class="hljs-string">&quot;org.webjars&quot;</span> % <span class="hljs-string">&quot;log4javascript&quot;</span> % versions.log4js / <span class="hljs-string">&quot;js/log4javascript_uncompressed.js&quot;</span> minified <span class="hljs-string">&quot;js/log4javascript.js&quot;</span>
+))
+</code></pre>
+<p>This will produce a file named <code>client-jsdeps.js</code> containing all those JavaScript files combined. In production build, a minimized version of each
+JavaScript file is selected.</p>
+<h2 id="webjar-cssless">WebJar CSS/LESS</h2>
+<p>For extracting CSS files from WebJars you could use the method described below, but there is bit more convenient method that gives you <a href="http://lesscss.org/" target="_blank">LESS</a>
+processing as a bonus. First we&apos;ll need to add the <a href="https://github.com/sbt/sbt-less" target="_blank">sbt-less</a> plugin into our <code>plugins.sbt</code></p>
+<pre><code class="lang-scala">addSbtPlugin(<span class="hljs-string">&quot;com.typesafe.sbt&quot;</span> % <span class="hljs-string">&quot;sbt-less&quot;</span> % <span class="hljs-string">&quot;1.0.6&quot;</span>)
+</code></pre>
+<p>The server project automatically enables the <code>sbt-web</code> and <code>sbt-less</code> plugins because it uses the <code>PlayScala</code> plugin.</p>
+<p>We&apos;ll be storing LESS files under <code>src/main/assets/stylesheets</code> to keep them separated from directly copied resources.</p>
+<pre><code class="lang-scala"><span class="hljs-type">LessKeys</span>.compress in <span class="hljs-type">Assets</span>  := <span class="hljs-literal">true</span>,
+</code></pre>
+<p>This tells the LESS compiler to minify the produced CSS.</p>
+<p>Next step is to create a <code>main.less</code> (yes, it has to be named exactly that) with references to CSS/LESS files inside the WebJars.</p>
+<pre><code class="lang-css">@<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;lib/bootstrap/less/bootstrap.less&quot;</span>;
+@<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;lib/font-awesome/less/font-awesome.less&quot;</span>;
+</code></pre>
+<p>In this case we just import Bootstrap and Font Awesome LESS files because all other CSS styles are defined using ScalaCSS. Depending on the WebJar, 
+it may or may not contain LESS files in addition to the CSS file. With the LESS files you can easily 
+<a href="http://getbootstrap.com/css/#less" target="_blank">configure the library</a> to your liking by defining CSS variables in your <code>main.less</code> file.</p>
+<pre><code class="lang-css">@<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;lib/bootstrap/less/bootstrap.less&quot;</span>;
+@<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;lib/font-awesome/less/font-awesome.less&quot;</span>;
+@<span class="hljs-keyword">brand-danger:</span>  #<span class="hljs-number">00534</span>f;
+</code></pre>
+<h2 id="webjar-resource-files">WebJar resource files</h2>
+<p>Sometimes WebJars contain other useful resources, such as the font files for Font Awesome in our case. Just including the WebJar as a dependency will provide
+us the extracted contents and it can be used directly.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="sbt-build-definition.html" class="navigation navigation-prev " aria-label="Previous page: SBT build definition">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="production-build.html" class="navigation navigation-next " aria-label="Next page: Production build">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Using resources from WebJars","level":"1.7.1","depth":2,"next":{"title":"Production build","level":"1.7.2","depth":2,"path":"production-build.md","ref":"production-build.md","articles":[]},"previous":{"title":"SBT build definition","level":"1.7","depth":1,"path":"sbt-build-definition.md","ref":"sbt-build-definition.md","articles":[{"title":"Using resources from WebJars","level":"1.7.1","depth":2,"path":"using-resources-from-webjars.md","ref":"using-resources-from-webjars.md","articles":[]},{"title":"Production build","level":"1.7.2","depth":2,"path":"production-build.md","ref":"production-build.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"jp","gitbook":"*"},"file":{"path":"using-resources-from-webjars.md","mtime":"2016-06-20T07:44:08.086Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"jp"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

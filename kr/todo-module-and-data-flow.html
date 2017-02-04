@@ -1,0 +1,631 @@
+
+<!DOCTYPE HTML>
+<html lang="kr" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Todo module and data flow · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="autowire-and-boopickle.html" />
+    
+    
+    <link rel="prev" href="integrating-javascript-components.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Todo module and data flow</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="todo-module-and-data-flow">Todo module and data flow</h1>
+<p>Todo &#xBAA8;&#xB4C8;&#xACFC; React &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xB294; &#xB300;&#xC2DC; &#xBCF4;&#xB4DC;&#xBCF4;&#xB2E4; &#xC57D;&#xAC04; &#xC7AC;&#xBBF8; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774; &#xBAA8;&#xB4C8;&#xC740;<code>TodoList</code> &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xB97C; &#xD3EC;&#xD568;&#xD558;&#xACE0; &#xC788;&#xC73C;&#xBA70;, &#xC11C;&#xBC84;&#xB85C;&#xBD80;&#xD130; &#xAC80;&#xC0C9;&#xB41C; Todo &#xC544;&#xC774;&#xD15C;&#xC758;&#xB9AC;&#xC2A4;&#xD2B8;&#xB97C; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;. &#xC0AC;&#xC6A9;&#xC790;&#xB294; &#xD56D;&#xBAA9; &#xC606;&#xC5D0;&#xC788;&#xB294; &#xD655;&#xC778;&#xB780;&#xC744; &#xD074;&#xB9AD;&#xD558;&#xC5EC; &#xD574;&#xB2F9; &#xD56D;&#xBAA9;&#xC774; &#xC644;&#xB8CC;&#xB418;&#xC5C8;&#xB294;&#xC9C0; &#xC5EC;&#xBD80;&#xB97C; &#xB098;&#xD0C0;&#xB0BC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xB0B4;&#xBD80;&#xC801;&#xC73C;&#xB85C; Todo &#xC544;&#xC774;&#xD15C;&#xC758; &#xC0C1;&#xD0DC;&#xB294;<code>Todo</code> &#xBAA8;&#xB4C8;&#xC5D0; &#xC758;&#xD574; &#xC720;&#xC9C0;&#xB418;&#xACE0;<code>TodoList</code>&#xB294; &#xC218;&#xB3D9;&#xC801;&#xC73C;&#xB85C; &#xD45C;&#xC2DC;&#xB429;&#xB2C8;&#xB2E4;.
+&#xC2E4;&#xC81C; Todo &#xBAA8;&#xB4C8; &#xBC0F; &#xAD00;&#xB828; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xB300;&#xD574; &#xC790;&#xC138;&#xD788; &#xC54C;&#xC544;&#xBCF4;&#xAE30; &#xC804;&#xC5D0; Scala.js React &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC5D0;&#xC11C; &#xB370;&#xC774;&#xD130; &#xD750;&#xB984;&#xC5D0; &#xB300;&#xD574; &#xC7A0;&#xC2DC; &#xC0DD;&#xAC01;&#xD574; &#xBD05;&#xC2DC;&#xB2E4;.</p>
+<h2 id="unidirectional-data-flow">Unidirectional data flow</h2>
+<p>&#xBC16;&#xC5D0;&#xC788;&#xB294; &#xC5EC;&#xB7EC; JS &#xD504;&#xB808;&#xC784; &#xC6CC;&#xD06C; (&#xC608; : AngularJS)&#xB294; &#xAC00;&#xBCC0; &#xC0C1;&#xD0DC;&#xC640; &#xC591;&#xBC29;&#xD5A5; &#xB370;&#xC774;&#xD130; &#xBC14;&#xC778;&#xB529;&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. &#xADF8;&#xB7EC;&#xB098;&#xC774; &#xD29C;&#xD1A0;&#xB9AC;&#xC5BC;&#xC5D0;&#xC11C;&#xB294; &#xB2E8;&#xBC29;&#xD5A5; &#xB370;&#xC774;&#xD130; &#xD750;&#xB984; &#xBC0F; &#xBD88;&#xBCC0; &#xC0C1;&#xD0DC;&#xB97C;&#xC704;&#xD55C; &#xB77C;&#xC774;&#xBE0C;&#xB7EC;&#xB9AC; &#xC778; [Diode] (<a href="https://github.com/ochrons/diode)&#xB97C;" target="_blank">https://github.com/ochrons/diode)&#xB97C;</a> &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xB7F0; &#xC885;&#xB958;&#xC758; &#xC544;&#xD0A4;&#xD14D;&#xCC98;&#xB294; &#xC591;&#xBC29;&#xD5A5; &#xB370;&#xC774;&#xD130; &#xBC14;&#xC778;&#xB529;&#xC73C;&#xB85C; &#xBAA8;&#xB4E0; &#xC885;&#xB958;&#xC758; &#xC5B4;&#xB824;&#xC6B4; &#xBB38;&#xC81C;&#xAC00; &#xBC1C;&#xC0DD;&#xD560; &#xC218;&#xC788;&#xB294; &#xBCF5;&#xC7A1;&#xD55C; &#xC751;&#xC6A9; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC5D0;&#xC11C; &#xD2B9;&#xD788; &#xC798; &#xC791;&#xB3D9;&#xD569;&#xB2C8;&#xB2E4;. &#xBE44;&#xAD50;&#xC801; &#xB2E8;&#xC21C;&#xD55C; &#xAC1C;&#xB150;&#xC774;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xC774;&#xC640; &#xAC19;&#xC740; &#xAC04;&#xB2E8;&#xD55C; &#xD29C;&#xD1A0;&#xB9AC;&#xC5BC; &#xC560;&#xD50C;&#xB9AC;&#xCF00;&#xC774;&#xC158;&#xC5D0;&#xC11C;&#xB3C4; &#xC798; &#xC791;&#xB3D9;&#xD569;&#xB2C8;&#xB2E4;. &#xC544;&#xB798;&#xC5D0;&#xC11C; &#xB2E4;&#xC774;&#xC624;&#xB4DC; &#xC544;&#xD0A4;&#xD14D;&#xCC98; &#xB2E4;&#xC774;&#xC5B4;&#xADF8;&#xB7A8;&#xC744; &#xBCFC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="https://github.com/ochrons/diode/raw/master/doc/images/architecture.png" alt="Diode architecture"></p>
+<ul>
+<li>Action <em>&#xC744; &#xCDE8;&#xD558;&#xB294; </em> Circuit <em>&#xB85C; &#xAD6C;&#xC131;&#xB418;&#xC5B4; Action Handler&#xC5D0; &#xB514;&#xC2A4;&#xD328;&#xCE58; &#xD55C; &#xB2E4;&#xC74C; </em> Views *&#xC5D0; &#xC0C8;&#xB85C;&#xC6B4; &#xB370;&#xC774;&#xD130;&#xB85C; &#xC790;&#xC2E0;&#xC744; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD558;&#xB3C4;&#xB85D; &#xC54C;&#xB9BD;&#xB2C8;&#xB2E4;. &#xC790;&#xC138;&#xD55C; &#xB0B4;&#xC6A9;&#xC740; <a href="https://ochrons.github.io/diode" target="_blank">&#xB2E4;&#xC774;&#xC624;&#xB4DC; &#xBB38;&#xC11C;</a>&#xB97C; &#xCC38;&#xC870;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</li>
+</ul>
+<h2 id="modifying-a-todo-state">Modifying a Todo state</h2>
+<p><code>TodoList</code> &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xB294; Todo&#xB97C; <em> completed </em>&#xB85C; &#xD45C;&#xC2DC;&#xD558;&#xB294; &#xB370; &#xC0AC;&#xC6A9;&#xD560; &#xC218;&#xC788;&#xB294; &#xAC01; Todo&#xC5D0; &#xB300;&#xD55C; &#xCCB4;&#xD06C; &#xBC15;&#xC2A4;&#xB97C; &#xB80C;&#xB354;&#xB9C1;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala">&lt;.input.checkbox(^.checked := item.completed, 
+  ^.onChange --&gt; <span class="hljs-type">P</span>.stateChange(item.copy(completed = !item.completed))),
+</code></pre>
+<p>&#xCCB4;&#xD06C; &#xBC15;&#xC2A4;&#xB97C; &#xD074;&#xB9AD;&#xD558;&#xBA74;<code>stateChange</code> &#xBA54;&#xC3D8;&#xB4DC;&#xAC00; &#xD638;&#xCD9C;&#xB429;&#xB2C8;&#xB2E4;.&#xC774; &#xBA54;&#xC3D8;&#xB4DC;&#xB294;<code>UpdateTodo (item)</code>&#xC561;&#xC158;&#xC744;<code>SPACircuit</code>&#xC758; &#xC561;&#xC158; &#xD578;&#xB4E4;&#xB7EC;&#xC5D0; &#xBCF4;&#xB0C5;&#xB2C8;&#xB2E4;. &#xC11C;&#xD0B7;&#xC5D0;&#xC11C; &#xC561;&#xC158;&#xC740;<code>TodoHandler</code>&#xC758;<code>handle</code> &#xD568;&#xC218;&#xC5D0; &#xC758;&#xD574; &#xC120;&#xD0DD;&#xB429;&#xB2C8;&#xB2E4;.&#xC774; &#xD568;&#xC218;&#xB294; &#xB0B4;&#xBD80; &#xBAA8;&#xB378;&#xC744; &#xC0C8;&#xB85C;&#xC6B4; &#xC544;&#xC774;&#xD15C;&#xC73C;&#xB85C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD558;&#xACE0; &#xADF8;&#xAC83;&#xC744; &#xC11C;&#xBC84;&#xB85C; &#xBCF4;&#xB0C5;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TodoHandler</span>[<span class="hljs-type">M</span>](<span class="hljs-params">modelRW: <span class="hljs-type">ModelRW</span>[<span class="hljs-type">M</span>, <span class="hljs-type">Pot</span>[<span class="hljs-type">Todos</span>]]</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">ActionHandler</span>(<span class="hljs-params">modelRW</span>) </span>{
+  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle</span> </span>= {
+    <span class="hljs-keyword">case</span> <span class="hljs-type">UpdateTodo</span>(item) =&gt;
+      <span class="hljs-keyword">val</span> updateServer = () =&gt; <span class="hljs-type">AjaxClient</span>[<span class="hljs-type">Api</span>].updateTodo(item).call().map(<span class="hljs-type">UpdateAllTodos</span>)
+      <span class="hljs-comment">// make a local update and inform server</span>
+      update(value.map(_.updated(item)), updateServer)
+</code></pre>
+<p>&#xC11C;&#xBC84;&#xAC00; &#xC751;&#xB2F5;&#xD558;&#xBA74; &#xC11C;&#xBC84;&#xC5D0;&#xC11C; &#xC624;&#xB294; &#xB370;&#xC774;&#xD130;&#xB85C; &#xBAA8;&#xB378;&#xC774; &#xB2E4;&#xC2DC; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xB429;&#xB2C8;&#xB2E4;. &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xB294; &#xAC19;&#xC740;<code>TodoHandler</code> &#xB0B4;&#xC5D0;&#xC11C; &#xCC98;&#xB9AC;&#xB418;&#xB294;<code>UpdateAllTodos</code> &#xC561;&#xC158;&#xC744; &#xB514;&#xC2A4;&#xD328;&#xCE58;&#xD568;&#xC73C;&#xB85C;&#xC368; &#xAC04;&#xC811;&#xC801;&#xC73C;&#xB85C; &#xBC1C;&#xC0DD;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala">    <span class="hljs-keyword">case</span> <span class="hljs-type">UpdateAllTodos</span>(todos) =&gt;
+      <span class="hljs-comment">// got new todos, update model</span>
+      update(<span class="hljs-type">Ready</span>(<span class="hljs-type">Todos</span>(todos)))
+</code></pre>
+<p>&#xBAA8;&#xB378; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xB294; &#xCCAD;&#xCDE8;&#xC790;&#xB97C; &#xBCC0;&#xACBD;&#xD558;&#xAE30;&#xC704;&#xD55C; &#xD638;&#xCD9C;&#xC744; &#xD2B8;&#xB9AC;&#xAC70;&#xD569;&#xB2C8;&#xB2E4;. &#xC2E4;&#xC81C;&#xB85C;, &apos;Todos&apos;&#xC5D0;&#xC11C; &#xBCC0;&#xACBD; &#xC0AC;&#xD56D;&#xC744; &#xAD00;&#xCC30;&#xD558;&#xB294; &#xB450; &#xAC1C;&#xC758; &#xAC1C;&#xBCC4; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xAD6C;&#xC131; &#xC694;&#xC18C; &#xC790;&#xCCB4;&#xB294; &#xC2E4;&#xC81C;&#xB85C; &#xC774;&#xB7EC;&#xD55C; &#xBCC0;&#xACBD; &#xC0AC;&#xD56D;&#xC744; &#xC218;&#xC2E0;&#xD558;&#xC9C0; &#xC54A;&#xC9C0;&#xB9CC; &#xBCC0;&#xACBD; &#xC0AC;&#xD56D;&#xC740; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xB798;&#xD551;&#xB429;&#xB2C8;&#xB2E4;. &#xC774; &#xB7A9;&#xD37C;&#xB294; &#xBCC0;&#xACBD; &#xC0AC;&#xD56D;&#xC5D0; &#xBC18;&#xC751;&#xD558;&#xC5EC; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xB97C; &#xAC31;&#xC2E0;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xB807;&#xAC8C;&#xD558;&#xBA74; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC5D0; &#xB300;&#xD55C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xAC00; &#xAC15;&#xC81C;&#xB85C; &#xC218;&#xD589;&#xB418;&#xBA70;, &#xC774;&#xB294; &#xB2E4;&#xC2DC; &apos;render&apos;&#xB97C; &#xD638;&#xCD9C;&#xD558;&#xC5EC; &#xBDF0;&#xB97C; &#xC0C8;&#xB85C; &#xACE0;&#xCE69;&#xB2C8;&#xB2E4;. &#xBCC0;&#xACBD; &#xC0AC;&#xD56D;&#xC740; &apos;TodoList&apos;&#xC640; &#xC6D0;&#xB798; &#xD074;&#xB9AD; &#xB41C; &#xAC1C;&#xBCC4; Todo&#xB85C; &#xC5F0;&#xACB0;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p>&#xADF8;&#xB7EC;&#xB098; &#xC55E;&#xC11C; &#xC5B8;&#xAE09;&#xD588;&#xB4EF;&#xC774; Todos&#xC758; &#xBCC0;&#xACBD;&#xC5D0; &#xAD00;&#xC2EC;&#xC774;&#xC788;&#xB294; &#xB2E4;&#xB978; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xAC00;&#xC788;&#xC5C8;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xC740; Todo&#xC758; &#xC8FC; &#xBA54;&#xB274; &#xD56D;&#xBAA9;&#xC73C;&#xB85C; &#xC5F4;&#xB824;&#xC788;&#xB294; Todos&#xC758; &#xC218;&#xB97C; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> todoCount = props.proxy().getOrElse(<span class="hljs-number">0</span>)
+<span class="hljs-type">Seq</span>(
+  &lt;.span(<span class="hljs-string">&quot;Todo &quot;</span>),
+  todoCount &gt; <span class="hljs-number">0</span> ?= &lt;.span(bss.labelOpt(<span class="hljs-type">CommonStyle</span>.danger), bss.labelAsBadge, todoCount)
+)
+</code></pre>
+<p>&#xC774;&#xAC83;&#xC740; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xAC00; &#xBCC0;&#xACBD;&#xC758; &#xCD9C;&#xCC98; &#xB610;&#xB294; &#xBCC0;&#xACBD;&#xC5D0; &#xAD00;&#xC2EC;&#xC774;&#xC788;&#xB294; &#xC0AC;&#xB78C;&#xC744; &#xC54C; &#xD544;&#xC694;&#xAC00;&#xC5C6;&#xB294; &#xB2E8;&#xBC29;&#xD5A5; &#xB370;&#xC774;&#xD130; &#xD750;&#xB984;&#xC758; &#xC7A5;&#xC810;&#xC785;&#xB2C8;&#xB2E4;. &#xBAA8;&#xB4E0; &#xC8FC; &#xBCC0;&#xACBD; &#xC0AC;&#xD56D;&#xC740; &#xC774;&#xD574; &#xAD00;&#xACC4;&#xC790;&#xC5D0;&#xAC8C; &#xC790;&#xB3D9;&#xC73C;&#xB85C; &#xC804;&#xD30C;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p>&#xB2E4;&#xC74C;&#xC73C;&#xB85C;, &#xB370;&#xC774;&#xD130;&#xAC00; &#xD750;&#xB974;&#xB3C4;&#xB85D; &#xBAA8;&#xB4E0; &#xAC83;&#xC744; &#xC124;&#xC815;&#xD558;&#xB294; &#xBC29;&#xBC95;&#xC744; &#xC0B4;&#xD3B4; &#xBCF4;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<h2 id="wiring">Wiring</h2>
+<p><strong>RootModel</strong></p>
+<ul>
+<li>todos &#xBC0F; motd&#xB97C; &#xD3EC;&#xD568;&#xD55C; &#xC560;&#xD50C;&#xB9AC;&#xCF00;&#xC774;&#xC158; &#xBAA8;&#xB378;&#xC744; &#xB098;&#xD0C0;&#xB0C5;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><strong>SPACircuit</strong></p>
+<ul>
+<li>&#xC560;&#xD50C;&#xB9AC;&#xCF00;&#xC774;&#xC158; &#xBAA8;&#xB378;&#xACFC; &#xC561;&#xC158; &#xD578;&#xB4E4;&#xB7EC;&#xB97C; &#xB2F4;&#xACE0;&#xC788;&#xB294; Diode`Circuit [RootModel]&#xC758; &#xC2F1;&#xAE00; &#xD1A4; &#xC778;&#xC2A4;&#xD134;&#xC2A4;.</li>
+<li>ReactConnector [RootModel]&#xB97C; &#xD655;&#xC7A5;&#xD558;&#xC5EC; React &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC640;&#xC758; &#xD1B5;&#xD569;&#xC744; &#xC81C;&#xACF5;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><strong>TodoHandler</strong></p>
+<ul>
+<li>todos&#xC640; &#xAD00;&#xB828;&#xB41C; &#xC791;&#xC5C5;&#xC744; &#xCC98;&#xB9AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p><strong>MotdHandler</strong></p>
+<ul>
+<li>Motd&#xC640; &#xAD00;&#xB828;&#xB41C; &#xC791;&#xC5C5;&#xC744; &#xCC98;&#xB9AC;&#xD569;&#xB2C8;&#xB2E4;.</li>
+</ul>
+<p>&#xC6B0;&#xB9AC;&#xC758; React &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xAC00; &#xC560;&#xD50C;&#xB9AC;&#xCF00;&#xC774;&#xC158; &#xBAA8;&#xB378;&#xC5D0; &#xC811;&#xADFC; &#xD560; &#xC218;&#xC788;&#xAC8C;&#xD558;&#xB824;&#xBA74;,<code>SPACircuit.connect</code> &#xB610;&#xB294;<code>SPACircuit.wrap</code> &#xBA54;&#xC18C;&#xB4DC;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; &#xC5F0;&#xACB0;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-type">SPACircuit</span>.wrap(_.motd)(proxy =&gt; <span class="hljs-type">Dashboard</span>(ctl, proxy))
+<span class="hljs-keyword">val</span> todoWrapper = <span class="hljs-type">SPACircuit</span>.connect(_.todos)
+todoWrapper(<span class="hljs-type">Todo</span>(_))
+</code></pre>
+<p><code>wrap</code>&#xACFC;<code>connect</code>&#xC758; &#xCC28;&#xC774;&#xC810;&#xC740; &#xC804;&#xC790;&#xAC00; &#xBAA8;&#xB378;&#xACFC; &#xB514;&#xC2A4;&#xD328;&#xCC98;&#xC5D0; &#xB300;&#xD55C; &#xC218;&#xB3D9; &#xC77D;&#xAE30; &#xC561;&#xC138;&#xC2A4; &#xB9CC; &#xC81C;&#xACF5;&#xD558;&#xACE0; &#xD6C4;&#xC790;&#xB294; &#xB9AC;&#xC2A4;&#xB108;&#xB97C; &#xD68C;&#xB85C;&#xC5D0; &#xB4F1;&#xB85D;&#xD558;&#xACE0; &#xC0C1;&#xD0DC;&#xAC00; &#xBC14;&#xB014; &#xB54C; &#xB798;&#xD551; &#xB41C; &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xB97C; &#xC801;&#xADF9;&#xC801;&#xC73C;&#xB85C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD55C;&#xB2E4;&#xB294; &#xC810;&#xC785;&#xB2C8;&#xB2E4;. &#xB450; &#xBA54;&#xC18C;&#xB4DC; &#xBAA8;&#xB450; &#xAD00;&#xC2EC;&#xC788;&#xB294; &#xBAA8;&#xB378;&#xC758; &#xC77C;&#xBD80;&#xB97C; &#xCD94;&#xCD9C;&#xD558;&#xB294; <em>reader function</em>&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.&#xC774; &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xB294; &#xBBF8;&#xB9AC; &#xBE4C;&#xB4DC; &#xB41C; &#xB2E4;&#xC74C;<code>ModelProxy [A]</code>&#xB85C; &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xB97C; &#xBE4C;&#xB4DC;&#xD558;&#xB294; &#xD568;&#xC218;&#xB97C; &#xC81C;&#xACF5;&#xD558;&#xC5EC; &#xC778;&#xC2A4;&#xD134;&#xC2A4;&#xD654;&#xB429;&#xB2C8;&#xB2E4;.
+<code>ModelProxy</code>&#xB294; &#xCD94;&#xCD9C; &#xB41C; &#xBAA8;&#xB378;&#xC744; &#xB7A9;&#xD551;&#xD558;&#xACE0; &#xB514;&#xC2A4;&#xD328;&#xCC98;&#xC5D0; &#xB300;&#xD55C; &#xC561;&#xC138;&#xC2A4;&#xB97C; &#xC81C;&#xACF5;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p><code>Dashboard</code>&#xC5D0;&#xC11C; &#xC6B0;&#xB9AC;&#xB294;<code>ModelProxy</code>&#xC758;<code>connect</code> &#xBA54;&#xC18C;&#xB4DC;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC;<code>Motd</code> &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xB97C; &#xBAA8;&#xB378;&#xC5D0; &#xCD94;&#xAC00;&#xB85C; &#xC5F0;&#xACB0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala">.initialState_P(props =&gt; <span class="hljs-type">State</span>(props.proxy.connect(m =&gt; m)))
+...
+state.motdWrapper(<span class="hljs-type">Motd</span>(_))
+</code></pre>
+<p><code>Dashboard</code>&#xB294; &#xBAA8;&#xB378;&#xC758;<code>motd</code> &#xBD80;&#xBD84;&#xB9CC;&#xC744; &#xBC1B;&#xC558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; Motd &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xC5D0; &#xADF8;&#xB300;&#xB85C; &#xC804;&#xB2EC;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<h2 id="working-with-potential-data">Working with potential data</h2>
+<p><code>String</code> &#xB300;&#xC2E0;&#xC5D0; Motd &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xAC00;<code>Pot [String]</code>&#xC744; &#xC218;&#xC2E0;&#xD55C;&#xB2E4;&#xB294; &#xAC83;&#xC744; &#xC54C;&#xC558;&#xC744; &#xAC83;&#xC785;&#xB2C8;&#xB2E4;. <code>Pot &apos;&#xC740; &#xC5EC;&#xB7EC; &#xC0C1;&#xD0DC;&#xB97C; &#xAC00;&#xC9C8; &#xC218;&#xC788;&#xB294; &#xB370;&#xC774;&#xD130;&#xB97C; &#xCC98;&#xB9AC;&#xD558;&#xB294; &#xB370; &#xC720;&#xC6A9;&#xD55C; &#xAD6C;&#xC870;&#xC785;&#xB2C8;&#xB2E4;. Scala</code>Option`&#xACFC; &#xAF64; &#xBE44;&#xC2B7;&#xD558;&#xC9C0;&#xB9CC; &#xB450; &#xAC1C; &#xC774;&#xC0C1;&#xC758; &#xC0C1;&#xD0DC;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><img src="http://ochrons.github.io/diode/images/pot-states.png" alt="Pot states"></p>
+<p>&#xC7A0;&#xC7AC;&#xC801; &#xC778; &#xB370;&#xC774;&#xD130;&#xB97C; &#xBCF4;&#xB294; &#xAC83;&#xC740; &#xBC88;&#xAC70;&#xB85C;&#xC6B8; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xB530;&#xB77C;&#xC11C; Diode&#xB294; &apos;Pot&apos;&#xC744; &apos;PotReact&apos;&#xB85C; &#xD655;&#xC7A5;&#xD558;&#xB294; &#xD3B8;&#xB9AC;&#xD55C; &#xC554;&#xC2DC; &#xC801; &#xD074;&#xB798;&#xC2A4;&#xB97C; &#xD3EC;&#xD568;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xAC83;&#xC740;<code>Pot &apos;&#xC774; &#xD2B9;&#xC815; &#xC0C1;&#xD0DC;&#xC5D0;&#xC788;&#xC744; &#xB54C;&#xB9CC; &#xB80C;&#xB354;&#xB9C1;&#xD558;&#xB294; &#xD2B9;&#xC815;</code>render` &#xBA54;&#xC3D8;&#xB4DC;&#xB97C; &#xD638;&#xCD9C; &#xD560; &#xC218;&#xC788;&#xAC8C;&#xD558;&#xC5EC; &#xC0AC;&#xC6A9;&#xC790;&#xC5D0;&#xAC8C; &quot;Loading&quot;&#xB610;&#xB294; &quot;Error&quot;&#xBA54;&#xC2DC;&#xC9C0;&#xB97C; &#xBCF4;&#xC5EC;&#xC8FC;&#xAE30; &#xC27D;&#xAC8C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala">proxy().renderPending(_ &gt; <span class="hljs-number">500</span>, _ =&gt; &lt;.p(<span class="hljs-string">&quot;Loading...&quot;</span>)),
+proxy().renderFailed(ex =&gt; &lt;.p(<span class="hljs-string">&quot;Failed to load&quot;</span>)),
+proxy().render(m =&gt; &lt;.p(m)),
+</code></pre>
+<p><code>renderPending</code>&#xC5D0;&#xB294; &#xB450; &#xAC00;&#xC9C0; &#xBCC0;&#xD615;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC5EC;&#xAE30;&#xC11C;&#xB294; &#xD544;&#xD130;&#xB9C1; &#xB41C; &#xAC83;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xACE0; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xCCAB; &#xBC88;&#xC9F8; &#xB9E4;&#xAC1C; &#xBCC0;&#xC218;&#xB294; &#xAE30;&#xAC04; &#xAC12;&#xC5D0; &#xB300;&#xD55C; &#xD544;&#xD130;&#xC785;&#xB2C8;&#xB2E4;. &#xC694;&#xCCAD;&#xC774; 500ms &#xC774;&#xC0C1; &#xBCF4;&#xB958; &#xC0C1;&#xD0DC; &#xC778; &#xACBD;&#xC6B0;&#xC5D0;&#xB9CC; &quot;&#xB85C;&#xB4DC; &#xC911; ...&quot;&#xBA54;&#xC2DC;&#xC9C0;&#xAC00; &#xD45C;&#xC2DC;&#xB429;&#xB2C8;&#xB2E4;. &#xAE30;&#xBCF8;<code>render</code> &#xBA54;&#xC18C;&#xB4DC;&#xB294;<code>Pot</code>&#xC758; &#xB0B4;&#xC6A9;&#xC744; &#xB80C;&#xB354;&#xB9C1;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xB2E4;&#xC591;&#xD55C;<code>isEmpty</code>,<code>isPending</code>,<code>isFailed</code> &#xB4F1;&#xC758; &#xBA54;&#xC18C;&#xB4DC;&#xB97C; &#xD638;&#xCD9C;&#xD558;&#xC5EC;<code>Pot</code>&#xC758; &#xC0C1;&#xD0DC;&#xB97C; &#xC9C8;&#xC758;&#xD558;&#xAC70;&#xB098;<code>map</code>&#xACFC;<code>flatMap</code>&#xACFC; &#xAC19;&#xC740; &#xBAA8;&#xB098;&#xB4DC; &#xD568;&#xC218;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; &#xADF8;&#xAC83;&#xB4E4;&#xC744; &#xC870;&#xC791; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC561;&#xC158; &#xD578;&#xB4E4;&#xB7EC; &#xB0B4;&#xC5D0;&#xC11C;&#xB294; autowire &#xD638;&#xCD9C;&#xACFC; &#xAC19;&#xC740; &#xBE44;&#xB3D9;&#xAE30; &#xD568;&#xC218;&#xB85C;&#xBD80;&#xD130;&#xBC1B;&#xB294; &#xACB0;&#xACFC;&#xC5D0; &#xB530;&#xB77C; &#xC2A4;&#xC2A4;&#xB85C; &apos;Pot&apos;&#xC0C1;&#xD0DC;&#xB97C; &#xAD00;&#xB9AC; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xADF8;&#xB7EC;&#xB098; &#xC77C;&#xBC18;&#xC801;&#xC73C;&#xB85C; &#xC694;&#xCCAD;&#xC774; &#xBCF4;&#xB958; &#xC911;&#xC77C; &#xB54C; &#xC790;&#xB3D9; &#xC7AC;&#xC2DC;&#xB3C4; &#xBC0F; &#xC54C;&#xB9BC;&#xC744; &#xC81C;&#xACF5;&#xD558;&#xB294; &#xBAA8;&#xB4E0; &#xAC83;&#xC744; &#xCC98;&#xB9AC;&#xD558;&#xB294; &#xAE30;&#xC131;&#xD488; &#xD578;&#xB4E4;&#xB7EC;&#xB97C; &#xD65C;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle</span> </span>= {
+  <span class="hljs-keyword">case</span> action: <span class="hljs-type">UpdateMotd</span> =&gt;
+    <span class="hljs-keyword">val</span> updateF = action.effect(<span class="hljs-type">AjaxClient</span>[<span class="hljs-type">Api</span>].welcome(<span class="hljs-string">&quot;User X&quot;</span>).call())(identity)
+    action.handleWith(<span class="hljs-keyword">this</span>, updateF)(<span class="hljs-type">PotAction</span>.handler(<span class="hljs-number">3</span>))
+}
+</code></pre>
+<p>&#xC6B0;&#xC120; &#xC6B0;&#xB9AC;&#xAC00; &#xC218;&#xD589;&#xD558;&#xACE0;&#xC790;&#xD558;&#xB294; &#xBE44;&#xB3D9;&#xAE30; &#xD638;&#xCD9C;&#xB85C;&#xBD80;&#xD130; <em>effect</em>&#xB97C; &#xC0DD;&#xC131;&#xD558;&#xACE0;, &#xADF8; &#xACB0;&#xACFC;&#xB97C; &#xC790;&#xB3D9;&#xC801;&#xC73C;&#xB85C; &#xAD00;&#xB9AC;&#xB418;&#xB294;<code>PotAction.handler</code>&#xC5D0; &#xC804;&#xB2EC;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xB2E4;&#xC774;&#xC624;&#xB4DC;&#xC5D0; &#xB300;&#xD55C; &#xC790;&#xC138;&#xD55C; &#xB0B4;&#xC6A9;&#xC740; [documentation] (<a href="https://ochrons.github.io/diode)&#xB97C;" target="_blank">https://ochrons.github.io/diode)&#xB97C;</a> &#xCC38;&#xC870;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+<h2 id="editing-todos">Editing todos</h2>
+<p>&#xC0C8;&#xB85C;&#xC6B4; Todo &#xD56D;&#xBAA9;&#xC744; &#xCD94;&#xAC00;&#xD558;&#xAE30; &#xC704;&#xD574;, &#xC0AC;&#xC6A9;&#xC790; &#xC778;&#xD130;&#xD398;&#xC774;&#xC2A4;&#xB294; &#xBC84;&#xD2BC;&#xACFC; &#xBAA8;&#xB2EC; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xB97C; &#xC81C;&#xACF5;&#xD569;&#xB2C8;&#xB2E4; (&#xC55E;&#xC5D0;&#xC11C; &#xC124;&#xBA85;&#xD55C;<code>Modal</code> &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8; &#xC0AC;&#xC6A9;). &#xAE30;&#xC874; &#xD56D;&#xBAA9; &#xD3B8;&#xC9D1;&#xC740; &#xD560; &#xC77C; &#xBAA9;&#xB85D; &#xC124;&#xBA85; &#xC606;&#xC758; <em> &#xD3B8;&#xC9D1; </em> &#xBC84;&#xD2BC;&#xC744; &#xD074;&#xB9AD;&#xD558;&#xC5EC; &#xC218;&#xD589;&#xB429;&#xB2C8;&#xB2E4;. &#xB450; &#xC791;&#xC5C5; &#xBAA8;&#xB450; &#xB3D9;&#xC77C;&#xD55C; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xB97C; &#xC5FD;&#xB2C8; &#xB2E4;. &#xB9C8;&#xC9C0;&#xB9C9;&#xC73C;&#xB85C; <em> &#xC0AD;&#xC81C; </em> &#xBC84;&#xD2BC;&#xC744; &#xD074;&#xB9AD;&#xD558;&#xC5EC; &#xD560; &#xC77C;&#xC744; &#xC0AD;&#xC81C;&#xD560; &#xC218;&#xB3C4; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+<p><code>TodoForm</code>&#xC740; &#xC0AC;&#xC6A9;&#xC790;&#xAC00; &#xAE30;&#xC874; Todo &#xC544;&#xC774;&#xD15C;&#xC744; &#xD3B8;&#xC9D1;&#xD558;&#xAC70;&#xB098; &#xC0C8;&#xB85C;&#xC6B4; Todo &#xC544;&#xC774;&#xD15C;&#xC744; &#xB9CC;&#xB4E4; &#xC218;&#xC788;&#xB294; (Modal)&#xC744; &#xAE30;&#xBC18;&#xC73C;&#xB85C;&#xD558;&#xB294; &#xAC04;&#xB2E8;&#xD55C; React &#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC785;&#xB2C8;&#xB2E4; (&#xAD6C;&#xC131; &#xC694;&#xC18C;&#xC758; &#xAD00;&#xC810;&#xC5D0;&#xC11C;&#xC774; &#xB458; &#xC0AC;&#xC774;&#xC5D0; &#xCC28;&#xC774;&#xC810;&#xC774; &#xC5C6;&#xC74C;). &#xADF8;&#xAC83;&#xC740; &#xB2E4;&#xC74C;&#xACFC; &#xAC19;&#xC774; &#xBCF4;&#xC785;&#xB2C8;&#xB2E4;.</p>
+<p><img src="images/dialogbox.png?raw=true" alt="Dialog box"></p>
+<p>&#xB300;&#xD654; &#xC0C1;&#xC790;&#xB294; &#xC18D;&#xC131;&#xC5D0;&#xC11C; &#xC120;&#xD0DD; &#xD56D;&#xBAA9;&#xC744; &#xAC00;&#xC838;&#xC624;&#xACE0; &#xD604;&#xC7AC; &#xD56D;&#xBAA9;&#xC744; &#xD574;&#xB2F9; &#xC0C1;&#xD0DC;&#xB85C; &#xC720;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;. <code>submitHandler</code> &#xCF5C;&#xBC31;&#xC740; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xAC00; &#xB2EB;&#xD788;&#xAC70;&#xB098; &#xCDE8;&#xC18C; &#xB420; &#xB54C; &#xBD80;&#xBAA8;&#xC5D0;&#xAC8C; &#xC54C;&#xB9AC;&#xAE30; &#xC704;&#xD574; &#xC0AC;&#xC6A9;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">item: <span class="hljs-type">Option</span>[<span class="hljs-type">TodoItem</span>], submitHandler: (<span class="hljs-type">TodoItem</span>, <span class="hljs-type">Boolean</span></span>) <span class="hljs-title">=&gt;</span> <span class="hljs-title">Unit</span>)</span>
+
+<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">State</span>(<span class="hljs-params">item: <span class="hljs-type">TodoItem</span>, cancelled: <span class="hljs-type">Boolean</span> = true</span>)</span>
+</code></pre>
+<p>Building the component looks a bit complicated, so let&apos;s walk through it.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> component = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">Props</span>](<span class="hljs-string">&quot;TodoForm&quot;</span>)
+  .initialState_P(p =&gt; <span class="hljs-type">State</span>(p.item.getOrElse(<span class="hljs-type">TodoItem</span>(<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-type">TodoNormal</span>, <span class="hljs-literal">false</span>))))
+  .renderBackend[<span class="hljs-type">Backend</span>]
+  .build
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">render</span></span>(p: <span class="hljs-type">Props</span>, s: <span class="hljs-type">State</span>) = {
+  log.debug(<span class="hljs-string">s&quot;User is <span class="hljs-subst">${if (s.item.id == &quot;&quot;) &quot;adding&quot; else &quot;editing&quot;}</span> a todo&quot;</span>)
+  <span class="hljs-keyword">val</span> headerText = <span class="hljs-keyword">if</span> (s.item.id == <span class="hljs-string">&quot;&quot;</span>) <span class="hljs-string">&quot;Add new todo&quot;</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;Edit todo&quot;</span>
+  <span class="hljs-type">Modal</span>(<span class="hljs-type">Modal</span>.<span class="hljs-type">Props</span>(
+    <span class="hljs-comment">// header contains a cancel button (X)</span>
+    header = hide =&gt; &lt;.span(&lt;.button(^.tpe := <span class="hljs-string">&quot;button&quot;</span>, bss.close, ^.onClick --&gt; hide, <span class="hljs-type">Icon</span>.close), &lt;.h4(headerText)),
+    <span class="hljs-comment">// footer has the OK button that submits the form before hiding it</span>
+    footer = hide =&gt; &lt;.span(<span class="hljs-type">Button</span>(<span class="hljs-type">Button</span>.<span class="hljs-type">Props</span>(submitForm() &gt;&gt; hide), <span class="hljs-string">&quot;OK&quot;</span>)),
+    <span class="hljs-comment">// this is called after the modal has been hidden (animation is completed)</span>
+    closed = formClosed(s, p)),
+    &lt;.div(bss.formGroup,
+      &lt;.label(^.`<span class="hljs-keyword">for</span>` := <span class="hljs-string">&quot;description&quot;</span>, <span class="hljs-string">&quot;Description&quot;</span>),
+      &lt;.input.text(bss.formControl, ^.id := <span class="hljs-string">&quot;description&quot;</span>, ^.value := s.item.content,
+        ^.placeholder := <span class="hljs-string">&quot;write description&quot;</span>, ^.onChange ==&gt; updateDescription)),
+    &lt;.div(bss.formGroup,
+      &lt;.label(^.`<span class="hljs-keyword">for</span>` := <span class="hljs-string">&quot;priority&quot;</span>, <span class="hljs-string">&quot;Priority&quot;</span>),
+      <span class="hljs-comment">// using defaultValue = &quot;Normal&quot; instead of option/selected due to React</span>
+      &lt;.select(bss.formControl, ^.id := <span class="hljs-string">&quot;priority&quot;</span>, ^.value := s.item.priority.toString, ^.onChange ==&gt; updatePriority,
+        &lt;.option(^.value := <span class="hljs-type">TodoHigh</span>.toString, <span class="hljs-string">&quot;High&quot;</span>),
+        &lt;.option(^.value := <span class="hljs-type">TodoNormal</span>.toString, <span class="hljs-string">&quot;Normal&quot;</span>),
+        &lt;.option(^.value := <span class="hljs-type">TodoLow</span>.toString, <span class="hljs-string">&quot;Low&quot;</span>)
+      )
+    )
+  )
+}
+</code></pre>
+<p>&#xC0C1;&#xD0DC;&#xB294; &#xC81C;&#xACF5;&#xB41C; &#xD56D;&#xBAA9; &#xB610;&#xB294; &#xC0C8; &#xD56D;&#xBAA9;&#xC774;&#xC788;&#xB294; &#xC0C1;&#xD0DC;&#xB85C; &#xCD08;&#xAE30;&#xD654;&#xB429;&#xB2C8;&#xB2E4;. <code>render</code> &#xBA54;&#xC3D8;&#xB4DC; (<code>Backend</code>&#xB0B4;&#xBD80;) &#xC548;&#xC5D0; &#xC0C8;&#xB85C;&#xC6B4;<code>Modal</code>&#xC774; &#xC0DD;&#xC131;&#xB418;&#xACE0; &#xC18D;&#xC131;&#xC5D0;&#xC11C; &#xB450; &#xAC1C;&#xC758; &#xBC84;&#xD2BC; &#xCF58;&#xD2B8;&#xB864;&#xC744; &#xD560;&#xB2F9;&#xD569;&#xB2C8;&#xB2E4;. <code>header</code>&#xC640;<code>footer</code> &#xB458; &#xB2E4;<code>Modal</code>&#xC758;<code>Backend</code>&#xC5D0; &#xC2E4;&#xC81C;&#xB85C; &#xC8FC;&#xC5B4;&#xC838;&#xC11C;<code>hide</code> &#xD568;&#xC218;&#xB97C; &#xD638;&#xCD9C; &#xD560; &#xC218;&#xC788;&#xB294; &#xD568;&#xC218;&#xC785;&#xB2C8;&#xB2E4;. &#xB300;&#xD654; &#xC0C1;&#xC790;&#xAC00; &#xC228;&#xACA8;&#xC9C0;&#xAE30; &#xC804;&#xC5D0; &#xC591;&#xC2DD;&#xC774; &#xBA3C;&#xC800; &#xC81C;&#xCD9C;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<p>&#xC591;&#xC2DD; &#xC790;&#xCCB4;&#xB294; &#xB9E4;&#xC6B0; &#xAC04;&#xB2E8;&#xD558;&#xBA70; &#xD544;&#xB4DC;&#xAC00; &#xBCC0;&#xACBD; &#xB420; &#xB54C; &#xB0B4;&#xBD80; &#xC0C1;&#xD0DC;&#xB97C; &#xC5C5;&#xB370;&#xC774;&#xD2B8;&#xD558;&#xB294; &#xD578;&#xB4E4;&#xB7EC;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. React&#xC5D0;&#xC11C;<code>select</code> &#xC5D8;&#xB9AC;&#xBA3C;&#xD2B8;&#xB294; &#xC77C;&#xBC18; HTML5&#xC640; &#xC870;&#xAE08; &#xB2E4;&#xB974;&#xAC8C; &#xC791;&#xB3D9;&#xD558;&#xBA70; &#xC77C;&#xBC18;&#xC801;&#xC778;<code>selected</code> &#xC18D;&#xC131; &#xB300;&#xC2E0;<code>value</code> &#xC18D;&#xC131;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; &#xC635;&#xC158;&#xC744; &#xC120;&#xD0DD;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+<p>&#xD3FC;&#xC774; &#xB2EB;&#xD788;&#xBA74; &#xD56D;&#xBAA9;&#xACFC; &#xD568;&#xAED8; &#xB300;&#xD654; &#xC0C1;&#xC790;&#xAC00; &#xCDE8;&#xC18C;&#xB418;&#xC5C8;&#xB294;&#xC9C0;&#xB97C; &#xB098;&#xD0C0;&#xB0B4;&#xB294; &#xD50C;&#xB798;&#xADF8;&#xC640; &#xD568;&#xAED8; &#xBD80;&#xBAA8;&#xC758;<code>submitHandler</code>&#xAC00; &#xD638;&#xCD9C;&#xB429;&#xB2C8;&#xB2E4;.</p>
+<pre><code class="lang-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">formClosed</span></span>(state: <span class="hljs-type">State</span>, props: <span class="hljs-type">Props</span>): <span class="hljs-type">Callback</span> = {
+  <span class="hljs-comment">// call parent handler with the new item and whether form was OK or cancelled</span>
+  props.submitHandler(state.item, state.cancelled)
+}
+</code></pre>
+<p>&#xADF8;&#xB7EC;&#xB098; &#xC774;&#xC81C;&#xB294; &#xD074;&#xB77C;&#xC774;&#xC5B8;&#xD2B8; - &#xC11C;&#xBC84; &#xCEE4;&#xBBA4;&#xB2C8;&#xCF00;&#xC774;&#xC158;&#xC758; &#xCD5C;&#xD558;&#xCE35;&#xC5D0; &#xB3C4;&#xB2EC; &#xD560; &#xB54C;&#xC785;&#xB2C8;&#xB2E4;!</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="integrating-javascript-components.html" class="navigation navigation-prev " aria-label="Previous page: Integrating JavaScript components">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="autowire-and-boopickle.html" class="navigation navigation-next " aria-label="Next page: Autowire and BooPickle">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Todo module and data flow","level":"1.3.1.6","depth":3,"next":{"title":"Autowire and BooPickle","level":"1.3.1.7","depth":3,"path":"autowire-and-boopickle.md","ref":"autowire-and-boopickle.md","articles":[]},"previous":{"title":"Integrating JavaScript components","level":"1.3.1.5","depth":3,"path":"integrating-javascript-components.md","ref":"integrating-javascript-components.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"kr","gitbook":"*"},"file":{"path":"todo-module-and-data-flow.md","mtime":"2017-02-04T10:03:33.810Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"kr"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

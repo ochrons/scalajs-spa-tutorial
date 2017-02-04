@@ -1,0 +1,710 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Integrating JavaScript components · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="todo-module-and-data-flow.html" />
+    
+    
+    <link rel="prev" href="css-in-scala.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Integrating JavaScript components</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="integrating-javascript-components">Integrating JavaScript components</h1>
+<p>Although Scala.js provides a superb environment for developing web clients, sometimes it makes sense to utilize the hard work of
+thousands of JavaScript developers fumbling in the shadows :)</p>
+<h2 id="bootstrap-css-components">Bootstrap CSS components</h2>
+<p><a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> is a popular HTML/CSS/JS framework by Twitter for developing responsive applications. It comes with a lot
+of styled HTML/CSS components that are easy to use and integrate into your application. Many parts of Bootstrap actually don&apos;t even use JavaScript, all
+the magic happens in CSS.</p>
+<p>This tutorial wraps a couple of simple Bootstrap <a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Bootstrap.scala" target="_blank">components</a>
+(button and panel) into React components. Bootstrap uses contextual styles in many components to convey additional meaning. These can be
+easily represented by a Scala enumeration.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">CommonStyle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Enumeration</span> </span>{
+  <span class="hljs-keyword">val</span> <span class="hljs-keyword">default</span>, primary, success, info, warning, danger = <span class="hljs-type">Value</span>
+}
+</code></pre>
+<p>To define an interactive button, it has to know what to do when it&apos;s clicked. In this example we simply pass a function to the properties
+alongside the contextual style. Note that the actual button contents don&apos;t need to be provided in the properties as it&apos;s more convenient
+to define it through child component(s).</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Button</span> </span>{
+
+  <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">onClick: <span class="hljs-type">Callback</span>, style: <span class="hljs-type">CommonStyle</span>.<span class="hljs-type">Value</span> = <span class="hljs-type">CommonStyle</span>.default, addStyles: <span class="hljs-type">Seq</span>[<span class="hljs-type">StyleA</span>] = <span class="hljs-type">Seq</span>(</span>))</span>
+
+  <span class="hljs-keyword">val</span> component = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">Props</span>](<span class="hljs-string">&quot;Button&quot;</span>)
+    .renderPC((_, props, children) =&gt;
+      &lt;.button(bss.buttonOpt(props.style), props.addStyles, ^.tpe := <span class="hljs-string">&quot;button&quot;</span>, ^.onClick --&gt; props.onClick, children)
+    ).build
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(props: <span class="hljs-type">Props</span>, children: <span class="hljs-type">ReactNode</span>*) = component(props, children: _*)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>() = component
+}
+</code></pre>
+<p>This time the render method gets two parameters: The properties and the children given to this component. It simply renders a normal
+button using Bootstrap CSS and binds <code>onClick</code> to the handler we defined in the properties. Finally the children are rendered within
+the button tag.</p>
+<p>Defining a Bootstrap Panel is about as simple.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Panel</span> </span>{
+  <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">heading: <span class="hljs-type">String</span>, style: <span class="hljs-type">CommonStyle</span>.<span class="hljs-type">Value</span> = <span class="hljs-type">CommonStyle</span>.default</span>)</span>
+
+  <span class="hljs-keyword">val</span> component = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">Props</span>](<span class="hljs-string">&quot;Panel&quot;</span>)
+    .renderPC((_, p, c) =&gt;
+      &lt;.div(bss.panelOpt(p.style),
+        &lt;.div(bss.panelHeading, p.heading),
+        &lt;.div(bss.panelBody, c)
+      )
+    ).build
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(props: <span class="hljs-type">Props</span>, children: <span class="hljs-type">ReactNode</span>*) = component(props, children: _*)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>() = component
+}
+</code></pre>
+<p>The panel provides no interactivity but this time we define a separate <code>heading</code> in addition to using the children property.</p>
+<h2 id="icons">Icons</h2>
+<p>Custom fonts are a great way to generate scalable icons that look good on all displays. In the tutorial we use
+<a href="http://fortawesome.github.io/Font-Awesome/" target="_blank">Font Awesome</a> icons and a simple wrapper that generates appropriate HTML tags to display the icon.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Icon</span> </span>{
+  <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Icon</span> </span>= <span class="hljs-type">ReactTag</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(name: <span class="hljs-type">String</span>): <span class="hljs-type">Icon</span> = &lt;.i(^.className := <span class="hljs-string">s&quot;fa fa-<span class="hljs-subst">$name</span>&quot;</span>)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adjust</span> </span>= apply(<span class="hljs-string">&quot;adjust&quot;</span>)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">adn</span> </span>= apply(<span class="hljs-string">&quot;adn&quot;</span>)
+  .
+  .
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">youtubePlay</span> </span>= apply(<span class="hljs-string">&quot;youtube-play&quot;</span>)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">youtubeSquare</span> </span>= apply(<span class="hljs-string">&quot;youtube-square&quot;</span>)
+}
+</code></pre>
+<h2 id="javascript-chart-component">JavaScript chart component</h2>
+<p>If you&apos;d want a nice charting component in your web UI you could go ahead and write a lot of SVG-generating code, but why bother when
+there are so many components available for your benefit. Scala.js provides many ways to <a href="http://www.scala-js.org/doc/calling-javascript.html" target="_blank">use JavaScript</a>
+from your own Scala code and some of them are more type-safe than others. A good way is to define a <em>facade</em> for the 3rd party JS module and
+for any data structures it may expose. This way you can be sure to use it in a type-safe manner.</p>
+<p>In the tutorial we are using <a href="http://www.chartjs.org/" target="_blank">Chart.js</a> but the same principles apply to practically all JS components out there.
+In your application you might want to use an <a href="https://github.com/coreyauger/scalajs-chart" target="_blank">existing facade</a> for Chart.js instead of writing
+your own.</p>
+<p>The Chart.js draws the chart onto a HTML5 canvas and is instantiated by following JavaScript code</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> ctx = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;myChart&quot;</span>).getContext(<span class="hljs-string">&quot;2d&quot;</span>);
+<span class="hljs-keyword">var</span> myNewChart = <span class="hljs-keyword">new</span> JSChart(ctx, { type: <span class="hljs-string">&quot;line&quot;</span>, data: data })
+</code></pre>
+<p>To do the same in Scala.js we define a simple <em>facade</em> as follows</p>
+<pre><code class="lang-scala"><span class="hljs-meta">@js</span>.native
+<span class="hljs-meta">@JSName</span>(<span class="hljs-string">&quot;Chart&quot;</span>)
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JSChart</span>(<span class="hljs-params">ctx: js.<span class="hljs-type">Dynamic</span>, config: <span class="hljs-type">ChartConfiguration</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">js</span>.<span class="hljs-title">Object</span></span>
+
+<span class="hljs-meta">@js</span>.native
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">ChartConfiguration</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">js</span>.<span class="hljs-title">Object</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> `<span class="hljs-title">type</span>`</span>: <span class="hljs-type">String</span> = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">data</span></span>: <span class="hljs-type">ChartData</span> = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">options</span></span>: <span class="hljs-type">ChartOptions</span> = js.native
+}
+</code></pre>
+<p>To actually instantiate the chart, we need access to the canvas element and with React this is a bit problematic since it builds a virtual-DOM and
+updates the real DOM behind the scene. Therefore the canvas element does not exist at the time of <code>render</code> function call. To work around this problem
+we need to build the chart in the <code>componentDidMount</code> function, which is called after the real DOM has been updated. This function is called with
+a <code>scope</code> parameter that gives us access to the actual DOM node through <code>getDOMNode()</code>. The chart is built by creating a new instance of <code>Chart</code>
+and calling the appropriate chart function.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> <span class="hljs-type">Chart</span> = <span class="hljs-type">ReactComponentB</span>[<span class="hljs-type">ChartProps</span>](<span class="hljs-string">&quot;Chart&quot;</span>)
+  .render_P(p =&gt;
+    &lt;.canvas(^.width := <span class="hljs-string">s&quot;<span class="hljs-subst">${p.width}</span>px&quot;</span>, ^.height := <span class="hljs-string">s&quot;<span class="hljs-subst">${p.height}</span>px&quot;</span>)
+  )
+  .domType[<span class="hljs-type">HTMLCanvasElement</span>]
+  .componentDidMount(scope =&gt; <span class="hljs-type">Callback</span> {
+    <span class="hljs-comment">// access context of the canvas</span>
+    <span class="hljs-keyword">val</span> ctx = scope.getDOMNode().getContext(<span class="hljs-string">&quot;2d&quot;</span>)
+    <span class="hljs-comment">// create the actual chart using the 3rd party component</span>
+    scope.props.style <span class="hljs-keyword">match</span> {
+      <span class="hljs-keyword">case</span> <span class="hljs-type">LineChart</span> =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">JSChart</span>(ctx, <span class="hljs-type">ChartConfiguration</span>(<span class="hljs-string">&quot;line&quot;</span>, scope.props.data))
+      <span class="hljs-keyword">case</span> <span class="hljs-type">BarChart</span> =&gt; <span class="hljs-keyword">new</span> <span class="hljs-type">JSChart</span>(ctx, <span class="hljs-type">ChartConfiguration</span>(<span class="hljs-string">&quot;bar&quot;</span>, scope.props.data))
+      <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">IllegalArgumentException</span>
+    }
+  }).build
+</code></pre>
+<p>Chart.js input data is a JavaScript object like below</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> data = {
+    labels: [<span class="hljs-string">&quot;January&quot;</span>, <span class="hljs-string">&quot;February&quot;</span>, <span class="hljs-string">&quot;March&quot;</span>, <span class="hljs-string">&quot;April&quot;</span>, <span class="hljs-string">&quot;May&quot;</span>, <span class="hljs-string">&quot;June&quot;</span>, <span class="hljs-string">&quot;July&quot;</span>],
+    datasets: [
+        {
+            label: <span class="hljs-string">&quot;My First dataset&quot;</span>,
+            fillColor: <span class="hljs-string">&quot;rgba(220,220,220,0.2)&quot;</span>,
+            strokeColor: <span class="hljs-string">&quot;rgba(220,220,220,1)&quot;</span>,
+            data: [<span class="hljs-number">65</span>, <span class="hljs-number">59</span>, <span class="hljs-number">80</span>, <span class="hljs-number">81</span>, <span class="hljs-number">56</span>, <span class="hljs-number">55</span>, <span class="hljs-number">40</span>]
+        },
+        {
+            label: <span class="hljs-string">&quot;My Second dataset&quot;</span>,
+            fillColor: <span class="hljs-string">&quot;rgba(151,187,205,0.2)&quot;</span>,
+            strokeColor: <span class="hljs-string">&quot;rgba(151,187,205,1)&quot;</span>,
+            data: [<span class="hljs-number">28</span>, <span class="hljs-number">48</span>, <span class="hljs-number">40</span>, <span class="hljs-number">19</span>, <span class="hljs-number">86</span>, <span class="hljs-number">27</span>, <span class="hljs-number">90</span>]
+        }
+    ]
+};
+</code></pre>
+<p>To build the same in Scala.js we could directly use <code>js.Dynamic.literal</code> but that would be very unsafe and cumbersome. A better alternative is to define
+a builder function to create it and a facade to access it.</p>
+<pre><code class="lang-scala"><span class="hljs-meta">@js</span>.native
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">ChartData</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">js</span>.<span class="hljs-title">Object</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">labels</span></span>: js.<span class="hljs-type">Array</span>[<span class="hljs-type">String</span>] = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">datasets</span></span>: js.<span class="hljs-type">Array</span>[<span class="hljs-type">ChartDataset</span>] = js.native
+}
+
+<span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">ChartData</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span></span>(labels: <span class="hljs-type">Seq</span>[<span class="hljs-type">String</span>], datasets: <span class="hljs-type">Seq</span>[<span class="hljs-type">ChartDataset</span>]): <span class="hljs-type">ChartData</span> = {
+    js.<span class="hljs-type">Dynamic</span>.literal(
+      labels = labels.toJSArray,
+      datasets = datasets.toJSArray
+    ).asInstanceOf[<span class="hljs-type">ChartData</span>]
+  }
+}
+</code></pre>
+<p>In this case defining the <code>ChartData</code> trait is actually not necessary, since we don&apos;t really use it except to enforce type safety. But if you actually
+need to access a JavaScript object defined outside your application, this is the way to do it. Defining chart data is now as simple as</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> cp = <span class="hljs-type">ChartProps</span>(<span class="hljs-string">&quot;Test chart&quot;</span>, <span class="hljs-type">Chart</span>.<span class="hljs-type">BarChart</span>, <span class="hljs-type">ChartData</span>(<span class="hljs-type">Seq</span>(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>), <span class="hljs-type">Seq</span>(<span class="hljs-type">ChartDataset</span>(<span class="hljs-type">Seq</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>), <span class="hljs-string">&quot;Data1&quot;</span>))))
+</code></pre>
+<p>If you need to build/access very complex JavaScript objects, consider an option builder approach like the one in
+<a href="https://github.com/jducoeur/jsext/blob/master/src/main/scala/org/querki/jsext/JSOptionBuilder.scala" target="_blank">Querki</a> by
+<a href="https://github.com/jducoeur" target="_blank">jducoeur</a> (for example <a href="https://github.com/jducoeur/Querki/blob/master/querki/scalajs/src/main/scala/org/querki/facades/jqueryui/JQueryUIDialog.scala" target="_blank">JQueryUIDialog</a>).</p>
+<h2 id="bootstrap-jquery-components">Bootstrap jQuery components</h2>
+<p>Bootstrap is not only a CSS library but also comes with JavaScript to add functionality to components like Dropdown and Modal. The
+<a href="http://getbootstrap.com/javascript/#modals" target="_blank">Modal</a> is an especially problematic system as it involves a hidden dialog box that is shown when the modal is
+activated and hidden afterwards. In a normal Bootstrap application you would define the dialog box HTML as part of your application and just keep it hidden.
+With React, however, it&apos;s easy (and recommended) to create the HTML for the modal just before it&apos;s displayed, so that your application can easily control
+the contents of the dialog box.</p>
+<p>Before diving into the integration of the Bootstrap Modal, let&apos;s first examine how jQuery components can be integrated in general. We&apos;ve provided a truly
+<a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/JQuery.scala" target="_blank">skeleton jQuery integration</a>,
+just enough for the modal to work, so you&apos;ll want to use something <a href="https://github.com/jducoeur/jquery-facade" target="_blank">more complete</a> for
+most purposes. The jQuery integration is also briefly explained in <a href="http://www.scala-js.org/doc/calling-javascript.html" target="_blank">Scala.js documentation</a> so we won&apos;t go
+into the details too much. Basically you need to define a global <code>jQuery</code> variable, through which you can then access the jQuery functionality. This is done
+in the <a href="https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/package.scala" target="_blank"><code>package.scala</code></a> for the
+components package.</p>
+<p>jQuery works by &quot;calling&quot; it with a selector or an element. In this tutorial we are always using a direct DOM element, so the facade only includes that option.
+For example to attach an event listener to an element, you would call</p>
+<pre><code class="lang-scala">jQuery(scope.getDOMNode()).on(<span class="hljs-string">&quot;hidden.bs.modal&quot;</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, scope.backend.hidden _)
+</code></pre>
+<p>jQuery has an extension mechanism where plugins can add new functions to the jQuery object. For example Bootstrap Modal adds a <code>modal</code> function. To define such
+an extension in Scala.js we create a trait for it and an implicit conversion (just a type cast, really) for it.</p>
+<pre><code class="lang-scala"><span class="hljs-meta">@js</span>.native
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">BootstrapJQuery</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">JQuery</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">modal</span></span>(action: <span class="hljs-type">String</span>): <span class="hljs-type">BootstrapJQuery</span> = js.native
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">modal</span></span>(options: js.<span class="hljs-type">Any</span>): <span class="hljs-type">BootstrapJQuery</span> = js.native
+}
+
+<span class="hljs-keyword">implicit</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">jq2bootstrap</span></span>(jq: <span class="hljs-type">JQuery</span>): <span class="hljs-type">BootstrapJQuery</span> = jq.asInstanceOf[<span class="hljs-type">BootstrapJQuery</span>]
+</code></pre>
+<p>Now whenever we want to call <code>jQuery(e).modal()</code> the compiler will automatically cast the <code>JQuery</code> type into <code>BootstrapJQuery</code>.</p>
+<p>Armed with the jQuery integration we can now tackle the Modal itself. One of the problems the Modal poses is that it&apos;s dynamically shown and hidden by
+the Bootstrap code and we need to somehow control that. In this tutorial we&apos;ve chosen a design where the modal doesn&apos;t even exist before it&apos;s needed and
+it&apos;s shown right after it has been created. This leaves only the hiding part for us to handle.</p>
+<p>In the <code>Backend</code> of the <code>Modal</code> we define a <code>hide()</code> function to do just that.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Backend</span>(<span class="hljs-params">t: <span class="hljs-type">BackendScope</span>[<span class="hljs-type">Props</span>, <span class="hljs-type">Unit</span>]</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hide</span> </span>= <span class="hljs-type">Callback</span> {
+    <span class="hljs-comment">// instruct Bootstrap to hide the modal</span>
+    jQuery(t.getDOMNode()).modal(<span class="hljs-string">&quot;hide&quot;</span>)
+  }
+</code></pre>
+<p>However, because the dialog box itself contains controls that need to actually close the dialog, we need to expose this functionality to the parent
+component via properties.</p>
+<pre><code class="lang-scala"><span class="hljs-comment">// header and footer are functions, so that they can get access to the </span>
+<span class="hljs-comment">// hide() function for their buttons</span>
+<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Props</span>(<span class="hljs-params">header: <span class="hljs-type">Callback</span> =&gt; <span class="hljs-type">ReactNode</span>, footer: <span class="hljs-type">Callback</span> =&gt; <span class="hljs-type">ReactNode</span>, 
+                 closed: <span class="hljs-type">Callback</span>, backdrop: <span class="hljs-type">Boolean</span> = true,
+                 keyboard: <span class="hljs-type">Boolean</span> = true</span>)</span>
+</code></pre>
+<p>Additionally, the Bootstrap modals are faded in and out, so the parent cannot go ahead and remove the modal HTML from DOM right away, but
+it needs to wait for the fade-out to complete. This is accomplished by listening to an event and calling the parent&apos;s <code>closed</code> function afterwards.</p>
+<pre><code class="lang-scala"><span class="hljs-comment">// jQuery event handler to be fired when the modal has been hidden</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hidden</span></span>(e: <span class="hljs-type">JQueryEventObject</span>): js.<span class="hljs-type">Any</span> = {
+  <span class="hljs-comment">// inform the owner of the component that the modal was closed/hidden</span>
+  t.props.flatMap(_.closed).runNow()
+}
+...
+<span class="hljs-comment">// register event listener to be notified when the modal is closed</span>
+jQuery(scope.getDOMNode()).on(<span class="hljs-string">&quot;hidden.bs.modal&quot;</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, scope.backend.hidden _)
+</code></pre>
+<p>To show the dialog box after it has been created, we again call <code>modal()</code> via jQuery in <code>componentDidMount</code>.</p>
+<pre><code class="lang-scala">.componentDidMount(scope =&gt; <span class="hljs-type">Callback</span> {
+  <span class="hljs-keyword">val</span> <span class="hljs-type">P</span> = scope.props
+  <span class="hljs-comment">// instruct Bootstrap to show the modal</span>
+  jQuery(scope.getDOMNode()).modal(js.<span class="hljs-type">Dynamic</span>.literal(<span class="hljs-string">&quot;backdrop&quot;</span> -&gt; <span class="hljs-type">P</span>.backdrop, <span class="hljs-string">&quot;keyboard&quot;</span> -&gt; <span class="hljs-type">P</span>.keyboard, <span class="hljs-string">&quot;show&quot;</span> -&gt; <span class="hljs-literal">true</span>))
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="css-in-scala.html" class="navigation navigation-prev " aria-label="Previous page: CSS in Scala">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="todo-module-and-data-flow.html" class="navigation navigation-next " aria-label="Next page: Todo module and data flow">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Integrating JavaScript components","level":"1.3.1.5","depth":3,"next":{"title":"Todo module and data flow","level":"1.3.1.6","depth":3,"path":"todo-module-and-data-flow.md","ref":"todo-module-and-data-flow.md","articles":[]},"previous":{"title":"CSS in Scala","level":"1.3.1.4","depth":3,"path":"css-in-scala.md","ref":"css-in-scala.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"en","gitbook":"*"},"file":{"path":"integrating-javascript-components.md","mtime":"2017-02-04T10:01:44.297Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"en"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

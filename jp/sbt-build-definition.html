@@ -1,0 +1,632 @@
+
+<!DOCTYPE HTML>
+<html lang="jp" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>SBT build definition · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="using-resources-from-webjars.html" />
+    
+    
+    <link rel="prev" href="logging.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >SBT build definition</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="sbt-build-definition">SBT build definition</h1>
+<p>Since Scala.js is quite new and it&apos;s been evolving even rather recently, building Scala.js applications with SBT is not as clear as it could
+be. Yes, the documentation and tutorials give you the basics, but what if you want something more, like configure a custom directory layout?</p>
+<p>The <code>build.sbt</code> in this tutorial shows you some typical cases you might run into in your own application. The basic structure of the <code>build.sbt</code>
+is built on top of the <a href="https://github.com/vmunier/play-with-scalajs-example/blob/master/build.sbt" target="_blank">example</a> provided by Vincent Munier, author of
+the <a href="https://github.com/vmunier/sbt-play-scalajs" target="_blank">sbt-play-scalajs</a> plugin.</p>
+<p>The build defines three separate projects:</p>
+<ul>
+<li>shared</li>
+<li>client</li>
+<li>server</li>
+</ul>
+<h2 id="shared-project">Shared project</h2>
+<p>First one is a special Scala.js <code>CrossProject</code> that actually contains two projects: one for JS and one for JVM. This <code>shared</code> project contains classes, libraries
+and resources shared between the client and server. In the context of this tutorial it means just the <code>Api.scala</code> trait and <code>TodoItem.scala</code> case class.
+In a more realistic application you would have your data models etc. defined here.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">lazy</span> <span class="hljs-keyword">val</span> shared = (crossProject.crossType(<span class="hljs-type">CrossType</span>.<span class="hljs-type">Pure</span>) in file(<span class="hljs-string">&quot;shared&quot;</span>))
+  .settings(
+    scalaVersion := <span class="hljs-type">Settings</span>.versions.scala,
+    libraryDependencies ++= <span class="hljs-type">Settings</span>.sharedDependencies.value
+  )
+  <span class="hljs-comment">// set up settings specific to the JS project</span>
+  .jsConfigure(_ enablePlugins <span class="hljs-type">ScalaJSPlay</span>)
+  .jsSettings(sourceMapsBase := baseDirectory.value / <span class="hljs-string">&quot;..&quot;</span>)
+</code></pre>
+<p>The shared dependencies include libraries used by both client and server such as <code>autowire</code> and <code>boopickle</code> for client/server communication.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">val</span> sharedDependencies = <span class="hljs-type">Def</span>.setting(<span class="hljs-type">Seq</span>(
+  <span class="hljs-string">&quot;com.lihaoyi&quot;</span> %%% <span class="hljs-string">&quot;autowire&quot;</span> % versions.autowire,
+  <span class="hljs-string">&quot;me.chrons&quot;</span> %%% <span class="hljs-string">&quot;boopickle&quot;</span> % versions.booPickle,
+  <span class="hljs-string">&quot;com.lihaoyi&quot;</span> %%% <span class="hljs-string">&quot;utest&quot;</span> % versions.uTest
+))
+</code></pre>
+<h2 id="client-project">Client project</h2>
+<p>Client is defined as a normal Scala.js project by enabling the <code>ScalaJSPlugin</code> on it.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">lazy</span> <span class="hljs-keyword">val</span> client: <span class="hljs-type">Project</span> = (project in file(<span class="hljs-string">&quot;client&quot;</span>))
+  .settings(
+    name := <span class="hljs-string">&quot;client&quot;</span>,
+    version := <span class="hljs-type">Settings</span>.version,
+    scalaVersion := <span class="hljs-type">Settings</span>.versions.scala,
+    scalacOptions ++= <span class="hljs-type">Settings</span>.scalacOptions,
+    libraryDependencies ++= <span class="hljs-type">Settings</span>.scalajsDependencies.value,
+    <span class="hljs-comment">// by default we do development build, no eliding</span>
+    elideOptions := <span class="hljs-type">Seq</span>(),
+    scalacOptions ++= elideOptions.value,
+    jsDependencies ++= <span class="hljs-type">Settings</span>.jsDependencies.value,
+    <span class="hljs-comment">// RuntimeDOM is needed for tests</span>
+    jsDependencies += <span class="hljs-type">RuntimeDOM</span> % <span class="hljs-string">&quot;test&quot;</span>,
+    <span class="hljs-comment">// yes, we want to package JS dependencies</span>
+    skip in packageJSDependencies := <span class="hljs-literal">false</span>,
+    <span class="hljs-comment">// use Scala.js provided launcher code to start the client app</span>
+    persistLauncher := <span class="hljs-literal">true</span>,
+    persistLauncher in <span class="hljs-type">Test</span> := <span class="hljs-literal">false</span>,
+    <span class="hljs-comment">// must specify source maps location because we use pure CrossProject</span>
+    sourceMapsDirectories += sharedJS.base / <span class="hljs-string">&quot;..&quot;</span>,
+    <span class="hljs-comment">// use uTest framework for tests</span>
+    testFrameworks += <span class="hljs-keyword">new</span> <span class="hljs-type">TestFramework</span>(<span class="hljs-string">&quot;utest.runner.Framework&quot;</span>)
+  )
+  .enablePlugins(<span class="hljs-type">ScalaJSPlugin</span>, <span class="hljs-type">ScalaJSPlay</span>)
+  .dependsOn(sharedJS)
+</code></pre>
+<p>First few settings are normal Scala settings, but let&apos;s go through the remaining settings to explain what they do.</p>
+<pre><code class="lang-scala">    <span class="hljs-comment">// by default we do development build, no eliding</span>
+    elideOptions := <span class="hljs-type">Seq</span>(),
+    scalacOptions ++= elideOptions.value,
+</code></pre>
+<p>Eliding is used to remove code that is not needed in the production build, such as debug logging. This setting is empty by default, but is enabled in
+the <code>release</code> command.</p>
+<pre><code class="lang-scala">    jsDependencies ++= <span class="hljs-type">Settings</span>.jsDependencies.value,
+    <span class="hljs-comment">// RuntimeDOM is needed for tests</span>
+    jsDependencies += <span class="hljs-type">RuntimeDOM</span> % <span class="hljs-string">&quot;test&quot;</span>,
+    <span class="hljs-comment">// yes, we want to package JS dependencies</span>
+    skip in packageJSDependencies := <span class="hljs-literal">false</span>,
+</code></pre>
+<p>The <code>jsDependencies</code> defines a set of JavaScript libraries your application depends on. These are also packaged into a single <code>.js</code> file for easy
+consumptions. For <code>test</code> phase we include the <code>RuntimeDOM</code> so that Scala.js plugin knows to use PhantomJS instead of the default Rhino to run the tests.
+Make sure you have installed <a href="http://phantomjs.org/" target="_blank">PhantomJS</a> before running the tests.</p>
+<pre><code class="lang-scala">    <span class="hljs-comment">// use Scala.js provided launcher code to start the client app</span>
+    persistLauncher := <span class="hljs-literal">true</span>,
+    persistLauncher in <span class="hljs-type">Test</span> := <span class="hljs-literal">false</span>,
+</code></pre>
+<p>This setting informs Scala.js plugin to generate a special <code>launcher.js</code> file, which is loaded last and invokes your <code>main</code> method. Using a launcher keeps
+your HTML template clean, as you don&apos;t need to specify the <code>main</code> function there.</p>
+<pre><code class="lang-scala">    <span class="hljs-comment">// must specify source maps location because we use pure CrossProject</span>
+    sourceMapsDirectories += sharedJS.base / <span class="hljs-string">&quot;..&quot;</span>,
+</code></pre>
+<p>Because we are using a pure <code>CrossProject</code>, the source map directories have to be manually adjusted to reflect where the source files can be found.</p>
+<pre><code class="lang-scala">    <span class="hljs-comment">// use uTest framework for tests</span>
+    testFrameworks += <span class="hljs-keyword">new</span> <span class="hljs-type">TestFramework</span>(<span class="hljs-string">&quot;utest.runner.Framework&quot;</span>)
+</code></pre>
+<p>Lets SBT know that we are using uTest framework for tests.</p>
+<pre><code class="lang-scala">  .enablePlugins(<span class="hljs-type">ScalaJSPlugin</span>, <span class="hljs-type">ScalaJSPlay</span>)
+  .dependsOn(sharedJS)
+</code></pre>
+<p>We enable both Scala.js and Scala.js-for-Play plugins. Finally the <code>client</code> project needs to depend on the <code>shared</code> project to get access to shared code
+and resources.</p>
+<h2 id="server-project">Server project</h2>
+<p>The server project is a normal Play project with a few twists to make client integration a breeze. Most of the heavy-lifting is done by the <code>ScalaJSPlay</code>
+plugin, which is automatically included to all projects using <code>PlayScala</code> plugin.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">lazy</span> <span class="hljs-keyword">val</span> server = (project in file(<span class="hljs-string">&quot;server&quot;</span>))
+  .settings(
+    name := <span class="hljs-string">&quot;server&quot;</span>,
+    version := <span class="hljs-type">Settings</span>.version,
+    scalaVersion := <span class="hljs-type">Settings</span>.versions.scala,
+    scalacOptions ++= <span class="hljs-type">Settings</span>.scalacOptions,
+    libraryDependencies ++= <span class="hljs-type">Settings</span>.jvmDependencies.value,
+    commands += <span class="hljs-type">ReleaseCmd</span>,
+    <span class="hljs-comment">// connect to the client project</span>
+    scalaJSProjects := clients,
+    pipelineStages := <span class="hljs-type">Seq</span>(scalaJSProd),
+    <span class="hljs-comment">// compress CSS</span>
+    <span class="hljs-type">LessKeys</span>.compress in <span class="hljs-type">Assets</span> := <span class="hljs-literal">true</span>
+  )
+  .enablePlugins(<span class="hljs-type">PlayScala</span>)
+  .disablePlugins(<span class="hljs-type">PlayLayoutPlugin</span>) <span class="hljs-comment">// use the standard directory layout instead of Play&apos;s custom</span>
+  .aggregate(clients.map(projectToRef): _*)
+  .dependsOn(sharedJVM)
+</code></pre>
+<p>As with the client project, the first few settings are just normal SBT settings, so let&apos;s focus on the more interesting ones.</p>
+<pre><code class="lang-scala">    commands += <span class="hljs-type">ReleaseCmd</span>,
+</code></pre>
+<p>We define a new SBT command <code>release</code> to run a sequence of commands to produce a <a href="production-build.html">distribution package</a>.</p>
+<pre><code class="lang-scala">    <span class="hljs-comment">// connect to the client project</span>
+    scalaJSProjects := clients,
+    pipelineStages := <span class="hljs-type">Seq</span>(scalaJSProd),
+</code></pre>
+<p>Let the plugin know where our client project is and enable Scala.js processing in the pipeline.</p>
+<pre><code class="lang-scala">    <span class="hljs-comment">// compress CSS</span>
+    <span class="hljs-type">LessKeys</span>.compress in <span class="hljs-type">Assets</span> := <span class="hljs-literal">true</span>,
+</code></pre>
+<p>This instructs the <code>sbt-less</code> plugin to minify the produced CSS.</p>
+<pre><code class="lang-scala">  .enablePlugins(<span class="hljs-type">PlayScala</span>)
+  .disablePlugins(<span class="hljs-type">PlayLayoutPlugin</span>) <span class="hljs-comment">// use the standard directory layout instead of Play&apos;s custom</span>
+</code></pre>
+<p>We use Play, but not its default layout. Instead we prefer the normal SBT layout with <code>src/main/scala</code> structure.</p>
+<pre><code class="lang-scala">  .aggregate(clients.map(projectToRef): _*)
+  .dependsOn(sharedJVM)
+</code></pre>
+<p>Server aggregates the client and also depends on the <code>shared</code> project to get access to shared code and resources.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="logging.html" class="navigation navigation-prev " aria-label="Previous page: Logging">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="using-resources-from-webjars.html" class="navigation navigation-next " aria-label="Next page: Using resources from WebJars">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"SBT build definition","level":"1.7","depth":1,"next":{"title":"Using resources from WebJars","level":"1.7.1","depth":2,"path":"using-resources-from-webjars.md","ref":"using-resources-from-webjars.md","articles":[]},"previous":{"title":"Logging","level":"1.6","depth":1,"path":"logging.md","ref":"logging.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"jp","gitbook":"*"},"file":{"path":"sbt-build-definition.md","mtime":"2016-06-20T07:44:08.076Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"jp"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

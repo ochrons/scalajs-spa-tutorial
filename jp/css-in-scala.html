@@ -1,0 +1,590 @@
+
+<!DOCTYPE HTML>
+<html lang="jp" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>CSS in Scala · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="integrating-javascript-components.html" />
+    
+    
+    <link rel="prev" href="dashboard.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="application-structure.html">
+            
+                <a href="application-structure.html">
+            
+                    
+                    Application structure
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="the-client.html">
+            
+                <a href="the-client.html">
+            
+                    
+                    The Client
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="main-menu.html">
+            
+                <a href="main-menu.html">
+            
+                    
+                    Main menu
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="dashboard.html">
+            
+                <a href="dashboard.html">
+            
+                    
+                    Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.1.4" data-path="css-in-scala.html">
+            
+                <a href="css-in-scala.html">
+            
+                    
+                    CSS in Scala
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="integrating-javascript-components.html">
+            
+                <a href="integrating-javascript-components.html">
+            
+                    
+                    Integrating JavaScript components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.6" data-path="todo-module-and-data-flow.html">
+            
+                <a href="todo-module-and-data-flow.html">
+            
+                    
+                    Todo module and data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.7" data-path="autowire-and-boopickle.html">
+            
+                <a href="autowire-and-boopickle.html">
+            
+                    
+                    Autowire and BooPickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="server-side.html">
+            
+                <a href="server-side.html">
+            
+                    
+                    Server side
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="testing.html">
+            
+                <a href="testing.html">
+            
+                    
+                    Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="debugging.html">
+            
+                <a href="debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="logging.html">
+            
+                <a href="logging.html">
+            
+                    
+                    Logging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="sbt-build-definition.html">
+            
+                <a href="sbt-build-definition.html">
+            
+                    
+                    SBT build definition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="using-resources-from-webjars.html">
+            
+                <a href="using-resources-from-webjars.html">
+            
+                    
+                    Using resources from WebJars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="production-build.html">
+            
+                <a href="production-build.html">
+            
+                    
+                    Production build
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="faq.html">
+            
+                <a href="faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="what-next.html">
+            
+                <a href="what-next.html">
+            
+                    
+                    What next?
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >CSS in Scala</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="css-in-scala">CSS in Scala</h1>
+<p>Now that it&apos;s quite common to generate HTML in code (using Scalatags for example), why not do the same for style sheets! There are certain benefits to
+creating style sheets in code instead of using external CSS files. One clear benefit is to get rid of global class names that quite easily clash with
+each other if you&apos;re not careful. Additionally you get things like type safety, easy refactoring and IDE completion support.</p>
+<p>At this writing there are at least two separate libraries for producing CSS in Scala. One is embedded with <a href="https://github.com/lihaoyi/scalatags" target="_blank">Scalatags</a> and
+the other one is a separate library called <a href="https://github.com/japgolly/scalacss" target="_blank">ScalaCSS</a>. They take a bit different approaches, so you might want to check both
+out and see which one fits your application better. In this tutorial we are using ScalaCSS, as it integrates nicely with scalajs-react.</p>
+<h2 id="defining-global-styles">Defining global styles</h2>
+<p>In our tutorial we are relying on Bootstrap to provide most of the CSS, so the global style definitions are really simple. The original CSS basically
+contains only one definition.</p>
+<pre><code class="lang-css"><span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">padding-top</span>: <span class="hljs-number">50px</span>;
+}
+</code></pre>
+<p>To express this in ScalaCSS we will use the <code>StyleSheet.Inline</code> class.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">GlobalStyles</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StyleSheet</span>.<span class="hljs-title">Inline</span> </span>{
+  <span class="hljs-keyword">import</span> dsl._
+
+  style(unsafeRoot(<span class="hljs-string">&quot;body&quot;</span>)(
+    paddingTop(<span class="hljs-number">50.</span>px))
+  )
+}
+</code></pre>
+<p>For more extensive examples, please refer to <a href="https://japgolly.github.io/scalacss/book" target="_blank">ScalaCSS documentation</a>.</p>
+<p>Each call to <code>style</code> registers a new style in the internal registry. To actually generate the CSS we need in the HTML page, we have to call</p>
+<pre><code class="lang-scala"><span class="hljs-type">GlobalStyles</span>.addToDocument()
+</code></pre>
+<p>in our application initialization code. Note that this is <a href="https://japgolly.github.io/scalacss/book/ext/react.html" target="_blank">specific initialization to scalajs-react</a>
+and there are other methods for creating and inserting CSS in other situations.</p>
+<h2 id="wrapping-external-css">Wrapping external CSS</h2>
+<p>As most of the styles we use are defined in Bootstrap CSS, we want to access those in a more convenient manner. Especially if at some point we would want
+to switch from Bootstrap to, say, <a href="http://materializecss.com/" target="_blank">MaterializeCSS</a>, it would be really nice if all the CSS class names would occur only in a single location.</p>
+<p>In Bootstrap it&apos;s very common to define a style using a base class and a contextual class, for example:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-info&quot;</span>&gt;</span>Info button<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre>
+<p>So we&apos;ll start by defining the contextual options and some helper functions to create the style wrappers.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BootstrapStyles</span>(<span class="hljs-params">implicit r: mutable.<span class="hljs-type">Register</span></span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">StyleSheet</span>.<span class="hljs-title">Inline</span>(<span class="hljs-params"></span>)(<span class="hljs-params">r</span>) </span>{
+
+  <span class="hljs-keyword">import</span> dsl._
+
+  <span class="hljs-keyword">val</span> csDomain = <span class="hljs-type">Domain</span>.ofValues(<span class="hljs-keyword">default</span>, primary, success, info, warning, danger)
+  <span class="hljs-keyword">val</span> contextDomain = <span class="hljs-type">Domain</span>.ofValues(success, info, warning, danger)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">commonStyle</span></span>[<span class="hljs-type">A</span>](domain: <span class="hljs-type">Domain</span>[<span class="hljs-type">A</span>], base: <span class="hljs-type">String</span>) = styleF(domain)(opt =&gt;
+    styleS(addClassNames(base, <span class="hljs-string">s&quot;<span class="hljs-subst">$base</span>-<span class="hljs-subst">$opt</span>&quot;</span>))
+  )
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">styleWrap</span></span>(classNames: <span class="hljs-type">String</span>*) = style(addClassNames(classNames: _*))
+</code></pre>
+<p>The values <code>default</code>, <code>primary</code> etc. come from an enumeration defined in the <code>Bootstrap.scala</code> component. The concept of <em>domain</em> comes from ScalaCSS 
+<a href="http://japgolly.github.io/scalacss/book/features/stylef.html" target="_blank">functional styles</a> and is a way of listing all possible values for a style that are generated
+before being used.</p>
+<p><code>commonStyle</code> is a <em>functional style</em>, which takes as an input one value from the defined domain and returns the appropriate style. We can define all
+possible Bootstrap <code>button</code> styles with simply</p>
+<pre><code class="lang-scala">  <span class="hljs-keyword">val</span> buttonOpt = commonStyle(csDomain, <span class="hljs-string">&quot;btn&quot;</span>)
+  <span class="hljs-keyword">val</span> button = buttonOpt(<span class="hljs-keyword">default</span>)
+</code></pre>
+<p>The default button style is defined as <code>button</code> for simple use, but if you&apos;d need an <em>info</em> button a simple call <code>buttonOpt(info)</code> would give you that.</p>
+<p>For more straightforward Bootstrap styles we use the <code>styleWrap</code> function, which simply adds all the provided Bootstrap class names to the style. To make the
+use of all the various Bootstrap styles more clear, we wrap related styles under separate objects.</p>
+<pre><code class="lang-scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">listGroup</span> </span>{
+  <span class="hljs-keyword">val</span> listGroup = styleWrap(<span class="hljs-string">&quot;list-group&quot;</span>)
+  <span class="hljs-keyword">val</span> item = styleWrap(<span class="hljs-string">&quot;list-group-item&quot;</span>)
+  <span class="hljs-keyword">val</span> itemOpt = commonStyle(contextDomain, <span class="hljs-string">&quot;list-group-item&quot;</span>)
+}
+</code></pre>
+<h2 id="using-styles">Using styles</h2>
+<p>To use the defined inline styles in your React components, you need to <code>import scalacss.ScalaCssReact._</code> to get the relevant implicit conversions.
+After that it&apos;s as simple as getting a reference to your stylesheet and using the styles in your tags like below.</p>
+<pre><code class="lang-scala"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bss</span> </span>= <span class="hljs-type">GlobalStyles</span>.bootstrapStyles
+
+<span class="hljs-keyword">val</span> style = bss.listGroup
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">renderItem</span></span>(item: <span class="hljs-type">TodoItem</span>) = {
+  <span class="hljs-comment">// convert priority into Bootstrap style</span>
+  <span class="hljs-keyword">val</span> itemStyle = item.priority <span class="hljs-keyword">match</span> {
+    <span class="hljs-keyword">case</span> <span class="hljs-type">TodoLow</span> =&gt; style.itemOpt(<span class="hljs-type">CommonStyle</span>.info)
+    <span class="hljs-keyword">case</span> <span class="hljs-type">TodoNormal</span> =&gt; style.item
+    <span class="hljs-keyword">case</span> <span class="hljs-type">TodoHigh</span> =&gt; style.itemOpt(<span class="hljs-type">CommonStyle</span>.danger)
+  }
+  &lt;.li(itemStyle)(
+    &lt;.input(^.tpe := <span class="hljs-string">&quot;checkbox&quot;</span>, ^.checked := item.completed, ^.onChange --&gt; <span class="hljs-type">P</span>.stateChange(item.copy(completed = !item.completed))),
+    &lt;.span(<span class="hljs-string">&quot; &quot;</span>),
+    <span class="hljs-keyword">if</span> (item.completed) &lt;.s(item.content) <span class="hljs-keyword">else</span> &lt;.span(item.content),
+    <span class="hljs-type">Button</span>(<span class="hljs-type">Button</span>.<span class="hljs-type">Props</span>(() =&gt; <span class="hljs-type">P</span>.editItem(item), addStyles = <span class="hljs-type">Seq</span>(bss.pullRight, bss.buttonXS)), <span class="hljs-string">&quot;Edit&quot;</span>),
+    <span class="hljs-type">Button</span>(<span class="hljs-type">Button</span>.<span class="hljs-type">Props</span>(() =&gt; <span class="hljs-type">P</span>.deleteItem(item), addStyles = <span class="hljs-type">Seq</span>(bss.pullRight, bss.buttonXS)), <span class="hljs-string">&quot;Delete&quot;</span>)
+  )
+}
+&lt;.ul(style.listGroup)(<span class="hljs-type">P</span>.items map renderItem)
+</code></pre>
+<p>As the Bootstrap class names are &quot;hidden&quot; behind Scala methods, you have full IDE code completion support and there is no chance of mistyping a class name
+without the compiler noticing it. And the output is still identical to what you would expect:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;scalacss-0029 list-group&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;scalacss-0034 list-group-item list-group-item-danger&quot;</span>&gt;</span>
+  .
+  .
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="dashboard.html" class="navigation navigation-prev " aria-label="Previous page: Dashboard">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="integrating-javascript-components.html" class="navigation navigation-next " aria-label="Next page: Integrating JavaScript components">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"CSS in Scala","level":"1.3.1.4","depth":3,"next":{"title":"Integrating JavaScript components","level":"1.3.1.5","depth":3,"path":"integrating-javascript-components.md","ref":"integrating-javascript-components.md","articles":[]},"previous":{"title":"Dashboard","level":"1.3.1.3","depth":3,"path":"dashboard.md","ref":"dashboard.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"jp","gitbook":"*"},"file":{"path":"css-in-scala.md","mtime":"2016-06-20T07:44:08.056Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-04T10:05:58.731Z"},"basePath":".","book":{"language":"jp"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -10,7 +10,7 @@ Scala.jsは、 `dom.extensions.Ajax` (もしくは、scalajs-dom 0.8+におい�
 私が作った、[BooPickle](https://github.com/ochrons/boopickle)ライブラリと組み合わせると、クライアント-サーバ間の通信を容易に行うことができます。
 
 ただし、BooPickleではバイナリでのシリアライズ化フォーマットを用いられます。JSONフォーマットを使いたい場合には、[uPickle](https://github.com/lihaoyi/upickle)を選択肢としてみてください。
-SPAチュートリアルにおいては、当初、シリアライズにuPickleをを用いていたため、リポジトリのヒストリの[ここ](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/js/src/main/scala/spatutorial/client/services/AjaxClient.scala)
+SPAチュートリアルにおいては、当初、シリアライズにuPickleを用いていたため、リポジトリのヒストリの[ここ](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/js/src/main/scala/spatutorial/client/services/AjaxClient.scala)
 と [ここ](https://github.com/ochrons/scalajs-spa-tutorial/blob/628bf9308aaebe7f3d0527007ef604801988ef42/jvm/src/main/scala/spatutorial/server/MainApp.scala)において、uPickleによる参照コードを見ることができます。
 
 クライアント-サーバ間通信の経路をビルドするにあたっては、クライアント側及びサーバ側にそれぞれ単一のオブジェクトを定義することだけが必要とされます。

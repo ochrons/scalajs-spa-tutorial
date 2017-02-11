@@ -1,15 +1,13 @@
-# Main menu
+# メインメニュー
 
-The main menu is just another React component that is given the current location and the router as properties. The contents of the menu is defined
-statically within the class itself, because the referred locations are anyway all known at compile time. For other kinds of menus you'd want to use
-a dynamic system, but static is just fine here.
+メインメニューは、現在の場所とルーターをプロパティとして指定したよくあるReactコンポーネントです。 メニューの内容はクラスの中に静的に定義されます。なぜなら、参照される場所はコンパイル時にすべて知っているからです。 動的なシステムを使いたいメニューもあるでしょうが、このシステムでは静的な定義でうまくいきます。
 
 ```scala
 case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[Option[Int]])
 
 case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
 
-// build the Todo menu item, showing the number of open todos
+// Todoメニュー項目を作成して、未完了のTodo数を表示します
 private def buildTodoMenu(props: Props): ReactNode = {
   val todoCount = props.proxy().getOrElse(0)
   Seq(
@@ -24,21 +22,21 @@ private val menuItems = Seq(
 )
 ```
 
-For each menu item we define a function to generate the label, an icon and the location that was registered in the `routerConfig`. For Dashboard
-the label is simple text, but for Todo we also render the number of open todos, which we get through the `ModelProxy` property.
+各メニュー項目に対して、ラベル、アイコン、および `routerConfig`に登録された場所を生成する関数を定義します。 ダッシュボード用
+ラベルはシンプルなテキストですが、Todoでは `ModelProxy`プロパティを介して取得する未完了のTodo数もレンダリングします。
 
-To render the menu we just loop over the items and create appropriate tags. For links we need to use the `RouterCtl` provided in the properties.
+メニューをレンダリングするには、項目をループして適切なタグを作成するだけです。 リンクについては、プロパティで提供されるRouterCtlを使用する必要があります。
 
 ```scala
 private class Backend(t: BackendScope[Props, _]) {
   def mounted(props: Props) = {
-    // dispatch a message to refresh the todos
+    // Todoをリフレッシュするメッセージをディスパッチする
     Callback.ifTrue(props.proxy.value.isEmpty, props.proxy.dispatch(RefreshTodos))
   }
 
   def render(props: Props) = {
     <.ul(bss.navbar)(
-      // build a list of menu items
+      // メニュー項目のリストを作成する
       for (item <- menuItems) yield {
         <.li(^.key := item.idx, (props.currentLoc == item.location) ?= (^.className := "active"),
           props.router.link(item.location)(item.icon, " ", item.label(props))
@@ -55,5 +53,5 @@ private val component = ReactComponentB[Props]("MainMenu")
   .build
 ```
 
-Ok, we've got the HTML page defined, menu generated and the active component (Dashboard) within the placeholder, what happens next?
+さて、HTMLページを定義し、メニューを生成し、アクティブなコンポーネント（Dashboard）をプレースホルダ内に持っていたら、次は何が起こるでしょうか？
 

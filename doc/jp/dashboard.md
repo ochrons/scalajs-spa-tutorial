@@ -1,37 +1,34 @@
-# Dashboard
+# ダッシュボード
 
-[Dashboard module](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/modules/Dashboard.scala) is really simple 
-in terms of React components as it contains no internal state nor backend functionality. It's basically just a placeholder for two other components 
-`Motd` and `Chart`. The only method is the `render` method which is responsible for rendering the component when it's mounted by React. It also provides 
-fake data for the Chart component, to keep things simple.
+[ダッシュボードモジュール](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/modules/Dashboard.scala)は本当にシンプルです。
+それには内部状態もバックエンド機能も含まれていないため、Reactコンポーネントの面では問題ありません。このモジュールは基本的に`Motd`と`Chart`という2つのコンポーネントのプレースホルダです。
+唯一のメソッドは、コンポーネントがReactによってマウントされたときにコンポーネントをレンダリングする`render`メソッドです。また、このコンポーネントは物事をシンプルに保つためにChartコンポーネントの偽データを提供します。
 
 ```scala
-// create the React component for Dashboard
+// ダッシュボード用Reactコンポーネントの作成
 private val component = ReactComponentB[Props]("Dashboard")
   .render_P { case Props(router, proxy) =>
     <.div(
-      // header, MessageOfTheDay and chart components
+      // header、MessageOfTheDay、chartコンポーネント
       <.h2("Dashboard"),
-      // use connect from ModelProxy to give Motd only partial view to the model
+      // ModelProxyの接続を使用して、Motdにモデルの部分的なビューのみを与える
       proxy.connect(_.motd)(Motd(_)),
       Chart(cp),
-      // create a link to the To Do view
+      // ToDoビューへのリンクを作成する
       <.div(router.link(TodoLoc)("Check your todos!"))
     )
   }.build
 ```
 
-## Message of the day
+## 今日のメッセージ
 
-[Motd component](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Motd.scala) is a simple React
-component that shows a *Message of the day* from the server in a panel. The `Motd` is given the message in properties (wrapped in a `Pot` and a
-`ModelProxy`).
-
+[Motdコンポーネント](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Motd.scala)は*今日のメッセージ*をサーバーから取得し、パネル上に表示するシンプルなReactコンポーネントです。
+`Motd`はプロパティでメッセージを与えられます（`Pot`と`ModelProxy`）。
 ```scala
 val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
   .render_P { proxy =>
     Panel(Panel.Props("Message of the day"),
-      // render messages depending on the state of the Pot
+      // Potの状態に応じてメッセージを表示する
       proxy().renderPending(_ > 500, _ => <.p("Loading...")),
       proxy().renderFailed(ex => <.p("Failed to load")),
       proxy().render(m => <.p(m)),
@@ -39,23 +36,21 @@ val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
     )
   }
   .componentDidMount(scope =>
-    // update only if Motd is empty
+    // Motdが空の場合のみ更新する
     Callback.ifTrue(scope.props.value.isEmpty, scope.props.dispatch(UpdateMotd()))
   )
   .build
 ```
-A React component is defined through a series of function calls. Each of these calls, modifies the type of the component, meaning you cannot call
-`componentDidMount` unless you have gone through `render` first.
+Reactコンポーネントは、一連の関数呼び出しによって定義されます。これらの呼び出しのそれぞれは、コンポーネントの型を変更します。つまり、最初に`render`を行わないと、`componentDidMount`を呼び出すことはできません
 
-Of course to actually get the message, we need to request it from the server. To do this automatically when the component is mounted, we hook a call to
-`dispatch` in the `componentDidMount` method, but only if there is no value already for the message.
+もちろん、実際にメッセージを取得するには、サーバーにリクエストを送る必要があります。コンポーネントがマウントされたときにこれを自動的に行うには、`componentDidMount`メソッド内で`dispatch`にフックします。ただし、すでにメッセージに値がない場合に限ります。
 
-The use of `ModelProxy` and `Pot` will be covered in detail [later](todo-module-and-data-flow.md).
+`ModelProxy`と`Pot`の使用については[後で](todo-module-and-data-flow.md)詳しく説明します.
 
-## Links to other routes
+## 他のルートへのリンク
 
-Sometimes you need to create a link that takes the user to another module behind a route. To create these links in a type-safe manner,
-the tutorial passes an instance of `RouterCtl` to components.
+ルートの背後にある別のモジュールにユーザーを誘導するリンクを作成する必要があることがあります。これらのリンクを型安全に作成するために、
+チュートリアルでは`RouterCtl`のインスタンスをコンポーネントに渡します。
 
 ```scala
 ctl.link(TodoLoc)("Check your todos!")

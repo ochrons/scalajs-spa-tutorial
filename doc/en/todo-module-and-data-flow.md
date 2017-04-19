@@ -143,7 +143,7 @@ override def handle = {
 
 We first create an _effect_ from the async call we want to perform and then pass that on to the `PotAction.handler` to be automatically managed.
 
-For more information on Diode, please refer to its [documentation](https://ochrons.github.io/diode).
+For more information on Diode, please refer to its [documentation](https://diode.suzaku.io/).
 
 ## Editing todos
 

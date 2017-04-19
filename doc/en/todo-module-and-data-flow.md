@@ -16,7 +16,7 @@ even in a simple tutorial application like this. Below you can see a diagram of 
 ![Diode architecture](https://github.com/ochrons/diode/raw/master/doc/images/architecture.png)
 
 It consists of a *Circuit* that takes in *Actions*, and dispatches them to action handlers, and then informs *Views* to update themselves with the new data. See
-the [Diode documentation](https://ochrons.github.io/diode) for more information.
+the [Diode documentation](https://diode.suzaku.io/) for more information.
 
 ## Modifying a Todo state 
 

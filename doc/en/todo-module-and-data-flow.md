@@ -112,7 +112,7 @@ Because `Dashboard` received only the `motd` part of the model, we pass it as su
 You may have noticed that instead of `String` the Motd component receives a `Pot[String]`. `Pot` is a helpful construct to handle data that can have multiple
 states. It's quite much like Scala `Option` but more than two states. 
 
-![Pot states](http://ochrons.github.io/diode/images/pot-states.png)
+![Pot states](http://diode.suzaku.io/images/pot-states.png)
 
 Viewing potential data can be cumbersome, so Diode includes a handy implicit class to extend a `Pot` into a `PotReact`. This allows you to call specific `render`
 methods that only render when the `Pot` is in a specific state, making it easy to show a "Loading" or "Error" message to the user.

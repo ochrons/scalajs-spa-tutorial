@@ -1,12 +1,12 @@
 package spatutorial.client.components
 
-import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, ReactComponentB}
+import japgolly.scalajs.react.vdom.html_<^._
+import japgolly.scalajs.react.{Callback, ScalaComponent}
 import org.scalajs.dom.raw.HTMLCanvasElement
 
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSName
+import scala.scalajs.js.annotation.JSGlobal
 
 @js.native
 trait ChartDataset extends js.Object {
@@ -75,7 +75,7 @@ object ChartConfiguration {
 
 // define a class to access the Chart.js component
 @js.native
-@JSName("Chart")
+@JSGlobal("Chart")
 class JSChart(ctx: js.Dynamic, config: ChartConfiguration) extends js.Object
 
 object Chart {
@@ -89,14 +89,13 @@ object Chart {
 
   case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 500, height: Int = 300)
 
-  val Chart = ReactComponentB[ChartProps]("Chart")
+  val Chart = ScalaComponent.builder[ChartProps]("Chart")
     .render_P(p =>
-      <.canvas("width".reactAttr := p.width, "height".reactAttr := p.height)
+      <.canvas(VdomAttr("width") := p.width, VdomAttr("height") := p.height)
     )
-    .domType[HTMLCanvasElement]
     .componentDidMount(scope => Callback {
       // access context of the canvas
-      val ctx = scope.getDOMNode().getContext("2d")
+      val ctx = scope.getDOMNode.asInstanceOf[HTMLCanvasElement].getContext("2d")
       // create the actual chart using the 3rd party component
       scope.props.style match {
         case LineChart => new JSChart(ctx, ChartConfiguration("line", scope.props.data))

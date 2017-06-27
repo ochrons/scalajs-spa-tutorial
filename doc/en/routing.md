@@ -34,7 +34,7 @@ The router provides the base HTML code (layout) and integrates a `MainMenu` comp
 uses Bootstrap CSS to provide a nice looking layout, but you can use whatever CSS framework you wish just by changing the CSS class definitions.
 
 ```scala
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 val todoCountWrapper = SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)
 def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
   <.div(
@@ -55,7 +55,7 @@ def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
 ```
 
 See how the code looks just like HTML, except it's type safe and the IDE provides auto-completion! If you insist on having even closer resemblance to HTML,
-you can replace the `prefix_<^` with `all` giving you simple `div` and `className` tag names. Be warned, however, that this may lead to nasty surprises
+you can replace the `html_<^` with `all` giving you simple `div` and `className` tag names. Be warned, however, that this may lead to nasty surprises
 down the road because the HTML namespace contains a lot of short, common tag names like `a` and `id`. The little extra effort from `<.` and `^.` pays
 off in the long run.
 

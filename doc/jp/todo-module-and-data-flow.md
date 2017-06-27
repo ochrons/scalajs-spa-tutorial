@@ -60,7 +60,7 @@ Todos.
 val todoCount = props.proxy().getOrElse(0)
 Seq(
   <.span("Todo "),
-  todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
+  <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount).when(todoCount > 0)
 )
 ```
 
@@ -164,8 +164,8 @@ case class State(item: TodoItem, cancelled: Boolean = true)
 
 Building the component looks a bit complicated, so let's walk through it.
 ```scala
-val component = ReactComponentB[Props]("TodoForm")
-  .initialState_P(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
+val component = ScalaComponent.builder[Props]("TodoForm")
+  .initialStateFromProps(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
   .renderBackend[Backend]
   .build
   

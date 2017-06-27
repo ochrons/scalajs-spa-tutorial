@@ -58,8 +58,8 @@ lazy val client: Project = (project in file("client"))
     // yes, we want to package JS dependencies
     skip in packageJSDependencies := false,
     // use Scala.js provided launcher code to start the client app
-    persistLauncher := true,
-    persistLauncher in Test := false,
+    scalaJSUseMainModuleInitializer := true,
+    scalaJSUseMainModuleInitializer in Test := false,
     // must specify source maps location because we use pure CrossProject
     sourceMapsDirectories += sharedJS.base / "..",
     // use uTest framework for tests
@@ -92,8 +92,8 @@ Make sure you have installed [PhantomJS](http://phantomjs.org/) before running t
 
 ```scala
     // use Scala.js provided launcher code to start the client app
-    persistLauncher := true,
-    persistLauncher in Test := false,
+    scalaJSUseMainModuleInitializer := true,
+    scalaJSUseMainModuleInitializer in Test := false,
 ```
 This setting informs Scala.js plugin to generate a special `launcher.js` file, which is loaded last and invokes your `main` method. Using a launcher keeps
 your HTML template clean, as you don't need to specify the `main` function there.

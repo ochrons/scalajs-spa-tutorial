@@ -24,7 +24,7 @@ val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
 ルータは、基本的なHTMLコード(layout)を提供して、アプリケーションのための`MainMenu`コンポーネントを統合します。このチュートリアルは、Bootstrap CSSを使用して見栄えの良いレイアウトを提供していますが、CSSクラスの定義を変更することで、あなたが使用したいCSSフレームワークは何でも使うことができます。
 
 ```scala
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
   <.div(
     // here we use plain Bootstrap class names as these are specific to the top level layout defined here
@@ -43,4 +43,4 @@ def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
 }
 ```
 
-型安全性、IDEが自動補完を提供するという点を除いて、コードがHTMLとどれだけ似ているか確認してください！HTMLともっと似ていると主張する場合、 `prefix_<^`を`all`に置き換えるだけの簡単`div`と`className`タグ名を与えることができます。ただし、HTMLの名前空間には`a`や`id`のような短い共通タグ名が多く含まれているので、不快な驚きとなるかもしれないので気をつけてください。`<.`と`^.`の少しの努力は、長期的に補償します。
+型安全性、IDEが自動補完を提供するという点を除いて、コードがHTMLとどれだけ似ているか確認してください！HTMLともっと似ていると主張する場合、 `html_<^`を`all`に置き換えるだけの簡単`div`と`className`タグ名を与えることができます。ただし、HTMLの名前空間には`a`や`id`のような短い共通タグ名が多く含まれているので、不快な驚きとなるかもしれないので気をつけてください。`<.`と`^.`の少しの努力は、長期的に補償します。

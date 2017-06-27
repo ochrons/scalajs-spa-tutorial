@@ -37,7 +37,7 @@ object SPAMain extends JSApp {
     // create the router
     val router = Router(BaseUrl.until_#, routerConfig)
     // tell React to render the router in the document body
-    React.render(router(), dom.document.getElementById("root"))
+    router().renderIntoDOM(dom.document.getElementById("root"))
   }
 }
 ```

@@ -108,7 +108,7 @@ def renderItem(item: TodoItem) = {
     Button(Button.Props(() => P.deleteItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Delete")
   )
 }
-<.ul(style.listGroup)(P.items map renderItem)
+<.ul(style.listGroup)(P.items toTagMod renderItem)
 ```
 
 부트 스트랩 클래스 이름이 스칼라 메서드 뒤에 "숨겨져"있기 때문에 전체 IDE 코드 완성을 지원하며 클래스 이름을 잘못 입력 할 가능성이 없습니다.

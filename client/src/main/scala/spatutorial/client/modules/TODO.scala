@@ -4,7 +4,7 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.components._
 import spatutorial.client.logger._
@@ -50,11 +50,11 @@ object Todo {
         // if the dialog is open, add it to the panel
         if (s.showTodoForm) TodoForm(TodoForm.Props(s.selectedItem, todoEdited))
         else // otherwise add an empty placeholder
-          Seq.empty[ReactElement])
+          VdomArray.empty())
   }
 
   // create the React component for To Do management
-  val component = ReactComponentB[Props]("TODO")
+  val component = ScalaComponent.builder[Props]("TODO")
     .initialState(State()) // initial state from TodoStore
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
@@ -82,13 +82,13 @@ object TodoForm {
       // call parent handler with the new item and whether form was OK or cancelled
       props.submitHandler(state.item, state.cancelled)
 
-    def updateDescription(e: ReactEventI) = {
+    def updateDescription(e: ReactEventFromInput) = {
       val text = e.target.value
       // update TodoItem content
       t.modState(s => s.copy(item = s.item.copy(content = text)))
     }
 
-    def updatePriority(e: ReactEventI) = {
+    def updatePriority(e: ReactEventFromInput) = {
       // update TodoItem priority
       val newPri = e.currentTarget.value match {
         case p if p == TodoHigh.toString => TodoHigh
@@ -125,8 +125,8 @@ object TodoForm {
     }
   }
 
-  val component = ReactComponentB[Props]("TodoForm")
-    .initialState_P(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, completed = false))))
+  val component = ScalaComponent.builder[Props]("TodoForm")
+    .initialStateFromProps(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, completed = false))))
     .renderBackend[Backend]
     .build
 

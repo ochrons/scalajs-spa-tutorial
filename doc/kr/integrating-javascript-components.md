@@ -21,12 +21,12 @@ object Button {
 
   case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
-  val component = ReactComponentB[Props]("Button")
+  val component = ScalaComponent.builder[Props]("Button")
     .renderPC((_, props, children) =>
-      <.button(bss.buttonOpt(props.style), props.addStyles, ^.tpe := "button", ^.onClick --> props.onClick, children)
+      <.button(bss.buttonOpt(props.style), props.addStyles.toTagMod, ^.tpe := "button", ^.onClick --> props.onClick, children)
     ).build
 
-  def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+  def apply(props: Props, children: ReactNode*) = component(props)(children: _*)
   def apply() = component
 }
 ```
@@ -39,7 +39,7 @@ object Button {
 object Panel {
   case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
-  val component = ReactComponentB[Props]("Panel")
+  val component = ScalaComponent.builder[Props]("Panel")
     .renderPC((_, p, c) =>
       <.div(bss.panelOpt(p.style),
         <.div(bss.panelHeading, p.heading),
@@ -47,7 +47,7 @@ object Panel {
       )
     ).build
 
-  def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+  def apply(props: Props, children: ReactNode*) = component(props)(children: _*)
   def apply() = component
 }
 ```
@@ -60,7 +60,7 @@ object Panel {
 
 ```scala
 object Icon {
-  type Icon = ReactTag
+  type Icon = VdomNode
   def apply(name: String): Icon = <.i(^.className := s"fa fa-$name")
 
   def adjust = apply("adjust")
@@ -89,7 +89,7 @@ Scala.js에서 동일한 작업을 수행하기 위해 다음과 같이 간단�
 
 ```scala
 @js.native
-@JSName("Chart")
+@JSGlobal("Chart")
 class JSChart(ctx: js.Dynamic, config: ChartConfiguration) extends js.Object
 
 @js.native
@@ -100,17 +100,16 @@ trait ChartConfiguration extends js.Object {
 }
 ```
 
-차트를 실제로 인스턴스화하려면 캔버스 요소에 액세스해야하고 React를 사용하면 가상 DOM을 작성하고 장면 뒤의 실제 DOM을 업데이트하므로 조금 문제가 있습니다. 그러므로`render` 함수 호출시 캔버스 요소는 존재하지 않습니다. 이 문제를 해결하려면 실제 DOM이 업데이트 된 후에 호출되는 'componentDidMount` 함수로 차트를 만들어야합니다. 이 함수는`getDOMNode ()`를 통해 실제 DOM 노드에 접근 할 수있게 해주는`scope` 매개 변수와 함께 호출됩니다. 차트는`Chart`의 새로운 인스턴스를 생성하고 적절한 차트 함수를 호출함으로써 만들어집니다.
+차트를 실제로 인스턴스화하려면 캔버스 요소에 액세스해야하고 React를 사용하면 가상 DOM을 작성하고 장면 뒤의 실제 DOM을 업데이트하므로 조금 문제가 있습니다. 그러므로`render` 함수 호출시 캔버스 요소는 존재하지 않습니다. 이 문제를 해결하려면 실제 DOM이 업데이트 된 후에 호출되는 'componentDidMount` 함수로 차트를 만들어야합니다. 이 함수는`getDOMNode`를 통해 실제 DOM 노드에 접근 할 수있게 해주는`scope` 매개 변수와 함께 호출됩니다. 차트는`Chart`의 새로운 인스턴스를 생성하고 적절한 차트 함수를 호출함으로써 만들어집니다.
 
 ```scala
-val Chart = ReactComponentB[ChartProps]("Chart")
+val Chart = ScalaComponent.builder[ChartProps]("Chart")
   .render_P(p =>
-    <.canvas(^.width := s"${p.width}px", ^.height := s"${p.height}px")
+    <.canvas(VdomAttr("width") := p.width, VdomAttr("height") := p.height)
   )
-  .domType[HTMLCanvasElement]
   .componentDidMount(scope => Callback {
     // access context of the canvas
-    val ctx = scope.getDOMNode().getContext("2d")
+    val ctx = scope.getDOMNode.asInstanceOf[HTMLCanvasElement].getContext("2d")
     // create the actual chart using the 3rd party component
     scope.props.style match {
       case LineChart => new JSChart(ctx, ChartConfiguration("line", scope.props.data))
@@ -178,7 +177,7 @@ Bootstrap Modal을 통합하기 전에 먼저 jQuery 컴포넌트를 통합하�
 jQuery는 셀렉터 나 엘리먼트로 "호출"함으로써 작동한다. 이 자습서에서는 항상 직접 DOM 요소를 사용하므로 Facade에는 해당 옵션 만 포함됩니다. 예를 들어 이벤트 리스너를 요소에 연결하려면, 당신은 다음처럼 
 
 ```scala
-jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+jQuery(scope.getDOMNode).on("hidden.bs.modal", null, null, scope.backend.hidden _)
 ```
 
 jQuery에는 플러그인이 jQuery 객체에 새로운 기능을 추가 할 수있는 확장 메커니즘이 있습니다. 예를 들어 부트 스트랩 모달은`모달`함수를 추가합니다. Scala.js에서 이러한 확장을 정의하기 위해이 확장을위한 특성과 그것을위한 암시 적 변환 (실제로 타입 캐스트 만)을 만듭니다.
@@ -201,10 +200,9 @@ jQuery 통합으로 무장 한 이제 Modal 자체를 다룰 수 있습니다. �
 
 ```scala
 class Backend(t: BackendScope[Props, Unit]) {
-  def hide = Callback {
+  def hide =
     // instruct Bootstrap to hide the modal
-    jQuery(t.getDOMNode()).modal("hide")
-  }
+    t.getDOMNode.map(jQuery(_).modal("hide")).void
 ```
 
 그러나 대화 상자 자체에는 대화 상자를 실제로 닫아야하는 컨트롤이 포함되어 있으므로이 기능을 속성을 통해 부모 구성 요소에 노출해야합니다.
@@ -212,7 +210,7 @@ class Backend(t: BackendScope[Props, Unit]) {
 ```scala
 // header and footer are functions, so that they can get access to the 
 // hide() function for their buttons
-case class Props(header: Callback => ReactNode, footer: Callback => ReactNode, 
+case class Props(header: Callback => VdomNode, footer: Callback => VdomNode,
                  closed: Callback, backdrop: Boolean = true,
                  keyboard: Boolean = true)
 ```
@@ -226,7 +224,7 @@ def hidden(e: JQueryEventObject): js.Any = {
 }
 ...
 // register event listener to be notified when the modal is closed
-jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+jQuery(scope.getDOMNode).on("hidden.bs.modal", null, null, scope.backend.hidden _)
 ```
 
 생성 된 대화 상자를 보여주기 위해 우리는 다시`componentDidMount`의 jQuery를 통해`modal ()`을 호출합니다.
@@ -234,6 +232,6 @@ jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidde
 .componentDidMount(scope => Callback {
   val P = scope.props
   // instruct Bootstrap to show the modal
-  jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
+  jQuery(scope.getDOMNode).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
 ```
 

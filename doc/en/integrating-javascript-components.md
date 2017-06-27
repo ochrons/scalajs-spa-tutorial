@@ -28,12 +28,12 @@ object Button {
 
   case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
-  val component = ReactComponentB[Props]("Button")
+  val component = ScalaComponent.builder[Props]("Button")
     .renderPC((_, props, children) =>
-      <.button(bss.buttonOpt(props.style), props.addStyles, ^.tpe := "button", ^.onClick --> props.onClick, children)
+      <.button(bss.buttonOpt(props.style), props.addStyles.toTagMod, ^.tpe := "button", ^.onClick --> props.onClick, children)
     ).build
 
-  def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+  def apply(props: Props, children: ReactNode*) = component(props)(children: _*)
   def apply() = component
 }
 ```
@@ -48,7 +48,7 @@ Defining a Bootstrap Panel is about as simple.
 object Panel {
   case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
-  val component = ReactComponentB[Props]("Panel")
+  val component = ScalaComponent.builder[Props]("Panel")
     .renderPC((_, p, c) =>
       <.div(bss.panelOpt(p.style),
         <.div(bss.panelHeading, p.heading),
@@ -56,7 +56,7 @@ object Panel {
       )
     ).build
 
-  def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+  def apply(props: Props, children: ReactNode*) = component(props)(children: _*)
   def apply() = component
 }
 ```
@@ -70,7 +70,7 @@ Custom fonts are a great way to generate scalable icons that look good on all di
 
 ```scala
 object Icon {
-  type Icon = ReactTag
+  type Icon = VdomNode
   def apply(name: String): Icon = <.i(^.className := s"fa fa-$name")
 
   def adjust = apply("adjust")
@@ -104,7 +104,7 @@ To do the same in Scala.js we define a simple *facade* as follows
 
 ```scala
 @js.native
-@JSName("Chart")
+@JSGlobal("Chart")
 class JSChart(ctx: js.Dynamic, config: ChartConfiguration) extends js.Object
 
 @js.native
@@ -118,18 +118,17 @@ trait ChartConfiguration extends js.Object {
 To actually instantiate the chart, we need access to the canvas element and with React this is a bit problematic since it builds a virtual-DOM and
 updates the real DOM behind the scene. Therefore the canvas element does not exist at the time of `render` function call. To work around this problem
 we need to build the chart in the `componentDidMount` function, which is called after the real DOM has been updated. This function is called with
-a `scope` parameter that gives us access to the actual DOM node through `getDOMNode()`. The chart is built by creating a new instance of `Chart`
+a `scope` parameter that gives us access to the actual DOM node through `getDOMNode`. The chart is built by creating a new instance of `Chart`
 and calling the appropriate chart function.
 
 ```scala
-val Chart = ReactComponentB[ChartProps]("Chart")
+val Chart = ScalaComponent.builder[ChartProps]("Chart")
   .render_P(p =>
-    <.canvas(^.width := s"${p.width}px", ^.height := s"${p.height}px")
+    <.canvas(VdomAttr("width") := p.width, VdomAttr("height") := p.height)
   )
-  .domType[HTMLCanvasElement]
   .componentDidMount(scope => Callback {
     // access context of the canvas
-    val ctx = scope.getDOMNode().getContext("2d")
+    val ctx = scope.getDOMNode.asInstanceOf[HTMLCanvasElement].getContext("2d")
     // create the actual chart using the 3rd party component
     scope.props.style match {
       case LineChart => new JSChart(ctx, ChartConfiguration("line", scope.props.data))
@@ -212,7 +211,7 @@ jQuery works by "calling" it with a selector or an element. In this tutorial we 
 For example to attach an event listener to an element, you would call
 
 ```scala
-jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+jQuery(scope.getDOMNode).on("hidden.bs.modal", null, null, scope.backend.hidden _)
 ```
 
 jQuery has an extension mechanism where plugins can add new functions to the jQuery object. For example Bootstrap Modal adds a `modal` function. To define such
@@ -238,10 +237,9 @@ In the `Backend` of the `Modal` we define a `hide()` function to do just that.
 
 ```scala
 class Backend(t: BackendScope[Props, Unit]) {
-  def hide = Callback {
+  def hide =
     // instruct Bootstrap to hide the modal
-    jQuery(t.getDOMNode()).modal("hide")
-  }
+    t.getDOMNode.map(jQuery(_).modal("hide")).void
 ```
 
 However, because the dialog box itself contains controls that need to actually close the dialog, we need to expose this functionality to the parent
@@ -250,7 +248,7 @@ component via properties.
 ```scala
 // header and footer are functions, so that they can get access to the 
 // hide() function for their buttons
-case class Props(header: Callback => ReactNode, footer: Callback => ReactNode, 
+case class Props(header: Callback => VdomNode, footer: Callback => VdomNode,
                  closed: Callback, backdrop: Boolean = true,
                  keyboard: Boolean = true)
 ```
@@ -265,7 +263,7 @@ def hidden(e: JQueryEventObject): js.Any = {
 }
 ...
 // register event listener to be notified when the modal is closed
-jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+jQuery(scope.getDOMNode).on("hidden.bs.modal", null, null, scope.backend.hidden _)
 ```
 
 To show the dialog box after it has been created, we again call `modal()` via jQuery in `componentDidMount`.
@@ -273,6 +271,6 @@ To show the dialog box after it has been created, we again call `modal()` via jQ
 .componentDidMount(scope => Callback {
   val P = scope.props
   // instruct Bootstrap to show the modal
-  jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
+  jQuery(scope.getDOMNode).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
 ```
 

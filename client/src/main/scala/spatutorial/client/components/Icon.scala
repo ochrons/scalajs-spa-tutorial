@@ -1,13 +1,12 @@
 package spatutorial.client.components
 
-import japgolly.scalajs.react.ReactNode
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 
 /**
  * Provides type-safe access to Font Awesome icons
  */
 object Icon {
-  type Icon = ReactNode
+  type Icon = VdomNode
   def apply(name: String): Icon = <.i(^.className := s"fa fa-$name")
 
   def adjust = apply("adjust")

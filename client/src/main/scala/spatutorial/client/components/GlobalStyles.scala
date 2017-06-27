@@ -1,6 +1,6 @@
 package spatutorial.client.components
 
-import scalacss.Defaults._
+import spatutorial.client.CssSettings._
 
 object GlobalStyles extends StyleSheet.Inline {
   import dsl._

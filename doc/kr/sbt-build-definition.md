@@ -54,8 +54,8 @@ lazy val client: Project = (project in file("client"))
     // yes, we want to package JS dependencies
     skip in packageJSDependencies := false,
     // use Scala.js provided launcher code to start the client app
-    persistLauncher := true,
-    persistLauncher in Test := false,
+    scalaJSUseMainModuleInitializer := true,
+    scalaJSUseMainModuleInitializer in Test := false,
     // must specify source maps location because we use pure CrossProject
     sourceMapsDirectories += sharedJS.base / "..",
     // use uTest framework for tests
@@ -86,8 +86,8 @@ Eliding은 프로덕트 빌드에서 필요하지 않은 코드 (예 : 디버그
 
 ```scala
     // use Scala.js provided launcher code to start the client app
-    persistLauncher := true,
-    persistLauncher in Test := false,
+    scalaJSUseMainModuleInitializer := true,
+    scalaJSUseMainModuleInitializer in Test := false,
 ```
 이 설정은 특별한`launcher.js` 파일을 생성하도록 Scala.js 플러그인에게 알려주고 마지막에로드되고`main` 메소드를 호출합니다. 런처를 사용하면 HTML 템플릿을 깨끗하게 유지할 수 있습니다. 여기에서`main` 함수를 지정할 필요가 없습니다.
 

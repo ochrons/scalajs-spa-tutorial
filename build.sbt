@@ -34,8 +34,8 @@ lazy val client: Project = (project in file("client"))
     // yes, we want to package JS dependencies
     skip in packageJSDependencies := false,
     // use Scala.js provided launcher code to start the client app
-    persistLauncher := true,
-    persistLauncher in Test := false,
+    scalaJSUseMainModuleInitializer := true,
+    scalaJSUseMainModuleInitializer in Test := false,
     // use uTest framework for tests
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
@@ -55,7 +55,7 @@ lazy val server = (project in file("server"))
     libraryDependencies ++= Settings.jvmDependencies.value,
     commands += ReleaseCmd,
     // triggers scalaJSPipeline when using compile or continuous compilation
-    compile in Compile <<= (compile in Compile) dependsOn scalaJSPipeline,
+    compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
     // connect to the client project
     scalaJSProjects := clients,
     pipelineStages in Assets := Seq(scalaJSPipeline),

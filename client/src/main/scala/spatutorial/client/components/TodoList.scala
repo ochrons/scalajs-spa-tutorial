@@ -1,7 +1,7 @@
 package spatutorial.client.components
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 import spatutorial.client.components.Bootstrap.{CommonStyle, Button}
 import spatutorial.shared._
 import scalacss.ScalaCssReact._
@@ -17,7 +17,7 @@ object TodoList {
     deleteItem: TodoItem => Callback
   )
 
-  private val TodoList = ReactComponentB[TodoListProps]("TodoList")
+  private val TodoList = ScalaComponent.builder[TodoListProps]("TodoList")
     .render_P(p => {
       val style = bss.listGroup
       def renderItem(item: TodoItem) = {
@@ -35,7 +35,7 @@ object TodoList {
           Button(Button.Props(p.deleteItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Delete")
         )
       }
-      <.ul(style.listGroup)(p.items map renderItem)
+      <.ul(style.listGroup)(p.items toTagMod renderItem)
     })
     .build
 

@@ -6,7 +6,7 @@
 
 ```scala
 // ダッシュボード用Reactコンポーネントの作成
-private val component = ReactComponentB[Props]("Dashboard")
+private val component = ScalaComponent.builder[Props]("Dashboard")
   .render_P { case Props(router, proxy) =>
     <.div(
       // header、MessageOfTheDay、chartコンポーネント
@@ -25,7 +25,7 @@ private val component = ReactComponentB[Props]("Dashboard")
 [Motdコンポーネント](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Motd.scala)は*今日のメッセージ*をサーバーから取得し、パネル上に表示するシンプルなReactコンポーネントです。
 `Motd`はプロパティでメッセージを与えられます（`Pot`と`ModelProxy`）。
 ```scala
-val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
+val Motd = ScalaComponent.builder[ModelProxy[Pot[String]]]("Motd")
   .render_P { proxy =>
     Panel(Panel.Props("Message of the day"),
       // Potの状態に応じてメッセージを表示する

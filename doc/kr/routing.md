@@ -26,7 +26,7 @@ val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
 라우터는 기본 HTML 코드 (레이아웃)를 제공하고 애플리케이션을위한`MainMenu` 컴포넌트를 통합합니다. SPA 튜토리얼은 부트 스트랩 CSS를 사용하여보기 좋은 레이아웃을 제공하지만 CSS 클래스 정의를 변경하여 원하는 CSS 프레임 워크를 사용할 수 있습니다.
 
 ```scala
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 val todoCountWrapper = SPACircuit.connect(_.todos.map(_.items.count(!_.completed)).toOption)
 def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
   <.div(
@@ -46,5 +46,5 @@ def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
 }
 ```
 
-타입 안전성을 제외하고 IDE가 자동 완성을 제공한다는 점을 제외하고 코드가 HTML과 어떻게 비슷한지 확인하십시오! HTML과 좀 더 닮았다 고 주장한다면`prefix _ <^ ^ '를`all`으로 대체하면 간단한'div`와`className` 태그 이름을 줄 수 있습니다. 그러나 HTML 네임 스페이스에`a`와`id '와 같은 짧은 공통 태그 이름이 많이 포함되어 있기 때문에 이것은 길을 따라 다니는 불쾌한 놀라움으로 이어질 수 있습니다. `<.`과`^ .`의 약간의 노력은 장기적으로 보상합니다.
+타입 안전성을 제외하고 IDE가 자동 완성을 제공한다는 점을 제외하고 코드가 HTML과 어떻게 비슷한지 확인하십시오! HTML과 좀 더 닮았다 고 주장한다면`html _ <^ ^ '를`all`으로 대체하면 간단한'div`와`className` 태그 이름을 줄 수 있습니다. 그러나 HTML 네임 스페이스에`a`와`id '와 같은 짧은 공통 태그 이름이 많이 포함되어 있기 때문에 이것은 길을 따라 다니는 불쾌한 놀라움으로 이어질 수 있습니다. `<.`과`^ .`의 약간의 노력은 장기적으로 보상합니다.
 

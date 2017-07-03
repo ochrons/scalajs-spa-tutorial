@@ -34,7 +34,7 @@ object SPAMain extends JSApp {
     // 라우터 생성
     val router = Router(BaseUrl.until_#, routerConfig)
     // 리액터에게 문서 body 에 라우터를 렌더하라고 말하기
-    React.render(router(), dom.document.getElementById("root"))
+    router().renderIntoDOM(dom.document.getElementById("root"))
   }
 }
 ```

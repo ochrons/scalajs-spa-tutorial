@@ -1,13 +1,12 @@
 package spatutorial.client.components
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.univeq.UnivEq
+import japgolly.scalajs.react.vdom.html_<^._
 
 import scala.language.implicitConversions
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
-import scalacss.Defaults._
+import spatutorial.client.CssSettings._
 
 /**
  * Common Bootstrap components for scalajs-react
@@ -34,12 +33,12 @@ object Bootstrap {
 
     case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
-    val component = ReactComponentB[Props]("Button")
+    val component = ScalaComponent.builder[Props]("Button")
       .renderPC((_, p, c) =>
-        <.button(bss.buttonOpt(p.style), p.addStyles, ^.tpe := "button", ^.onClick --> p.onClick, c)
+        <.button(bss.buttonOpt(p.style), p.addStyles.toTagMod, ^.tpe := "button", ^.onClick --> p.onClick, c)
       ).build
 
-    def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+    def apply(props: Props, children: VdomNode*) = component(props)(children: _*)
     def apply() = component
   }
 
@@ -47,7 +46,7 @@ object Bootstrap {
 
     case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
-    val component = ReactComponentB[Props]("Panel")
+    val component = ScalaComponent.builder[Props]("Panel")
       .renderPC((_, p, c) =>
         <.div(bss.panelOpt(p.style),
           <.div(bss.panelHeading, p.heading),
@@ -55,21 +54,20 @@ object Bootstrap {
         )
       ).build
 
-    def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+    def apply(props: Props, children: VdomNode*) = component(props)(children: _*)
     def apply() = component
   }
 
   object Modal {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
-    case class Props(header: Callback => ReactNode, footer: Callback => ReactNode, closed: Callback, backdrop: Boolean = true,
+    case class Props(header: Callback => VdomNode, footer: Callback => VdomNode, closed: Callback, backdrop: Boolean = true,
                      keyboard: Boolean = true)
 
     class Backend(t: BackendScope[Props, Unit]) {
-      def hide = Callback {
+      def hide =
         // instruct Bootstrap to hide the modal
-        jQuery(t.getDOMNode()).modal("hide")
-      }
+        t.getDOMNode.map(jQuery(_).modal("hide")).void
 
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {
@@ -91,18 +89,18 @@ object Bootstrap {
       }
     }
 
-    val component = ReactComponentB[Props]("Modal")
-      .renderBackend[Backend]
+    val component = ScalaComponent.builder[Props]("Modal")
+      .renderBackendWithChildren[Backend]
       .componentDidMount(scope => Callback {
         val p = scope.props
         // instruct Bootstrap to show the modal
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> p.backdrop, "keyboard" -> p.keyboard, "show" -> true))
+        jQuery(scope.getDOMNode).modal(js.Dynamic.literal("backdrop" -> p.backdrop, "keyboard" -> p.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
-        jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+        jQuery(scope.getDOMNode).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })
       .build
 
-    def apply(props: Props, children: ReactElement*) = component(props, children: _*)
+    def apply(props: Props, children: VdomElement*) = component(props)(children: _*)
     def apply() = component
   }
 

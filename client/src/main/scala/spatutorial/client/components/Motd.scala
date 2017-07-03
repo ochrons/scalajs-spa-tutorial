@@ -4,7 +4,7 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 import spatutorial.client.components.Bootstrap._
 import spatutorial.client.services.UpdateMotd
 
@@ -14,7 +14,7 @@ import spatutorial.client.services.UpdateMotd
 object Motd {
 
   // create the React component for holding the Message of the Day
-  val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
+  val Motd = ScalaComponent.builder[ModelProxy[Pot[String]]]("Motd")
     .render_P { proxy =>
       Panel(Panel.Props("Message of the day"),
         // render messages depending on the state of the Pot

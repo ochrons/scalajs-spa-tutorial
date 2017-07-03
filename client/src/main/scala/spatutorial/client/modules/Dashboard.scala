@@ -4,7 +4,7 @@ import diode.data.Pot
 import diode.react._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 import spatutorial.client.SPAMain.{Loc, TodoLoc}
 import spatutorial.client.components._
 
@@ -28,9 +28,9 @@ object Dashboard {
   )
 
   // create the React component for Dashboard
-  private val component = ReactComponentB[Props]("Dashboard")
+  private val component = ScalaComponent.builder[Props]("Dashboard")
     // create and store the connect proxy in state for later use
-    .initialState_P(props => State(props.proxy.connect(m => m)))
+    .initialStateFromProps(props => State(props.proxy.connect(m => m)))
     .renderPS { (_, props, state) =>
       <.div(
         // header, MessageOfTheDay and chart components

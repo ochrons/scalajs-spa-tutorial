@@ -60,7 +60,7 @@ Todos.
 val todoCount = props.proxy().getOrElse(0)
 Seq(
   <.span("Todo "),
-  todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
+  <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount).when(todoCount > 0)
 )
 ```
 
@@ -100,7 +100,7 @@ The `ModelProxy` wraps the extracted model and provides access to the dispatcher
 Within `Dashboard` we further connect the `Motd` component to the model using the `connect` method of the `ModelProxy`.
 
 ```scala
-.initialState_P(props => State(props.proxy.connect(m => m)))
+.initialStateFromProps(props => State(props.proxy.connect(m => m)))
 ...
 state.motdWrapper(Motd(_))
 ```
@@ -167,8 +167,8 @@ case class State(item: TodoItem, cancelled: Boolean = true)
 
 Building the component looks a bit complicated, so let's walk through it.
 ```scala
-val component = ReactComponentB[Props]("TodoForm")
-  .initialState_P(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
+val component = ScalaComponent.builder[Props]("TodoForm")
+  .initialStateFromProps(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
   .renderBackend[Backend]
   .build
   

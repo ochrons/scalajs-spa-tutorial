@@ -47,7 +47,7 @@ class TodoHandler[M](modelRW: ModelRW[M, Pot[Todos]]) extends ActionHandler(mode
 val todoCount = props.proxy().getOrElse(0)
 Seq(
   <.span("Todo "),
-  todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
+  <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount).when(todoCount > 0)
 )
 ```
 
@@ -84,7 +84,7 @@ todoWrapper(Todo(_))
 `Dashboard`에서 우리는`ModelProxy`의`connect` 메소드를 사용하여`Motd` 컴포넌트를 모델에 추가로 연결합니다.
 
 ```scala
-.initialState_P(props => State(props.proxy.connect(m => m)))
+.initialStateFromProps(props => State(props.proxy.connect(m => m)))
 ...
 state.motdWrapper(Motd(_))
 ```
@@ -141,8 +141,8 @@ case class State(item: TodoItem, cancelled: Boolean = true)
 
 Building the component looks a bit complicated, so let's walk through it.
 ```scala
-val component = ReactComponentB[Props]("TodoForm")
-  .initialState_P(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
+val component = ScalaComponent.builder[Props]("TodoForm")
+  .initialStateFromProps(p => State(p.item.getOrElse(TodoItem("", 0, "", TodoNormal, false))))
   .renderBackend[Backend]
   .build
   

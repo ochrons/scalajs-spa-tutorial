@@ -4,9 +4,9 @@
 
 ```scala
 // create the React component for Dashboard
-private val component = ReactComponentB[Props]("Dashboard")
+private val component = ScalaComponent.builder[Props]("Dashboard")
   // create and store the connect proxy in state for later use
-  .initialState_P(props => State(props.proxy.connect(m => m)))
+  .initialStateFromProps(props => State(props.proxy.connect(m => m)))
   .renderPS { (_, props, state) =>
     <.div(
       // header, MessageOfTheDay and chart components
@@ -26,7 +26,7 @@ private val component = ReactComponentB[Props]("Dashboard")
 
 [Motd 구성 요소](https://github.com/ochrons/scalajs-spa-tutorial/tree/master/client/src/main/scala/spatutorial/client/components/Motd.scala)는 간단한 React 구성 요소로서 패널의 서버에서 보낸 *오늘의 메시지*  를 보여줍니다. `Motd`는 프로퍼티(`Pot`와`ModelProxy`로 싸인)에서 메시지를받습니다.
 ```scala
-val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
+val Motd = ScalaComponent.builder[ModelProxy[Pot[String]]]("Motd")
   .render_P { proxy =>
     Panel(Panel.Props("Message of the day"),
       // render messages depending on the state of the Pot

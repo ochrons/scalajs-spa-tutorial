@@ -3,7 +3,7 @@ package spatutorial.client.components
 import japgolly.univeq.UnivEq
 import spatutorial.client.components.Bootstrap.CommonStyle
 
-import scalacss.Defaults._
+import spatutorial.client.CssSettings._
 import scalacss.internal.mutable
 import spatutorial.client.components.Bootstrap.CommonStyle._
 

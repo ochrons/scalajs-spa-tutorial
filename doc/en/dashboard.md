@@ -7,9 +7,9 @@ fake data for the Chart component, to keep things simple.
 
 ```scala
 // create the React component for Dashboard
-private val component = ReactComponentB[Props]("Dashboard")
+private val component = ScalaComponent.builder[Props]("Dashboard")
   // create and store the connect proxy in state for later use
-  .initialState_P(props => State(props.proxy.connect(m => m)))
+  .initialStateFromProps(props => State(props.proxy.connect(m => m)))
   .renderPS { (_, props, state) =>
     <.div(
       // header, MessageOfTheDay and chart components
@@ -30,7 +30,7 @@ component that shows a *Message of the day* from the server in a panel. The `Mot
 `ModelProxy`).
 
 ```scala
-val Motd = ReactComponentB[ModelProxy[Pot[String]]]("Motd")
+val Motd = ScalaComponent.builder[ModelProxy[Pot[String]]]("Motd")
   .render_P { proxy =>
     Panel(Panel.Props("Message of the day"),
       // render messages depending on the state of the Pot

@@ -3,7 +3,7 @@ package spatutorial.client.modules
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 import spatutorial.client.SPAMain.{DashboardLoc, Loc, TodoLoc}
 import spatutorial.client.components.Bootstrap.CommonStyle
 import spatutorial.client.components.Icon._
@@ -18,14 +18,14 @@ object MainMenu {
 
   case class Props(router: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[Option[Int]])
 
-  private case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
+  private case class MenuItem(idx: Int, label: (Props) => VdomNode, icon: Icon, location: Loc)
 
   // build the Todo menu item, showing the number of open todos
-  private def buildTodoMenu(props: Props): ReactElement = {
+  private def buildTodoMenu(props: Props): VdomElement = {
     val todoCount = props.proxy().getOrElse(0)
     <.span(
       <.span("Todo "),
-      todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
+      <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount).when(todoCount > 0)
     )
   }
 
@@ -42,20 +42,19 @@ object MainMenu {
     def render(props: Props) = {
       <.ul(bss.navbar)(
         // build a list of menu items
-        for (item <- menuItems) yield {
-          <.li(^.key := item.idx, (props.currentLoc == item.location) ?= (^.className := "active"),
-            props.router.link(item.location)(item.icon, " ", item.label(props))
-          )
-        }
+        menuItems.toVdomArray(item =>
+          <.li(^.key := item.idx, (^.className := "active").when(props.currentLoc == item.location),
+          props.router.link(item.location)(item.icon, " ", item.label(props))
+        ))
       )
     }
   }
 
-  private val component = ReactComponentB[Props]("MainMenu")
+  private val component = ScalaComponent.builder[Props]("MainMenu")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[Option[Int]]): ReactElement =
+  def apply(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[Option[Int]]): VdomElement =
     component(Props(ctl, currentLoc, proxy))
 }

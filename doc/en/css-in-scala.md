@@ -120,7 +120,7 @@ def renderItem(item: TodoItem) = {
     Button(Button.Props(() => P.deleteItem(item), addStyles = Seq(bss.pullRight, bss.buttonXS)), "Delete")
   )
 }
-<.ul(style.listGroup)(P.items map renderItem)
+<.ul(style.listGroup)(P.items toTagMod renderItem)
 ```
 
 As the Bootstrap class names are "hidden" behind Scala methods, you have full IDE code completion support and there is no chance of mistyping a class name

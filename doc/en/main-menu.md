@@ -7,14 +7,14 @@ a dynamic system, but static is just fine here.
 ```scala
 case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[Option[Int]])
 
-case class MenuItem(idx: Int, label: (Props) => ReactNode, icon: Icon, location: Loc)
+case class MenuItem(idx: Int, label: (Props) => VdomNode, icon: Icon, location: Loc)
 
 // build the Todo menu item, showing the number of open todos
-private def buildTodoMenu(props: Props): ReactNode = {
+private def buildTodoMenu(props: Props): VdomElement = {
   val todoCount = props.proxy().getOrElse(0)
   Seq(
     <.span("Todo "),
-    todoCount > 0 ?= <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount)
+    <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, todoCount).when(todoCount > 0)
   )
 }
 
@@ -40,7 +40,7 @@ private class Backend(t: BackendScope[Props, _]) {
     <.ul(bss.navbar)(
       // build a list of menu items
       for (item <- menuItems) yield {
-        <.li(^.key := item.idx, (props.currentLoc == item.location) ?= (^.className := "active"),
+        <.li(^.key := item.idx, (^.className := "active").when(props.currentLoc == item.location),
           props.router.link(item.location)(item.icon, " ", item.label(props))
         )
       }
@@ -48,8 +48,7 @@ private class Backend(t: BackendScope[Props, _]) {
   }
 }
 
-private val component = ReactComponentB[Props]("MainMenu")
-  .stateless
+private val component = ScalaComponent.builder[Props]("MainMenu")
   .renderBackend[Backend]
   .componentDidMount(scope => scope.backend.mounted(scope.props))
   .build

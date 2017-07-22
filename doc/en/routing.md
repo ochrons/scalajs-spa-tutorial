@@ -28,7 +28,7 @@ val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
 
 Here we just register the two routes using the `staticRoute`. First route is our main route which is attached to the special `root`. The second
 route is attached to `#todo` path. Finally any route that is not matched results in a redirect to the Dashboard. You could also use "clean" paths 
-without the hash, but then your server must be prepared to server correct content even when there is a sub-path defined.
+without the hash, but then your server must be prepared to serve correct content even when there is a sub-path defined.
 
 The router provides the base HTML code (layout) and integrates a `MainMenu` component for the application. SPA tutorial
 uses Bootstrap CSS to provide a nice looking layout, but you can use whatever CSS framework you wish just by changing the CSS class definitions.

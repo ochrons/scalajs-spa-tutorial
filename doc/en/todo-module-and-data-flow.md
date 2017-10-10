@@ -94,7 +94,7 @@ todoWrapper(Todo(_))
 
 The difference between `wrap` and `connect` is that the former provides only passive read access to the model and the dispatcher, while the latter registers a
 listener with the circuit and actively updates the wrapped component when the state changes. Both methods take a _reader function_ that extracts the part of the
-model we are interested in. This component is built beforehand and then instantiated by providing a a function that builds the component with a `ModelProxy[A]`.
+model we are interested in. This component is built beforehand and then instantiated by providing a function that builds the component with a `ModelProxy[A]`.
 The `ModelProxy` wraps the extracted model and provides access to the dispatcher.
 
 Within `Dashboard` we further connect the `Motd` component to the model using the `connect` method of the `ModelProxy`.
